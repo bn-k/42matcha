@@ -1,6 +1,4 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const router = require('./src/modules/request');
-
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
     template: './src/index.html',
@@ -49,7 +47,8 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/api': 'http://localhost:81'
+            '/api': 'http://localhost:81',
+            '/auth': 'http://localhost:81'
         },
         historyApiFallback: true,
     },

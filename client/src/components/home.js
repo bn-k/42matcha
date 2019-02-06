@@ -1,15 +1,15 @@
 import React from "react";
 
-class Match extends React.Component {
-    constructor () {
-        super();
+class Home extends React.Component {
+    constructor (props) {
+        super(props);
         this.state = {
             test: "test",
             next: [],
         };
     }
     componentDidMount(){
-        fetch('api/next')
+        fetch('api/curr')
             .then(results => {
                 return results.json();
             }).then(data => {
@@ -43,15 +43,5 @@ class Match extends React.Component {
         )
     }
 }
-
-
-const Home = () => {
-    return (
-        <div>
-            <h1>Home</h1>
-            <Match/>
-        </div>
-    )
-};
 
 export default Home;

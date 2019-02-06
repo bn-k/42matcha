@@ -6,7 +6,6 @@ import (
 	"github.com/appleboy/gin-jwt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
-	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"
@@ -36,8 +35,20 @@ var identityKey = "id"
 var users []User
 var i int
 
-func useMiddleware (router *gin.Engine) {
-	// the jwt middleware
+func Run() {
+	i = 0
+	dbmongo.Init()
+	defer dbmongo.MgoSession.Close()
+
+	router := gin.Default()
+	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
+
+	mongoCo := dbmongo.MgoSession.Copy()
+	colUser := mongoCo.DB("matcha").C("user")
+	err := colUser.Find(nil).All(&users)
+	if err != nil {
+		fmt.Println("Something gones wrong in DBQuery")
+	}
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
 		Realm:       "test zone",
 		Key:         []byte("secret key"),
@@ -111,47 +122,26 @@ func useMiddleware (router *gin.Engine) {
 	if err != nil {
 		fmt.Println("JWT Error:" + err.Error())
 	}
-	router.POST("api/login", authMiddleware.LoginHandler)
-
-	router.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
-		claims := jwt.ExtractClaims(c)
-		fmt.Printf("NoRoute claims: %#v\n", claims)
-		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
-	})
-
-	auth := router.Group("/auth")
 	// Refresh time can be longer than token timeout
-	auth.GET("/refresh_token", authMiddleware.RefreshHandler)
-	auth.Use(authMiddleware.MiddlewareFunc())
+	auth := router.Group("/auth")
 	{
-		auth.GET("/hello", helloHandler)
+		//auth.Use(gin.Logger())
+		auth.Use(gin.Recovery())
+
+		// Refresh time can be longer than token timeout
+		auth.GET("/", func(c *gin.Context) {
+			fmt.Println(c.Request.Header)
+			c.JSON(200, gin.H{"Purpose": "Api for authorization"})
+		})
+		auth.POST("/login", authMiddleware.LoginHandler)
+		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+		auth.Use(authMiddleware.MiddlewareFunc())
+		{
+			auth.GET("/hello", helloHandler)
+			auth.GET("/getuser", getUserHandler)
+		}
 	}
-
-}
-
-func Run() {
-	i = 0
-	dbmongo.Init()
-	defer dbmongo.MgoSession.Close()
-
-	router := gin.Default()
-	router.Use(gin.Logger())
-	router.Use(gin.Recovery())
-	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
-
-	mongoCo := dbmongo.MgoSession.Copy()
-	colUser := mongoCo.DB("matcha").C("user")
-	err := colUser.Find(nil).All(&users)
-	if err != nil {
-		fmt.Println("Something gones wrong in DBQuery")
-	}
-	useMiddleware(router)
-
-	router.Use(static.Serve("/static", static.LocalFile("./views", true)))
-	router.Use(static.Serve("/img", static.LocalFile("./img", true)))
-	router.Use(static.Serve("/js", static.LocalFile("./js", true)))
 	router.Use(sessions.Sessions("mysession", store))
-	router.LoadHTMLFiles("./views/index.html")
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{"Purpose": "Api for matcha"})
@@ -159,8 +149,7 @@ func Run() {
 
 	api := router.Group("/api")
 	{
-		api.GET("/", func(c *gin.Context) {c.JSON(http.StatusOK, gin.H {"message": "api"})})
-		//api.POST("/login", loginHandler)
+		//api.GET("/", func(c *gin.Context) {c.JSON(http.StatusOK, gin.H {"message": "api"})})
 		api.POST("/like", likeHandler)
 		api.GET("/user/:userID", userHandler)
 		api.GET("/next", nextHandler)
@@ -184,20 +173,27 @@ func Run() {
 	}
 	router.Run(":81")
 }
-
-func helloHandler(c *gin.Context) {
+func getUserHandler(c *gin.Context) {
+	fmt.Println("getUserHandler")
 	claims := jwt.ExtractClaims(c)
 	user, _ := c.Get(identityKey)
 	c.JSON(200, gin.H{
 		"userID":   claims["id"],
 		"userName": user.(*User).UserName,
+		"Purpose":     "get User res",
+	})
+	fmt.Println("getUserHandler Ended")
+}
+
+func helloHandler(c *gin.Context) {
+	claims := jwt.ExtractClaims(c)
+	user, _ := c.Get(identityKey)
+	fmt.Println(c.Request.Header)
+	c.JSON(200, gin.H{
+		"userID":   claims["id"],
+		"userName": user.(*User).UserName,
 		"text":     "Hello World.",
 	})
-}
-func loginHandler(c *gin.Context) {
-	c.Header("Content-Type", "application/json")
-	fmt.Println(c.PostForm("email"), c.PostForm("password"))
-	c.JSON(http.StatusOK, gin.H{"uuid":"uuid code!!!"})
 }
 
 func likeHandler(c *gin.Context) {
@@ -234,6 +230,7 @@ func userHandler(c *gin.Context) {
 	u := dbQuery(id)
 	c.JSON(http.StatusOK, gin.H {"Person": u})
 }
+
 
 func currHandler(c *gin.Context) {
 	c.Header("Content-Type", "application/json")

@@ -21,15 +21,15 @@ class Login extends Component {
         e.preventDefault();
         const formData = new FormData(e.target);
 
-        fetch('/api/login', {
+        fetch('/auth/login', {
             method: 'POST',
             body: formData,
-        })
-            .then(results => {
+        }).then(results => {
                 return results.json();
             }).then(data => {
-                console.log(data['status']);
-                localStorage.setItem("uuid", data['token']);
+            console.log(data['status']);
+            localStorage.setItem("uuid", data['token']);
+            this.props.history.push('/home');
         });
     }
     render () {
