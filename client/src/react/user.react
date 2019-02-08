@@ -1,0 +1,36 @@
+import React from "react";
+import jwtDecode from 'jwt-decode';
+
+class User extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            username: undefined
+        };
+    }
+    componentDidMount(){
+        const jwt = localStorage.getItem('uuid');
+        console.log('test: ', jwtDecode(jwt));
+        fetch('auth/getuser',{
+            method: 'GET',
+            headers: new Headers({
+                'Authorization': 'Bearer '+ jwt,
+                'Content-Type': 'application/json',
+            }),
+        }).then(results => {
+                return results.json();
+            }).then(data => {
+                console.log(data);
+            this.setState({username: data['username']});
+        });
+    }
+    render () {
+        return (
+            <div>
+                {this.state.username}
+            </div>
+        )
+    }
+}
+
+export default User;

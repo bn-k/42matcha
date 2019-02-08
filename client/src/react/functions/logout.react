@@ -9,9 +9,7 @@ class Logout extends Component {
         this.props.history.push('login');
     }
     render () {
-        return (
-            <div></div>
-        )
+        return (<div></div>)
     }
 }
 

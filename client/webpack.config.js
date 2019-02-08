@@ -10,7 +10,7 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 module.exports = {
     entry: [
         '@babel/polyfill',
-        './src/index.js',
+        './src/app.react',
     ],
     output: {
         filename: 'app.js',
@@ -19,7 +19,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.react$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"

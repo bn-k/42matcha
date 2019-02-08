@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"github.com/42matcha/server/dbmongo"
 	"github.com/appleboy/gin-jwt"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"
@@ -23,13 +21,10 @@ type User struct {
 	Picture		string		`json:"picture"`
 }
 
-
-
 type login struct {
 	Username string `form:"username" json:"username" binding:"required"`
 	Password string `form:"password" json:"password" binding:"required"`
 }
-
 
 var identityKey = "id"
 var users []User
@@ -37,13 +32,12 @@ var i int
 
 func Run() {
 	i = 0
+	router := gin.Default()
 	dbmongo.Init()
 	defer dbmongo.MgoSession.Close()
-
-	router := gin.Default()
-	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
-
 	mongoCo := dbmongo.MgoSession.Copy()
+
+
 	colUser := mongoCo.DB("matcha").C("user")
 	err := colUser.Find(nil).All(&users)
 	if err != nil {
@@ -91,8 +85,7 @@ func Run() {
 			if v, ok := data.(*User); ok && v.UserName == "admin" {
 				return true
 			}
-
-			return false
+			return true
 		},
 		Unauthorized: func(c *gin.Context, code int, message string) {
 			c.JSON(code, gin.H{
@@ -100,22 +93,8 @@ func Run() {
 				"message": message,
 			})
 		},
-		// TokenLookup is a string in the form of "<source>:<name>" that is used
-		// to extract token from the request.
-		// Optional. Default value "header:Authorization".
-		// Possible values:
-		// - "header:<name>"
-		// - "query:<name>"
-		// - "cookie:<name>"
-		// - "param:<name>"
 		TokenLookup: "header: Authorization, query: token, cookie: jwt",
-		// TokenLookup: "query:token",
-		// TokenLookup: "cookie:token",
-
-		// TokenHeadName is a string in the header. Default value is "Bearer"
 		TokenHeadName: "Bearer",
-
-		// TimeFunc provides the current time. You can override it to use another time value. This is useful for testing or if your server uses a different time zone than your tokens.
 		TimeFunc: time.Now,
 	})
 
@@ -141,35 +120,17 @@ func Run() {
 			auth.GET("/getuser", getUserHandler)
 		}
 	}
-	router.Use(sessions.Sessions("mysession", store))
-
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{"Purpose": "Api for matcha"})
 	})
 
 	api := router.Group("/api")
 	{
-		//api.GET("/", func(c *gin.Context) {c.JSON(http.StatusOK, gin.H {"message": "api"})})
 		api.POST("/like", likeHandler)
 		api.GET("/user/:userID", userHandler)
 		api.GET("/next", nextHandler)
 		api.GET("/curr", currHandler)
 		api.POST("/disl/:userID", dislHandler)
-		api.GET("/count", func(c *gin.Context) {
-			session := sessions.Default(c)
-			var count int
-			v := session.Get("count")
-			if v == nil {
-				count = 0
-			} else {
-				count = v.(int)
-				count++
-			}
-			session.Set("count", count)
-			session.Save()
-			c.Header("Content-Type", "application/json")
-			c.JSON(200, gin.H{"count": count})
-		})
 	}
 	router.Run(":81")
 }
@@ -179,7 +140,7 @@ func getUserHandler(c *gin.Context) {
 	user, _ := c.Get(identityKey)
 	c.JSON(200, gin.H{
 		"userID":   claims["id"],
-		"userName": user.(*User).UserName,
+		"username": user.(*User).UserName,
 		"Purpose":     "get User res",
 	})
 	fmt.Println("getUserHandler Ended")
@@ -231,7 +192,6 @@ func userHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H {"Person": u})
 }
 
-
 func currHandler(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	next := users[i]
@@ -262,4 +222,3 @@ func dislHandler(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	c.JSON(http.StatusOK, gin.H{"status":"disliked"})
 }
-
