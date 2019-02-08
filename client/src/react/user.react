@@ -9,7 +9,7 @@ class User extends React.Component {
         };
     }
     componentDidMount(){
-        const jwt = localStorage.getItem('uuid');
+        const jwt = localStorage.getItem('token');
         console.log('test: ', jwtDecode(jwt));
         fetch('auth/getuser',{
             method: 'GET',

@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e485c5d-96e2-4d3f-95ee-50320d9270d1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/modules/logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/modules/logout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/navigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/route/route.go" beforeDir="false" afterPath="$PROJECT_DIR$/route/route.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/react/action/login-action.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/react/action/login-action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/react/action/types-action.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/react/action/types-action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/react/login.react" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/react/login.react" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/react/reducers/index-reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/react/reducers/index-reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/react/reducers/login-reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/react/reducers/login-reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/react/store/matcha-store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/react/store/matcha-store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,12 +41,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="25297" />
+          <entry key="go" value="25303" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="25297" />
+          <entry key="Go" value="25303" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.go.postfix.template.usages.trigger">
@@ -74,8 +70,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/route/route.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="607">
-              <caret line="223" selection-start-line="223" selection-end-line="223" />
+            <state relative-caret-position="299">
+              <caret line="220" selection-start-line="220" selection-end-line="220" />
               <folding>
                 <element signature="e#15#288#0" expanded="true" />
               </folding>
@@ -282,8 +278,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/route/route.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="223" selection-start-line="223" selection-end-line="223" />
+        <state relative-caret-position="299">
+          <caret line="220" selection-start-line="220" selection-end-line="220" />
           <folding>
             <element signature="e#15#288#0" expanded="true" />
           </folding>

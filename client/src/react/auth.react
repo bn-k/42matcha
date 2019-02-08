@@ -10,7 +10,7 @@ class Auth extends Component {
     }
 
     componentDidMount() {
-        const jwt = localStorage.getItem('uuid');
+        const jwt = localStorage.getItem('token');
         if (!jwt) {
             this.props.history.push('/login');
         } else {
@@ -28,8 +28,9 @@ class Auth extends Component {
                 this.setState({user: "success"});
                 console.log('user on mount',this.state.user);
                 console.log('username: ', data['Username']);
-                // localStorage.setItem("uuid", data['token']);
+                localStorage.setItem("username", data['username']);
             });
+            this.props.history.push('/home');
         }
     }
 

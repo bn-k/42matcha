@@ -8,7 +8,7 @@ class ButtonLogout extends Component {
         this.logout = this.logout.bind(this);
     }
     logout () {
-        let jwt = localStorage.getItem('uuid');
+        let jwt = localStorage.getItem('token');
         if (jwt) {
             return(
                 <NavLink to="/logout">Logout</NavLink>

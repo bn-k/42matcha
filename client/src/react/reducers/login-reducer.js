@@ -1,10 +1,18 @@
-import {GET_LOGIN} from "../action/types-action";
+import {LOGIN} from "../action/types-action";
 
 const initialState = {
-    uuid: "",
+    token: "",
+    expire: "",
 };
 
-export default function (state = initialState, action) {
-    if (action === GET_LOGIN) {
+export function loginReducer (state = initialState, action) {
+    if (action.type === LOGIN) {
+        console.log('if resolved: ');
+        return {
+            ...state,
+            token: action.token,
+        }
+    } else {
+        return state
     }
 }
