@@ -1,3 +1,3 @@
-export const actionLogin = {
-
+export const actionLogin = () => {
+    fetch()
 };
