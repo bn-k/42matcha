@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {Route, Redirect} from  'react-router-dom';
+import storeMatcha from "../store/matcha-store";
 
-const AuthStatus = {
-    isAuthenticated: localStorage.getItem('token'),
-};
+const logged =  storeMatcha.getState().login.loggedIn;
 
 const PrivateRoute= ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            AuthStatus.isAuthenticated ? (
+        logged ? (
                 <Component {...props} />
             ) : (
                 <Redirect

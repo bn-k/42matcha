@@ -1,4 +1,4 @@
-import {LOGIN, GET_USER} from './types-action';
+import {LOGIN, LOGOUT} from './types-action';
 
 export const loginAction = (formData) => dispatch => {
     fetch('/auth/login', {
@@ -6,14 +6,19 @@ export const loginAction = (formData) => dispatch => {
         body: formData,
     }).then(res => res.json()
     ).then(login => {
+        localStorage.setItem("token", login['token']);
         dispatch({
             type: LOGIN,
             token: login['token'],
             expire : login['expire'],
         });
-        localStorage.setItem("token", login['token']);
     });
 };
 
-export const getUserAction = (formData) => dispatch => {
+export const logoutAction = () => dispatch => {
+    console.log('logoutAction');
+    localStorage.setItem("token", "");
+    dispatch({
+        type: LOGOUT,
+    });
 };

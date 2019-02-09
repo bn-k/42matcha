@@ -14,7 +14,6 @@ class Home extends React.Component {
                 return results.json();
             }).then(data => {
             this.setState({next: data});
-            console.log(this.state.next)
         });
     }
     next () {
@@ -23,7 +22,6 @@ class Home extends React.Component {
                 return results.json();
             }).then(data => {
             this.setState({next: data});
-            console.log(this.state.next)
         });
     }
     love () {

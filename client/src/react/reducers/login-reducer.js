@@ -1,18 +1,22 @@
-import {LOGIN} from "../action/types-action";
+import {LOGIN, LOGOUT} from "../action/types-action";
 
-const initialState = {
-    token: "",
-    expire: "",
+const initial = {
+    loggedIn: null,
+    token: null
 };
 
-export function loginReducer (state = initialState, action) {
-    if (action.type === LOGIN) {
-        console.log('if resolved: ');
-        return {
-            ...state,
-            token: action.token,
-        }
-    } else {
-        return state
+export function loginReducer (state = initial, action) {
+    switch (action.type) {
+        case LOGIN:
+            return {
+                loggedIn: true,
+                token: action.token,
+            };
+        case LOGOUT:
+            return {
+                loggedIn: false,
+                token: "",
+            };
     }
+    return state;
 }

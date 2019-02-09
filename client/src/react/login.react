@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {NavLink} from "react-router-dom"
+import {NavLink, Redirect} from "react-router-dom"
 import {connect} from "react-redux";
 import {loginAction} from './action/login-action';
 
@@ -7,6 +7,7 @@ class Login extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            redirect: false,
             username: "",
             email: "",
             password: "",
@@ -19,22 +20,32 @@ class Login extends Component {
             this.props.history.push('/');
         }
     }
-
     change (e) {
         this.setState({
             [e.target.name]: e.target.value,
         })
     }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/home' />
+        }
+    };
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        })
+    };
     submit (e) {
         e.preventDefault();
         const formData = new FormData(e.target);
         this.props.loginAction(formData);
-        this.props.history.push('/home');
+        this.setRedirect();
     }
     render () {
         return (
             <div>
                 <form onSubmit={e => this.submit(e)}>
+                    {this.renderRedirect()}
                     <label>Username</label><input type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
                     <label>Email</label><input type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
                     <label>Password</label><input type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>

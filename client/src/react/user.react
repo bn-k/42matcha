@@ -1,5 +1,4 @@
 import React from "react";
-import jwtDecode from 'jwt-decode';
 
 class User extends React.Component {
     constructor (props) {
@@ -9,20 +8,6 @@ class User extends React.Component {
         };
     }
     componentDidMount(){
-        const jwt = localStorage.getItem('token');
-        console.log('test: ', jwtDecode(jwt));
-        fetch('auth/getuser',{
-            method: 'GET',
-            headers: new Headers({
-                'Authorization': 'Bearer '+ jwt,
-                'Content-Type': 'application/json',
-            }),
-        }).then(results => {
-                return results.json();
-            }).then(data => {
-                console.log(data);
-            this.setState({username: data['username']});
-        });
     }
     render () {
         return (

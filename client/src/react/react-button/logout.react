@@ -1,0 +1,41 @@
+import React, { Component } from "react";
+import {connect} from "react-redux";
+import {logoutAction} from '../action/login-action';
+import {Redirect} from "react-router-dom";
+
+class Logout extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            redirect: false
+        };
+        this.submit = this.submit.bind(this);
+    }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/login' />
+        }
+    };
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        })
+    };
+    submit (e) {
+        e.preventDefault();
+        this.props.logoutAction(e);
+        this.setRedirect();
+    };
+    render () {
+        return (
+            <React.Fragment>
+                {this.renderRedirect()}
+                <button onClick={e => this.submit(e)}>Logout</button>
+            </React.Fragment>
+        )
+    }
+
+}
+
+export default connect(null, {logoutAction})(Logout);
+
