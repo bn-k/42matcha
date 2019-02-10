@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {BrowserRouter, Route, Switch} from  'react-router-dom';
 import {Provider} from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 
 import Login from "./login.react";
 import Auth from "./auth.react";
@@ -13,11 +14,14 @@ import Navigation from "./navigation.react";
 import Logout from "./functions/logout.react";
 import PrivateRoute from './modules/private-route.react';
 import storeMatcha from './store/matcha-store';
+import {history} from "./modules/history-router.react";
 
 class Router extends Component {
     render () {
         return (
+
             <Provider store={storeMatcha}>
+                <ConnectedRouter history={history}>
                 <BrowserRouter>
                     <div>
                         <Navigation/>
@@ -32,6 +36,7 @@ class Router extends Component {
                         </Switch>
                     </div>
                 </BrowserRouter>
+            </ConnectedRouter>
             </Provider>
         )
     }
