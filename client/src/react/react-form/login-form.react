@@ -1,16 +1,23 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
+import {connect} from "react-redux";
+import storeMatcha from '../store/matcha-store';
+import {loginAction} from '../action/login-action';
 
-class Login extends Component {
+class LoginForm extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            redirect: false,
             username: "",
             email: "",
-            password1: "",
-            password2: "",
+            password: "",
         };
         this.change = this.change.bind(this);
         this.submit = this.submit.bind(this);
+    }
+    componentDidMount() {
+        console.log('loginform: ', this.props)
     }
     change (e) {
         this.setState({
@@ -20,30 +27,29 @@ class Login extends Component {
     submit (e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-
-        fetch('/auth/register', {
-            method: 'POST',
-            body: formData,
-        }).then(results => {
-            return results.json();
-        }).then(data => {
-        });
-    }
+        storeMatcha.dispatch(loginAction(formData));
+        this.props.history.push('/home');
+    };
     render () {
         return (
             <div>
                 <form onSubmit={e => this.submit(e)}>
                     <label>Username</label><input type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
                     <label>Email</label><input type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
-                    <label>Password</label><input type="password" name="password1" onChange={e => this.change(e)} value={this.state.password1}/>
-                    <label>Confirmed Password</label><input type="password" name="password2" onChange={e => this.change(e)} value={this.state.password2}/>
+                    <label>Password</label><input type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
                     <button>submit</button>
-                    <p>Already registered?</p><a href="/login">Login</a>
+                    <p>Not registered?</p>
                 </form>
             </div>
         )
     }
-
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    };
+};
+
+import {withRouter} from 'react-router-dom';
+export default withRouter(connect(mapStateToProps)(LoginForm))

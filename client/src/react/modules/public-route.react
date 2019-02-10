@@ -6,16 +6,16 @@ function logged() {
     return storeMatcha.getState().login.loggedIn;
 }
 
-const PrivateRoute= ({ component: Component, ...rest }) => (
+const PublicRoute= ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            logged() ? (
+            !logged() ? (
                 <Component {...props} />
             ) : (
                 <Redirect
                     to={{
-                        pathname: "/login",
+                        pathname: "/home",
                         state: { from: props.location }
                     }}
                 />
@@ -24,4 +24,4 @@ const PrivateRoute= ({ component: Component, ...rest }) => (
     />
 );
 
-export default (PrivateRoute);
+export default (PublicRoute);

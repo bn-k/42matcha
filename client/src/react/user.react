@@ -1,18 +1,11 @@
 import React from "react";
 
 class User extends React.Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            username: undefined
-        };
-    }
     componentDidMount(){
     }
     render () {
         return (
             <div>
-                {this.state.username}
             </div>
         )
     }

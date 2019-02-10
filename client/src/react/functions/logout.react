@@ -1,16 +1,14 @@
 import React, {Component} from "react";
+import {Redirect} from "react-router-dom";
 
 class Logout extends Component {
-    constructor(props) {
-        super(props);
-    }
     componentDidMount() {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
-        this.props.history.push('login');
+        console.log(this.props);
     }
     render () {
-        return (<div></div>)
+            return <Redirect to='/' />
     }
 }
 

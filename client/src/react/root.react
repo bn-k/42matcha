@@ -1,0 +1,46 @@
+import React from "react";
+import {BrowserRouter as Router, Route, Switch} from  'react-router-dom';
+import {Provider} from 'react-redux';
+
+import Login from "./login.react";
+import Auth from "./auth.react";
+import Home from "./home.react";
+import User from "./user.react";
+import Register from "./register.react";
+import Error from "./error.react";
+import Navigation from "./navigation.react";
+import Test from "./test.react";
+
+import Logout from "./functions/logout.react";
+import PrivateRoute from './modules/private-route.react';
+import PublicRoute from './modules/public-route.react';
+import AdminRoute from './modules/admin-route.react';
+import storeMatcha from './store/matcha-store';
+
+
+const Root = () => (
+    <Provider store={storeMatcha}>
+            <Router>
+                <div>
+                    <Navigation/>
+                    <Switch>
+                        <Route exact path="/" component={Auth}/>
+                        <PrivateRoute path="/home" component={Home}/>
+                        <PrivateRoute path="/user" component={User}/>
+                        <PrivateRoute path="/logout" component={Logout}/>
+                        <PublicRoute path="/login" component={Login}/>
+                        <PublicRoute path="/register" component={Register}/>
+                        <PublicRoute component={Error}/>
+                    </Switch>
+                </div>
+            </Router>
+    </Provider>
+);
+
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    };
+};
+
+export default (Root)

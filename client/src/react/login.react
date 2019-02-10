@@ -1,62 +1,27 @@
-import React, { Component } from "react";
-import {NavLink, Redirect} from "react-router-dom"
+import React from 'react';
+import {withRouter, Redirect} from "react-router-dom"
 import {connect} from "react-redux";
-import {loginAction} from './action/login-action';
+import storeMatcha from "./store/matcha-store";
+import LoginForm from './react-form/login-form.react'
 
-class Login extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            redirect: false,
-            username: "",
-            email: "",
-            password: "",
-        };
-        this.change = this.change.bind(this);
-        this.submit = this.submit.bind(this);
-    }
-    componentDidMount() {
-        if (localStorage.getItem('token')) {
-            this.props.history.push('/');
-        }
-    }
-    change (e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-    }
-    renderRedirect = () => {
-        if (this.state.redirect) {
-            return <Redirect to='/home' />
-        }
-    };
-    setRedirect = () => {
-        this.setState({
-            redirect: true
-        })
-    };
-    submit (e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        this.props.loginAction(formData);
-        this.setRedirect();
-    }
-    render () {
+export const Login = withRouter(() =>{
+    if (storeMatcha.getState().login.loggedIn){
         return (
-            <div>
-                <form onSubmit={e => this.submit(e)}>
-                    {this.renderRedirect()}
-                    <label>Username</label><input type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
-                    <label>Email</label><input type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
-                    <label>Password</label><input type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
-                    <button>submit</button>
-                    <p>Not registered?</p>
-                    <NavLink to="/register">Register</NavLink>
-                </form>
-            </div>
+        <Redirect
+            to={{
+                pathname: "/home",
+            }}
+        />
         )
+    } else {
+        return <LoginForm/>
     }
+});
 
-}
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    };
+};
 
-export default connect(null, {loginAction})(Login);
+export default withRouter(connect(mapStateToProps)(Login))
