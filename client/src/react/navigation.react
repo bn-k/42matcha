@@ -1,34 +1,33 @@
 import React, {Component} from "react";
 import {NavLink} from "react-router-dom"
-import {connect} from 'react-redux';
 import ButtonLogout from "./react-button/logout.react";
 
 class Navigation extends Component {
+    Button () {
+        if (this.props.login.loggedIn) {
+            return (<ButtonLogout/>)
+        }
+    };
     render () {
         return (
             <div className="nav">
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/register">Register</NavLink>
                 <NavLink to="/user">User</NavLink>
-                <ButtonLogout/>
+                {this.Button()}
             </div>
         )
     }
 }
 
+// Redux dependencies,setting and export
+
 const mapStateToProps = (state) => {
     return {
-        login : state.login
-    }
+        login: state.login
+    };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: () => {
-            dispatch ({
-                type: "LOGOUT",
-            })
-        }
-    }
-};
-export default connect(mapStateToProps)(Navigation);
+import {connect} from "react-redux";
+import {withRouter} from 'react-router-dom';
+export default withRouter(connect(mapStateToProps)(Navigation))

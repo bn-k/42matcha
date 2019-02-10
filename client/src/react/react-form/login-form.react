@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
-import {connect} from "react-redux";
 import storeMatcha from '../store/matcha-store';
 import {loginAction} from '../action/login-action';
 
@@ -45,11 +43,14 @@ class LoginForm extends Component {
     }
 }
 
+// Redux dependencies,setting and export
+
 const mapStateToProps = (state) => {
     return {
         login: state.login
     };
 };
 
+import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
 export default withRouter(connect(mapStateToProps)(LoginForm))

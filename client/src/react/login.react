@@ -1,6 +1,4 @@
 import React from 'react';
-import {withRouter, Redirect} from "react-router-dom"
-import {connect} from "react-redux";
 import storeMatcha from "./store/matcha-store";
 import LoginForm from './react-form/login-form.react'
 
@@ -24,4 +22,6 @@ const mapStateToProps = (state) => {
     };
 };
 
+import {withRouter, Redirect} from "react-router-dom"
+import {connect} from "react-redux";
 export default withRouter(connect(mapStateToProps)(Login))
