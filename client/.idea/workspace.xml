@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8847181-2b31-4e33-8322-53bbfbfcbd99" name="Default Changelist" comment=" Mess fixed. supasate/connected-react-router(kind of react-router-redux) implemented">
-      <change afterPath="$PROJECT_DIR$/src/react/modules/public-route.react" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/react/modules/router-history.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/react/react-form/login-form.react" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/react/root.react" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/react/test.react" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/history/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/history/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/react-router/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/react-router/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/auth.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/auth.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/functions/logout.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/functions/logout.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/login.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/login.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/modules/private-route.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/modules/private-route.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/navigation.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/navigation.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/react-button/logout.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/react-button/logout.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/register.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/register.react" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/router.react" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/store/matcha-store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/store/matcha-store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/user.react" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/user.react" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -54,10 +34,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/react/login.react">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="46">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#481#534#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -66,22 +46,61 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/react/react-form/login-form.react">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+            <state relative-caret-position="120">
+              <caret line="44" selection-start-line="44" selection-end-line="44" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#1594#1630#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/react/navigation.react">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="79">
+              <caret line="14" column="57" selection-start-line="14" selection-start-column="57" selection-end-line="14" selection-end-column="57" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#981#1017#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/react/react-button/logout.react">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+            <state relative-caret-position="322">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/react/modules/admin-route.react">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#772#808#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/react/modules/private-route.react">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -328,27 +347,27 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81560000" />
+    <option name="totallyTimeSpent" value="81908000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6119096" visible="true" weight="0.2494043" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6119096" visible="true" weight="0.2494043" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.38809034" side_tool="true" weight="0.2494043" />
       <window_info id="Favorites" order="3" sideWeight="0.38655463" side_tool="true" weight="0.2494043" />
       <window_info anchor="bottom" id="Messages" order="0" weight="0.32913166" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32913166" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31792718" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.31792718" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32913166" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49960285" weight="0.6904762" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50039715" side_tool="true" weight="0.6904762" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.4047619" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -492,8 +511,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/react/modules/private-route.react">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="350">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -507,13 +526,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/react/modules/history-router.react.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/react/modules/history-router.react.js" />
     <entry file="file://$PROJECT_DIR$/src/react/store/middleware-store.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
@@ -538,13 +551,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/react/test.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/react/test.js" />
     <entry file="file://$PROJECT_DIR$/src/react/modules/admin-route.react">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+        <state relative-caret-position="138">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#772#808#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -624,18 +639,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/react/login.react">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="46">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#481#534#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/react/navigation.react">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="42" lean-forward="true" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
+        <state relative-caret-position="79">
+          <caret line="14" column="57" selection-start-line="14" selection-start-column="57" selection-end-line="14" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#981#1017#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -651,18 +670,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/react/react-form/login-form.react">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+        <state relative-caret-position="120">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#1594#1630#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/react/react-button/logout.react">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+        <state relative-caret-position="322">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
