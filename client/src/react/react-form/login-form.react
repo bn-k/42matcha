@@ -15,7 +15,6 @@ class LoginForm extends Component {
         this.submit = this.submit.bind(this);
     }
     componentDidMount() {
-        console.log('loginform: ', this.props)
     }
     change (e) {
         this.setState({

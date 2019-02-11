@@ -1,11 +1,10 @@
-package main
+package api
 
 import (
-	"github.com/42matcha/server/handlers"
 	"github.com/gin-gonic/gin"
 )
 
-func main() {
+func RouterAPI() {
 	router := gin.Default()
 
 	router.GET("/", func(c *gin.Context) {
@@ -16,11 +15,11 @@ func main() {
 		auth.GET("/", func(c *gin.Context) {
 			c.JSON(200, gin.H{"Purpose": "Api for authorization"})
 		})
-		auth.POST("login", handlers.Login)
+		auth.POST("login", Login)
 	}
 	api := router.Group("/api")
 	{
-		api.GET("/next", handlers.Next)
+		api.GET("/next", Next)
 	}
 	router.Run(":81")
 }

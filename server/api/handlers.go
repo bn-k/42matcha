@@ -1,11 +1,17 @@
-package handlers
+package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
 func Login(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
+	form := c.PostForm("username")
+	fmt.Println("form: ", form)
+	c.JSON(401, gin.H{
+		"login": false,
+	})
 }
 
 func Next(c *gin.Context) {
