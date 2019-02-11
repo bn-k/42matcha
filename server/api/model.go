@@ -12,19 +12,27 @@ type App struct {
 }
 
 type User struct {
-	Id        int16
-	Username  string
-	FirstName string
-	LastName  string
-	Password  string
-	EMail     string
-	Images    [5]string
-	Birthday  time.Time
-	Login     login
-}
-
-type login struct {
-	Id       int
-	Username string
-	Password string
+	Id           int16
+	Username     string
+	EMail        string
+	LastName     string
+	FirstName    string
+	Password     string
+	CreatedAtTmp string
+	CreatedAt    time.Time
+	RandomToken  string
+	Images       [5]string
+	Biography    string
+	BirthdayTmp  time.Time
+	Birthday     time.Time
+	Genre        string
+	Interest     string
+	City         string
+	Zip          string
+	Country      string
+	Latitude     float32
+	Longitude    float32
+	geoAllowed   bool
+	Online       bool
+	Rating       float32
 }

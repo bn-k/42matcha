@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -39,14 +40,28 @@ func (user User) check(Id int16, trueUsername, truePassword string, c *gin.Conte
 	}
 }
 
-func Login(c *gin.Context) {
+func (user User) completeLogin(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
+
+	c.JSON(200, gin.H{
+		"next": "next",
+	})
+}
+
+func Login(c *gin.Context) {
 	var user User
+
+	testQuery(c)
 
 	user.Username = c.PostForm("username")
 	user.Password = c.PostForm("password")
 
-	rows, err := app.Db.Query(`SELECT id, username, password FROM users WHERE username=$1`, user.Username)
+	fmt.Println("========>", user.Username)
+
+	rows, err := app.Db.Query(`SELECT id, username, password,
+firstname, lastname, created_at, random_token, img1, img2, img3, img4,
+img5, biography, birthday, genre, interest, city, zip, country, latitude,
+longitude, geo_allowed FROM users WHERE username=$1`, user.Username)
 
 	var trueId int16
 	var trueUsername, truePassword string
@@ -54,8 +69,24 @@ func Login(c *gin.Context) {
 		loginError(err, c)
 	} else {
 		for rows.Next() {
-			if err := rows.Scan(&trueId, &trueUsername, &truePassword); err != nil {
-				loginError(errors.New(scanFailure))
+			if err := rows.Scan(&trueId, &trueUsername, &truePassword,
+				&user.FirstName, &user.LastName, &user.CreatedAtTmp,
+				&user.RandomToken, &user.Images[0], &user.Images[1],
+				&user.Images[2], &user.Images[3], &user.Images[4],
+				&user.Biography, &user.BirthdayTmp, &user.Genre,
+				&user.Interest, &user.City, &user.Zip, &user.Country,
+				&user.Latitude, &user.Longitude, &user.geoAllowed); err != nil {
+				loginError(errors.New(scanFailure), c)
+			}
+		}
+		if user.check(trueId, trueUsername, truePassword, c) {
+			userJson, err := json.Marshal(user)
+			if err != nil {
+				loginError(errors.New("userJson fail"), c)
+			} else {
+				fmt.Println(trueUsername, truePassword)
+				fmt.Println(user)
+				c.JSON(200, string(userJson))
 			}
 		}
 	}
