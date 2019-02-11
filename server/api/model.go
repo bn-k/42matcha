@@ -1,12 +1,30 @@
 package api
 
-import "time"
+import (
+	"database/sql"
+	"github.com/gin-gonic/gin"
+	"time"
+)
+
+type App struct {
+	Db *sql.DB
+	r  *gin.Engine
+}
 
 type User struct {
-	username  string
-	firstName string
-	lastName  string
-	eMail     string
-	images    [5]string
-	birthday  time.Time
+	Id        int16
+	Username  string
+	FirstName string
+	LastName  string
+	Password  string
+	EMail     string
+	Images    [5]string
+	Birthday  time.Time
+	Login     login
+}
+
+type login struct {
+	Id       int
+	Username string
+	Password string
 }
