@@ -8,12 +8,7 @@ class Home extends React.Component {
         };
     }
     componentDidMount(){
-        fetch('api/curr')
-            .then(results => {
-                return results.json();
-            }).then(data => {
-            this.setState({next: data});
-        });
+        this.next()
     }
     next () {
         fetch('api/next')
