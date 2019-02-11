@@ -9,7 +9,6 @@ import User from "./user.react";
 import Register from "./register.react";
 import Error from "./error.react";
 import Navigation from "./navigation.react";
-import Test from "./test.react";
 
 import Logout from "./functions/logout.react";
 import PrivateRoute from './modules/private-route.react';
@@ -36,11 +35,5 @@ const Root = () => (
             </Router>
     </Provider>
 );
-
-const mapStateToProps = (state) => {
-    return {
-        login: state.login
-    };
-};
 
 export default (Root)
