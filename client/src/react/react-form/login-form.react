@@ -15,10 +15,6 @@ class LoginForm extends Component {
         this.submit = this.submit.bind(this);
     }
     componentDidMount() {
-        setInterval(function () {
-            // this.props.history.push('/home');
-            console.log(this.props)
-        }, 1000)
     }
     change (e) {
         this.setState({

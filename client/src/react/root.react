@@ -21,22 +21,22 @@ import storeMatcha from './store/matcha-store';
 
 const Root = () => (
     <Provider store={storeMatcha}>
-            <Router>
-                <div>
-                    <Navigation/>
-                    <Switch>
-                        <Route exact path="/" component={Auth}/>
-                        <Route path="/401" component={Error401}/>
-                        <PrivateRoute path="/home" component={Home}/>
-                        <PrivateRoute path="/user" component={User}/>
-                        <PrivateRoute path="/logout" component={Logout}/>
-                        <PublicRoute path="/login" component={Login}/>
-                        <PublicRoute path="/register" component={Register}/>
-                        <AdminRoute path="/admin" component={Admin}/>
-                        <PublicRoute component={Error}/>
-                    </Switch>
-                </div>
-            </Router>
+        <Router>
+            <div>
+                <Navigation/>
+                <Switch>
+                    <Route exact path="/" component={Auth}/>
+                    <Route path="/401" component={Error401}/>
+                    <PrivateRoute path="/home" component={Home}/>
+                    <PrivateRoute path="/user" component={User}/>
+                    <PrivateRoute path="/logout" component={Logout}/>
+                    <PublicRoute path="/login" component={Login}/>
+                    <PublicRoute path="/register" component={Register}/>
+                    <AdminRoute path="/admin" component={Admin}/>
+                    <PublicRoute component={Error}/>
+                </Switch>
+            </div>
+        </Router>
     </Provider>
 );
 

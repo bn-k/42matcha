@@ -7,7 +7,7 @@ const User = {
 };
 
 const Auth = withRouter(
-    ({ history }) =>
+    () =>
         User.isAuthenticated ? (
             <Redirect
                 to={{
@@ -26,4 +26,11 @@ const Auth = withRouter(
         )
 );
 
-export default (Auth);
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    };
+};
+
+import {connect} from "react-redux";
+export default connect(mapStateToProps)(Auth)

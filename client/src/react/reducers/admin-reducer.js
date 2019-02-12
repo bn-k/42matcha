@@ -10,6 +10,7 @@ export function adminReducer (state = initial, action) {
             return {
                 users: action.users,
             };
+    default:
+     return state
     }
-    return state;
 }
