@@ -1,13 +1,14 @@
 import {LOAD} from './types-action';
+import storeMatcha from "../store/matcha-store";
 
-export const loadUsers = (id) => dispatch => {
-    fetch('/admin/users', {
-        method: 'POST',
-        body: {
-            "username" : id.username,
-            "password" : id.password
-        },
-    }).then(res => {
+export const loadUsers = (json) => dispatch => {
+    var Init = { method: 'GET',
+        username: json.username,
+        password: json.password,
+    };
+
+    fetch('/admin/users', Init)
+        .then(res => {
             switch (res.status) {
                 case 401:
                     console.log("Non Authorized");
@@ -18,16 +19,10 @@ export const loadUsers = (id) => dispatch => {
                             type: LOAD,
                             users: json,
                         });
+                        storeMatcha.dispatch(push('asdfasdf'));
                     })
             }
         }
     )
 };
 
-export const logoutAction = () => dispatch => {
-    console.log('logoutAction');
-    localStorage.setItem("token", "");
-    dispatch({
-        type: LOGOUT,
-    });
-};

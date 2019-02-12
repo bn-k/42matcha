@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/labstack/gommon/log"
 )
 
 func testQuery(c *gin.Context) {
@@ -14,5 +15,15 @@ func testQuery(c *gin.Context) {
 	fmt.Println("Param", c.Param("username"))
 	fmt.Println("Query", c.Query("username"))
 	fmt.Println("Req.PostForm", c.Request.PostForm)
-	fmt.Println("Req.PostForm", c.Request.Proto)
+	fmt.Println("Req.PostForm", c.Params)
+	fmt.Println("Req.PostForm", c.DefaultQuery("username", "haha"))
+}
+
+func printHeader (c *gin.Context) {
+	for k, vals := range c.Request.Header {
+		log.Infof("%s", k)
+		for _, v := range vals {
+			log.Infof("\t%s", v)
+		}
+	}
 }

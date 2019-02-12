@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
 )
@@ -15,28 +16,33 @@ func adminError(err error, c *gin.Context) {
 }
 
 func Users(c *gin.Context) {
-	username := c.PostForm("username")
-	password := c.PostForm("password")
+	//username := c.Query("username")
+	//password := c.Query("password")
+
+	printHeader(c)
+	//fmt.Println(username, password)
+	testQuery(c)
 
 	app, _ := c.MustGet("app").(App)
-	user, err := check(username, password, c, app.Users)
-	if err != nil {
-		c.JSON(401, gin.H{})
-	} else if user.Admin {
+
+	//admin, err := checkAdmin(username, password, c, app.Users)
+	//if err != nil  {
+	//	c.JSON(401, gin.H{})
+	//} else {
+	//	if !admin.Admin {
+	//		c.JSON(401, gin.H{"Not authorized: ":"not admin"})
+	//	}
 		c.JSON(200, app.Users)
-	}
-	c.JSON(401, gin.H{})
+	//}
 }
 
 func checkAdmin(username, password string, c *gin.Context, Users []User) (User, error) {
+	fmt.Println(Users)
 	for _, user := range Users {
 		if user.Username == username {
 			if user.Password == password {
-				user.Token, _ = user.GenerateJwt()
-				user.Action = "LOGIN"
 				return user, nil
 			} else {
-				loginError(errors.New(wPassword), c)
 				return User{}, errors.New("bad")
 			}
 		}

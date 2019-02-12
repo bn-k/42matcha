@@ -18,7 +18,6 @@ export function loginReducer (state = initial, action) {
                 loggedIn: false,
                 token: "",
             };
-            break
         default:
             return state
     }

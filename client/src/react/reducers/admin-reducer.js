@@ -7,6 +7,7 @@ const initial = {
 export function adminReducer (state = initial, action) {
     switch (action.type) {
         case LOAD:
+            console.log("adminReducer: ", action);
             return {
                 users: action.users,
             };
