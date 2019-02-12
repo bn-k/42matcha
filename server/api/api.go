@@ -1,25 +1,15 @@
 package api
 
 import (
-	"database/sql"
-	"github.com/42matcha/server/api/types"
 	"github.com/gin-gonic/gin"
-	"time"
 )
-
-type App struct {
-	types.AppModel
-}
-
-type User struct {
-	types.User
-}
 
 func newApp() *App {
 	app := new(App)
 	app.Db = psql()
 	app.R = gin.Default()
-	app.Users = make([]types.User, 0)
+	app.Users = make([]User, 0)
+	return app
 }
 
 func Run() {

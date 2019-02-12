@@ -1,6 +1,16 @@
-package types
+package api
 
-import "time"
+import (
+	"database/sql"
+	"github.com/gin-gonic/gin"
+	"time"
+)
+
+type App struct {
+	Db    *sql.DB
+	R     *gin.Engine
+	Users []User
+}
 
 type User struct {
 	Id           int16     `json:"id"`

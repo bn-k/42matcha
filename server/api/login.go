@@ -1,8 +1,7 @@
-package handlers
+package api
 
 import (
 	"errors"
-	"github.com/42matcha/server/api/types"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
 )
@@ -19,7 +18,7 @@ func Login(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
-	app, _ := c.MustGet("app").(types.AppModel)
+	app, _ := c.MustGet("app").(App)
 	user, err := check(username, password, c, app.Users)
 	if err != nil {
 		c.JSON(401, gin.H{})
@@ -28,17 +27,17 @@ func Login(c *gin.Context) {
 	}
 }
 
-func check(username, password string, c *gin.Context, Users []types.User) (types.User, error) {
+func check(username, password string, c *gin.Context, Users []User) (User, error) {
 	for _, user := range Users {
 		if user.Username == username {
 			if user.Password == password {
 				return user, nil
 			} else {
 				loginError(errors.New(wPassword), c)
-				return types.User{}, errors.New("bad")
+				return User{}, errors.New("bad")
 			}
 		}
 	}
 	loginError(errors.New("username doesn't exist"), c)
-	return types.User{}, errors.New("bad")
+	return User{}, errors.New("bad")
 }

@@ -1,7 +1,6 @@
 package api
 
 import (
-	"github.com/42matcha/server/api/handlers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,10 +15,10 @@ func (app *App) routerAPI() {
 	app.R.Use(apiMiddleware(app))
 	auth := app.R.Group("/auth")
 	{
-		auth.POST("login", handlers.Login)
+		auth.POST("login", Login)
 	}
 	api := app.R.Group("/api")
 	{
-		api.GET("/next", handlers.Next)
+		api.GET("/next", Next)
 	}
 }
