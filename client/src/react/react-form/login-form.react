@@ -14,8 +14,6 @@ class LoginForm extends Component {
         this.change = this.change.bind(this);
         this.submit = this.submit.bind(this);
     }
-    componentDidMount() {
-    }
     change (e) {
         this.setState({
             [e.target.name]: e.target.value,
@@ -26,15 +24,19 @@ class LoginForm extends Component {
         const formData = new FormData(e.target);
         storeMatcha.dispatch(loginAction(formData, this.props.history));
     };
-
     render () {
+        console.log("Render Login Form");
         return (
             <div>
                 <form onSubmit={e => this.submit(e)}>
                     <label>Username</label><input type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
+                    <br/>
                     <label>Email</label><input type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
+                    <br/>
                     <label>Password</label><input type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
+                    <br/>
                     <button>submit</button>
+                    <br/>
                     <p>Not registered?</p>
                 </form>
             </div>

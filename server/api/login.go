@@ -8,9 +8,8 @@ import (
 
 func loginError(err error, c *gin.Context) {
 	log.Error("login Error: ", err.Error())
-	c.JSON(401, gin.H{
+	c.JSON(441, gin.H{
 		"username": "",
-		"token":    false,
 	})
 }
 
@@ -21,7 +20,7 @@ func Login(c *gin.Context) {
 	app, _ := c.MustGet("app").(App)
 	user, err := check(username, password, c, app.Users)
 	if err != nil {
-		c.JSON(401, gin.H{})
+		c.JSON(441, gin.H{})
 	} else {
 		c.JSON(200, user)
 	}

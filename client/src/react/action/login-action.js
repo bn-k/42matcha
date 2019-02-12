@@ -6,7 +6,15 @@ export const loginAction = (formData, history) => dispatch => {
     fetch('/auth/login', {
         method: 'POST',
         body: formData,
-    }).then(res => {
+        credentials: 'same-origin',
+    })
+        .then(function (response) {
+            if (!response.ok) {
+                throw Error("erooooor");
+            }
+            return response;
+        })
+        .then(res => {
             switch (res.status) {
                 case 401:
                     console.log("Non Authorized");
@@ -29,6 +37,7 @@ export const loginAction = (formData, history) => dispatch => {
             }
         }
     )
+        .catch(error => console.log(error))
 };
 
 export const logoutAction = () => dispatch => {
