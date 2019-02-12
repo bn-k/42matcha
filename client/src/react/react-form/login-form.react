@@ -24,8 +24,7 @@ class LoginForm extends Component {
     submit (e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-        storeMatcha.dispatch(loginAction(formData));
-        this.props.history.push('/home');
+        storeMatcha.dispatch(loginAction(formData, this.props.history));
     };
 
     render () {

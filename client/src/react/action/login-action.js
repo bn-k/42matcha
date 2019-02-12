@@ -2,7 +2,7 @@ import {LOGIN, LOGOUT} from './types-action';
 import {loadUsers} from "./admin-action";
 import storeMatcha from '../store/matcha-store'
 
-export const loginAction = (formData) => dispatch => {
+export const loginAction = (formData, history) => dispatch => {
     fetch('/auth/login', {
         method: 'POST',
         body: formData,
@@ -20,7 +20,10 @@ export const loginAction = (formData) => dispatch => {
                         });
                         if (json.admin) {
                             console.log("loginAction => loginAction: ",json);
-                            storeMatcha.dispatch(loadUsers(json));
+                            storeMatcha.dispatch(loadUsers(json, history));
+                        } else {
+                            console.log("redirectHome");
+                            history.push('/home');
                         }
                     });
             }

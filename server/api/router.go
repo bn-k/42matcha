@@ -19,7 +19,7 @@ func (app *App) routerAPI() {
 	}
 	admin := app.R.Group("/admin")
 	{
-		admin.POST("/users", Users)
+		admin.GET("/users", Users)
 	}
 	api := app.R.Group("/api")
 	{

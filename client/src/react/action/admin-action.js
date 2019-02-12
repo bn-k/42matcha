@@ -1,7 +1,8 @@
 import {LOAD} from './types-action';
 import storeMatcha from "../store/matcha-store";
+import {BrowserRouter} from "react-router-dom";
 
-export const loadUsers = (json) => dispatch => {
+export const loadUsers = (json, history) => dispatch => {
     var Init = { method: 'GET',
         username: json.username,
         password: json.password,
@@ -19,7 +20,8 @@ export const loadUsers = (json) => dispatch => {
                             type: LOAD,
                             users: json,
                         });
-                        storeMatcha.dispatch(push('asdfasdf'));
+                        console.log("redirectAdmin");
+                        history.push('/admin');
                     })
             }
         }
