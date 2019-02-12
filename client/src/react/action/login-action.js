@@ -10,12 +10,13 @@ export const loginAction = (formData) => dispatch => {
                     console.log("Non Authorized");
                     break;
                 case 200:
-                    res.json().then(login =>{
-                        localStorage.setItem("token", login['token']);
+                    res.json().then(json =>{
+                        localStorage.setItem("token", json['token']);
+                        console.log(json);
                         dispatch({
                             type: LOGIN,
-                            token: login['token'],
-                            expire : login['expire'],
+                            user: json,
+                            token: "haha",
                         });
                     })
             }

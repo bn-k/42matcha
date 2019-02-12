@@ -1,25 +1,31 @@
 package api
 
 import (
+	"database/sql"
+	"github.com/42matcha/server/api/types"
 	"github.com/gin-gonic/gin"
+	"time"
 )
 
-var app = App{psql(), gin.Default()}
+type App struct {
+	types.AppModel
+}
 
-func RouterAPI() {
-	app.r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"Purpose": "Api for matcha"})
-	})
-	auth := app.r.Group("/auth")
-	{
-		auth.GET("/", func(c *gin.Context) {
-			c.JSON(200, gin.H{"Purpose": "Api for authorization"})
-		})
-		auth.POST("login", Login)
-	}
-	api := app.r.Group("/api")
-	{
-		api.GET("/next", Next)
-	}
-	app.r.Run(":81")
+type User struct {
+	types.User
+}
+
+func newApp() *App {
+	app := new(App)
+	app.Db = psql()
+	app.R = gin.Default()
+	app.Users = make([]types.User, 0)
+}
+
+func Run() {
+	app := newApp()
+	go app.routerAPI()
+	go app.fetchUsers()
+
+	app.R.Run(":81")
 }
