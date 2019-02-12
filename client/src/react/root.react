@@ -8,12 +8,14 @@ import Home from "./home.react";
 import User from "./user.react";
 import Register from "./register.react";
 import Error from "./error.react";
+import Error401 from "./401.react";
 import Navigation from "./navigation.react";
 
 import Logout from "./functions/logout.react";
 import PrivateRoute from './modules/private-route.react';
 import PublicRoute from './modules/public-route.react';
 import AdminRoute from './modules/admin-route.react';
+import Admin from './admin.react';
 import storeMatcha from './store/matcha-store';
 
 
@@ -24,11 +26,13 @@ const Root = () => (
                     <Navigation/>
                     <Switch>
                         <Route exact path="/" component={Auth}/>
+                        <Route path="/401" component={Error401}/>
                         <PrivateRoute path="/home" component={Home}/>
                         <PrivateRoute path="/user" component={User}/>
                         <PrivateRoute path="/logout" component={Logout}/>
                         <PublicRoute path="/login" component={Login}/>
                         <PublicRoute path="/register" component={Register}/>
+                        <AdminRoute path="/admin" component={Admin}/>
                         <PublicRoute component={Error}/>
                     </Switch>
                 </div>

@@ -1,0 +1,32 @@
+import React, {Component} from "react";
+
+class Error401 extends Component{
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        setTimeout(function(){
+            console.log(this.props);
+        }, 500);
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                <h3>You are not authorized</h3>
+            </React.Fragment>
+        )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        props: "asdfsdf",
+        login: state.login,
+    };
+};
+
+import {withRouter} from "react-router-dom"
+import {connect} from "react-redux";
+export default withRouter(connect(mapStateToProps, null)(Error401))

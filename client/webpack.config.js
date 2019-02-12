@@ -48,6 +48,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': 'http://localhost:81',
+            '/admin': 'http://localhost:81',
             '/auth': 'http://localhost:81'
         },
         historyApiFallback: true,

@@ -8,11 +8,12 @@ import (
 
 var key = []byte("supersecret")
 
-func (User) generateJwt() (string, error) {
+func (user User) GenerateJwt() (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"authorized": true,
-		"username":   "Nwtype",
-		"exp":        time.Now().Add(time.Minute * 30).Unix(),
+		"admin": true,
+		"user": user,
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
 	})
 
 	tokenString, err := token.SignedString(key)

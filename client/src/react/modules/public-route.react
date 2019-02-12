@@ -24,4 +24,12 @@ const PublicRoute= ({ component: Component, ...rest }) => (
     />
 );
 
-export default (PublicRoute);
+const mapStateToProps = (state) => {
+    return {
+        login: state.login,
+    };
+};
+
+import {withRouter} from "react-router-dom"
+import {connect} from "react-redux";
+export default withRouter(connect(mapStateToProps)(PublicRoute))

@@ -1,0 +1,20 @@
+import React, {Component} from 'react'
+
+class Admin extends Component{
+    render() {
+        return (
+        <h1>Admin</h1>
+        )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        login: state.login,
+        // admin: state.admin
+    };
+};
+
+import {withRouter} from "react-router-dom"
+import {connect} from "react-redux";
+export default withRouter(connect(mapStateToProps)(Admin))

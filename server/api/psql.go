@@ -12,7 +12,7 @@ func (app App) usersQuery() (sql.Rows, error) {
 	rows, err := app.Db.Query(`SELECT id, username, email, password,
 firstname, lastname, created_at, random_token, img1, img2, img3, img4,
 img5, biography, birthday, genre, interest, city, zip, country, latitude,
-longitude, geo_allowed FROM users`)
+longitude, geo_allowed, admin FROM users`)
 	if err != nil {
 		return sql.Rows{}, err
 	} else {
@@ -33,7 +33,7 @@ func (app *App) fetchUsers() {
 				&U.Images[2], &U.Images[3], &U.Images[4],
 				&U.Biography, &U.BirthdayTmp, &U.Genre,
 				&U.Interest, &U.City, &U.Zip, &U.Country,
-				&U.Latitude, &U.Longitude, &U.GeoAllowed); err != nil {
+				&U.Latitude, &U.Longitude, &U.GeoAllowed, &U.Admin); err != nil {
 				fmt.Println(errors.New("FetchUsers: queryScan failed"))
 			} else {
 			}

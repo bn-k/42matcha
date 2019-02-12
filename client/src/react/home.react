@@ -28,7 +28,8 @@ class Home extends React.Component {
         return (
             <div>
                 <h3>{this.state.next['name']}</h3>
-                <img src="https://picsum.photos/200/300"/>
+                <img src="https://source.unsplash.com/user/erondu/300x450"/>
+                <br/>
                 <button onClick={() => this.next()}>love</button>
                 <button onClick={() => this.next()}>f***</button>
             </div>
@@ -36,4 +37,12 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    };
+};
+
+import {withRouter} from "react-router-dom"
+import {connect} from "react-redux";
+export default withRouter(connect(mapStateToProps)(Home))

@@ -15,7 +15,11 @@ func (app *App) routerAPI() {
 	app.R.Use(apiMiddleware(app))
 	auth := app.R.Group("/auth")
 	{
-		auth.POST("login", Login)
+		auth.POST("/login", Login)
+	}
+	admin := app.R.Group("/admin")
+	{
+		admin.POST("/users", Users)
 	}
 	api := app.R.Group("/api")
 	{

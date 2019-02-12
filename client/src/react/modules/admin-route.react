@@ -2,21 +2,21 @@ import React, {Component} from 'react';
 import {Route, Redirect} from  'react-router-dom';
 import storeMatcha from '../store/matcha-store';
 
-function logged() {
-    return storeMatcha.getState().login.loggedIn;
+function admin() {
+    return storeMatcha.getState().login.loggedIn && storeMatcha.getState().login.data.user.admin;
 }
 
-const PrivateRoute= ({ component: Component, ...rest }) => (
+const AdminRoute= ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            logged() ? (
+            admin() ? (
                 <Component {...props} />
             ) : (
                 <Redirect
                     to={{
-                        pathname: "/login",
-                        state: { from: props.location }
+                        pathname: "/401",
+                        // state: { from: props.location }
                     }}
                 />
             )
@@ -24,14 +24,12 @@ const PrivateRoute= ({ component: Component, ...rest }) => (
     />
 );
 
-// Redux dependencies,setting and export
-
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        login: state.login,
     };
 };
 
+import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
-import {withRouter} from 'react-router-dom';
-export default withRouter(connect(mapStateToProps)(PrivateRoute))
+export default withRouter(connect(mapStateToProps)(AdminRoute))

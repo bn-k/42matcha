@@ -1,9 +1,12 @@
-import {LOGIN, LOGOUT} from './types-action';
+import {LOAD} from './types-action';
 
-export const loginAction = (formData) => dispatch => {
-    fetch('/auth/login', {
+export const loadUsers = (id) => dispatch => {
+    fetch('/admin/users', {
         method: 'POST',
-        body: formData,
+        body: {
+            "username" : id.username,
+            "password" : id.password
+        },
     }).then(res => {
             switch (res.status) {
                 case 401:
@@ -11,11 +14,9 @@ export const loginAction = (formData) => dispatch => {
                     break;
                 case 200:
                     res.json().then(json =>{
-                        localStorage.setItem("token", json['token']);
-                        console.log("login action: ",json);
                         dispatch({
-                            type: LOGIN,
-                            user: json,
+                            type: LOAD,
+                            users: json,
                         });
                     })
             }
@@ -25,7 +26,7 @@ export const loginAction = (formData) => dispatch => {
 
 export const logoutAction = () => dispatch => {
     console.log('logoutAction');
-    localStorage.removeItem('token');
+    localStorage.setItem("token", "");
     dispatch({
         type: LOGOUT,
     });
