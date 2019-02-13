@@ -1,17 +1,17 @@
 import JwtDecode from 'jwt-decode'
 
-const parseToken = () => {
-    if (!localStorage.getItem('token') || !localStorage.getItem('token') == undefined) {
-        localStorage.removeItem('token');
+const parseToken = (file) => {
+    if (!localStorage.getItem(file) || !localStorage.getItem(file) == undefined) {
+        localStorage.removeItem(file);
         return null
     } else {
-        console.log("Token parse: ", JwtDecode(localStorage.getItem('token')));
-        return JwtDecode(localStorage.getItem('token'))
+        console.log("Token parse: ", file, JwtDecode(localStorage.getItem(file)));
+        return JwtDecode(localStorage.getItem(file))
     }
 };
 
-const stillLogged = () => {
-    const token = parseToken();
+const stillLogged = (file) => {
+    const token = parseToken(file);
     console.log("still Logged token:", token);
     if (!token) {
         console.log("still Logged token: return false");
@@ -26,9 +26,10 @@ const stillLogged = () => {
 
 const preloadedState = {
     login : {
-        loggedIn: stillLogged(),
-        data: parseToken(),
-    }
+        loggedIn: stillLogged('token'),
+        data: parseToken('token'),
+    },
+    users : [],
 };
 
 export default preloadedState;

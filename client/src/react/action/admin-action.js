@@ -1,10 +1,9 @@
 import {LOAD} from './types-action';
 
-export const loadUsers = (json, history) => dispatch => {
+export const loadUsers = (user) => dispatch => {
     console.log("loadUsers(admin-action)");
     let body = new FormData;
-    body.append("username", json.username);
-    body.append("password", json.password);
+    body.append("username", user.username);
     fetch('/admin/users', {
         method: 'POST',
         body: body,
@@ -20,8 +19,6 @@ export const loadUsers = (json, history) => dispatch => {
                                 type: LOAD,
                                 users: json,
                             });
-                            console.log("redirectAdmin");
-                            history.push('/admin');
                         })
                 }
             }

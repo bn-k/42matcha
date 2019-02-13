@@ -1,18 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react'
 import User from './admin-user-comp.react'
+import storeMatcha from './store/matcha-store'
+import {loadUsers} from "./action/admin-action";
+import Grid from './admin-grid.react'
 
 const Admin = withRouter((props) => {
-    // console.log(props.users);
-    props.users.forEach(function (user) {
-        console.log(user);
-    });
-    return (
-        <React.Fragment>
-            <User/>
-        </React.Fragment>
-        )
-    }
-);
+    return <Grid/>
+});
 
 const mapStateToProps = (state) => {
     return {

@@ -1,6 +1,4 @@
 import {LOGIN, LOGOUT} from './types-action';
-import {loadUsers} from "./admin-action";
-import storeMatcha from '../store/matcha-store'
 
 export const loginAction = (formData, history) => dispatch => {
     fetch('/auth/login', {
@@ -26,13 +24,8 @@ export const loginAction = (formData, history) => dispatch => {
                             type: LOGIN,
                             user: json,
                         });
-                        if (json.admin) {
-                            console.log("loginAction => loginAction: ",json);
-                            storeMatcha.dispatch(loadUsers(json, history));
-                        } else {
                             console.log("redirectHome");
                             history.push('/home');
-                        }
                     });
             }
         }

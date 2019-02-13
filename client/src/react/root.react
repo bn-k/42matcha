@@ -32,7 +32,7 @@ const Root = () => (
                     <PrivateRoute path="/logout" component={Logout}/>
                     <PublicRoute path="/login" component={Login}/>
                     <PublicRoute path="/register" component={Register}/>
-                    <AdminRoute path="/ad" component={Admin}/>
+                    <AdminRoute path="/adm" component={Admin}/>
                     <PublicRoute component={Error}/>
                 </Switch>
             </div>

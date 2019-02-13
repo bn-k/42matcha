@@ -14,7 +14,7 @@ class Navigation extends Component {
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/register">Register</NavLink>
                 <NavLink to="/user">User</NavLink>
-                <NavLink to="/ad">Admin</NavLink>
+                <NavLink to="/adm">Admin</NavLink>
                 {this.Button()}
             </div>
         )

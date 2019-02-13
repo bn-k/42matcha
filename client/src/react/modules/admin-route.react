@@ -3,8 +3,8 @@ import {Route, Redirect} from  'react-router-dom';
 import storeMatcha from '../store/matcha-store';
 
 function admin() {
-    // return storeMatcha.getState().login.loggedIn && storeMatcha.getState().login.data.user.admin;
-    return true
+    return storeMatcha.getState().login.loggedIn && storeMatcha.getState().login.data.user.admin;
+    // return true
 }
 
 const AdminRoute= ({ component: Component, ...rest }) => (
@@ -17,7 +17,7 @@ const AdminRoute= ({ component: Component, ...rest }) => (
                 <Redirect
                     to={{
                         pathname: "/401",
-                        // state: { from: props.location }
+                        state: { from: props.location }
                     }}
                 />
             )
@@ -28,6 +28,7 @@ const AdminRoute= ({ component: Component, ...rest }) => (
 const mapStateToProps = (state) => {
     return {
         login: state.login,
+        users: state.users,
     };
 };
 

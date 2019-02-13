@@ -1,7 +1,6 @@
 import {LOAD} from "../action/types-action";
 
 const initial = {
-    users: []
 };
 
 export function adminReducer (state = initial, action) {
