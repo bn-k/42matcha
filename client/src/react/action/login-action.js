@@ -10,7 +10,7 @@ export const loginAction = (formData, history) => dispatch => {
     })
         .then(function (response) {
             if (!response.ok) {
-                throw Error("erooooor");
+                throw Error("Horror");
             }
             return response;
         })

@@ -1,17 +1,23 @@
-import React, {Component} from 'react'
+import React from 'react'
+import User from './admin-user-comp.react'
 
-class Admin extends Component{
-    render() {
-        return (
-        <h1>Admin</h1>
+const Admin = withRouter((props) => {
+    // console.log(props.users);
+    props.users.forEach(function (user) {
+        console.log(user);
+    });
+    return (
+        <React.Fragment>
+            <User/>
+        </React.Fragment>
         )
     }
-}
+);
 
 const mapStateToProps = (state) => {
     return {
         login: state.login,
-        // admin: state.admin
+        users: state.users
     };
 };
 

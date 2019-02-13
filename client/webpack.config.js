@@ -51,6 +51,7 @@ module.exports = {
             '/admin': 'http://localhost:81',
             '/auth': 'http://localhost:81'
         },
+        publicPath: '/',
         historyApiFallback: true,
     },
     plugins: [htmlWebpackPlugin]

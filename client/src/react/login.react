@@ -2,9 +2,8 @@ import React from 'react';
 import storeMatcha from "./store/matcha-store";
 import LoginForm from './react-form/login-form.react'
 
-export const Login = withRouter(() =>{
+export const Login = withRouter(() => {
     if (storeMatcha.getState().login.loggedIn){
-        console.log("Login: redirect home");
         return (
         <Redirect
             to={{
