@@ -6,7 +6,6 @@ import (
 
 func newApp() *App {
 	app := new(App)
-	app.Db = psql()
 	app.R = gin.Default()
 	app.Users = make([]User, 0)
 	return app
@@ -15,7 +14,7 @@ func newApp() *App {
 func Run() {
 	app := newApp()
 	go app.routerAPI()
-	go app.fetchUsers()
+	Sql()
 
 	app.R.Run(":81")
 }

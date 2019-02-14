@@ -12,10 +12,11 @@ class Grid extends Component {
     }
     grid() {
         if (typeof this.props.users[0] != undefined) {
-            console.log("Admin =====>", this.props);
+            let users = [];
             this.props.users.map((user) => {
-
-            })
+                users.push(<User key={user.id} id={user.id} username={user.username} password={user.password}/>)
+            });
+            return users
         }
     }
     render () {

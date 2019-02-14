@@ -31,7 +31,6 @@ func check(username, password string, c *gin.Context, Users []User) (User, error
 		if user.Username == username {
 			if user.Password == password {
 				user.Token, _ = user.GenerateJwt()
-				user.Action = "LOGIN"
 				return user, nil
 			} else {
 				loginError(errors.New(wPassword), c)

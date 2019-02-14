@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 
 class User extends Component{
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
-        console.log("User Props: ", this.props)
     }
     render() {
         return (
             <div>
-                <p>User Component</p>
+                <p>Id: {this.props.id}</p>
             </div>
         );
     }
@@ -22,4 +25,5 @@ const mapStateToProps = (state) => {
 
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
-export default withRouter(connect(mapStateToProps)(User));
+// export default withRouter(connect(mapStateToProps)(User));
+export default (User);
