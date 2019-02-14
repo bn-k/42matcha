@@ -14,7 +14,10 @@ func newApp() *App {
 func Run() {
 	app := newApp()
 	go app.routerAPI()
-	Sql()
+	app.Db = pSql()
+	app.fetchUsers()
 
+	const c = "dur"
+	app.insertUser(NewUser(c+"User", c+"Mail", c+"Pass", c+"Last", c+"First"))
 	app.R.Run(":81")
 }
