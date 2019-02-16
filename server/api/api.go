@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +18,6 @@ func Run() {
 	app.Db = pSql()
 	app.fetchUsers()
 
-	const c = "dur"
-	app.insertUser(NewUser(c+"User", c+"Mail", c+"Pass", c+"Last", c+"First"))
+	fmt.Printf("Print Users: %#v", app.Users)
 	app.R.Run(":81")
 }

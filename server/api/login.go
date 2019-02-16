@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
 )
@@ -27,10 +28,12 @@ func Login(c *gin.Context) {
 }
 
 func check(username, password string, c *gin.Context, Users []User) (User, error) {
+	fmt.Println(Users)
 	for _, user := range Users {
 		if user.Username == username {
 			if user.Password == password {
 				user.Token, _ = user.GenerateJwt()
+				fmt.Println(user)
 				return user, nil
 			} else {
 				loginError(errors.New(wPassword), c)

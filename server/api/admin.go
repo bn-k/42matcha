@@ -19,11 +19,11 @@ func Users(c *gin.Context) {
 
 	app, _ := c.MustGet("app").(App)
 	admin, err := checkAdmin(username, c, app.Users)
-	if err != nil  {
-		c.JSON(401, gin.H{})
+	if err != nil {
+		c.JSON(401, gin.H{"Not authorized: ": "not logged"})
 	} else {
 		if !admin.Admin {
-			c.JSON(401, gin.H{"Not authorized: ":"not admin"})
+			c.JSON(401, gin.H{"Not authorized: ": "not admin"})
 		}
 		c.JSON(200, app.Users)
 	}

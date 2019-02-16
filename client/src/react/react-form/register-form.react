@@ -1,0 +1,89 @@
+import React, {Component} from 'react';
+import storeMatcha from '../store/matcha-store';
+import {registerAction} from '../action/register-action';
+import DatePicker from 'react-datepicker';
+
+import "react-datepicker/dist/react-datepicker.css";
+
+// CSS Modules, react-datepicker-cssmodules.css
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
+
+class RegisterForm extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            username: "",
+            email: "",
+            password: "",
+            confirm: "",
+            firstname: "",
+            lastname: "",
+            admin: false,
+            startDate: new Date()
+        };
+        this.changeDate = this.changeDate.bind(this);
+        this.change = this.change.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+    change (e) {
+        // console.log(e.startDate);
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    changeDate (date) {
+        // console.log(e.startDate);
+        this.setState({
+            birthday: date
+        })
+    }
+    submit (e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        storeMatcha.dispatch(registerAction(formData, this.props.history));
+    };
+    render () {
+        console.log("Render Register Form");
+        return (
+            <div>
+                <form onSubmit={e => this.submit(e)}>
+                    <label>Username</label><input type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
+                    <br/>
+                    <label>Email</label><input type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
+                    <br/>
+                    <label>Password</label><input type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
+                    <br/>
+                    <label>Confirm</label><input type="password" name="confirm" onChange={e => this.change(e)} value={this.state.confirm}/>
+                    <br/>
+                    <label>Firstname</label><input type="text" name="firstname" onChange={e => this.change(e)} value={this.state.firstname}/>
+                    <br/>
+                    <label>Birthday</label>
+                    <DatePicker
+                        selected={this.state.startDate}
+                        name="birthday"
+                        onChange={this.changeDate}
+                        dropdownMode='select'
+                    />
+                    <input type="hidden" name="birthday" value={this.state.startDate}/>
+                    <br/>
+                    <button>submit</button>
+                    <br/>
+                    <p>Already registered?</p>
+                </form>
+            </div>
+        )
+    }
+}
+
+// Redux dependencies,setting and export
+
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    };
+};
+
+import {connect} from "react-redux";
+import {withRouter} from 'react-router-dom';
+export default withRouter(connect(mapStateToProps)(RegisterForm))
