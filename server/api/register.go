@@ -43,6 +43,7 @@ func Register(c *gin.Context) {
 	if err != nil {
 		c.JSON(401, gin.H{"err": err.Error()})
 	} else {
+		app.insertUser(user)
 		c.JSON(200, user)
 	}
 }
@@ -57,7 +58,7 @@ func parseTime(str string) (time.Time, error) {
 func (app *App) checkRegister(rf registerForm) (User, error) {
 	// here rf should not exist on DB, password must match confirm, validity of all datas.
 	u := User{}
-	err := app.Db.Get(&u, `SELECT * FROM users WHERE username=$1`, rf.Username)
+	err := app.Db.Get(&u, `SELECT * FROM users WHERE username=$1 OR email=$2`, rf.Username, rf.Email)
 	fmt.Println("checkRegister: >>", u.Id, "<<", err)
 	if u.Id != 0 {
 		return User{}, errors.New("Username or Email already exist")
