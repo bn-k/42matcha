@@ -5,15 +5,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func newApp() *App {
-	app := new(App)
+var app App
+
+func (app *App) newApp() {
 	app.R = gin.Default()
 	app.Users = make([]User, 0)
-	return app
 }
 
 func Run() {
-	app := newApp()
+	app.newApp()
 	go app.routerAPI()
 	app.Db = pSql()
 	app.fetchUsers()

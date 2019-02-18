@@ -18,7 +18,6 @@ func Login(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
-	app, _ := c.MustGet("app").(App)
 	user, err := check(username, password, c, app.Users)
 	if err != nil {
 		c.JSON(441, gin.H{})

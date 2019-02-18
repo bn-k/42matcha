@@ -18,6 +18,5 @@ func pSql() *sqlx.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	return db
 }

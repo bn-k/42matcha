@@ -38,7 +38,6 @@ func Register(c *gin.Context) {
 		c.PostForm("birthday"),
 		admin,
 	}
-	app, _ := c.MustGet("app").(App)
 	user, err := app.checkRegister(rf)
 	if err != nil {
 		c.JSON(401, gin.H{"err": err.Error()})
