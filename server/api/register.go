@@ -12,17 +12,6 @@ import (
 
 const vUsers = `(:username, :email, :lastname, :firstname, :password, :random_token, :img1, :img2, :img3, :img4, :img5, :biography, :birthday, :genre, :interest, :city, :zip, :country, :latitude, :longitude, :geo_allowed, :online, :rating, :admin)`
 
-type registerForm struct {
-	Username  string `db:"username"`
-	Email     string `db:"email"`
-	Password  string `db:"password"`
-	Confirm   string `db:"confirm"`
-	Lastname  string `db:"lastname"`
-	Firstname string `db:"firstname"`
-	Birthday  string `db:"birthday"`
-	Admin     bool   `db:"admin"`
-}
-
 func Register(c *gin.Context) {
 	admin := false
 	if c.PostForm("admin") == "true" {
@@ -38,20 +27,10 @@ func Register(c *gin.Context) {
 		c.PostForm("birthday"),
 		admin,
 	}
-	user, err := app.checkRegister(rf)
-	if err != nil {
-		c.JSON(401, gin.H{"err": err.Error()})
-	} else {
-		app.insertUser(user)
-		c.JSON(200, user)
-	}
-}
-
-func parseTime(str string) (time.Time, error) {
-	var re = regexp.MustCompile(`\s\((.*)\)`)
-	s := re.ReplaceAllString(str, ``)
-	t, err := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700", s)
-	return t, err
+	user := NewUser(rf)
+	c.JSON(401, gin.H{"err": "Error in register"})
+	app.insertUser(user)
+	c.JSON(200, user)
 }
 
 func (app *App) checkRegister(rf registerForm) (User, error) {
@@ -63,6 +42,13 @@ func (app *App) checkRegister(rf registerForm) (User, error) {
 		return User{}, errors.New("Username or Email already exist")
 	}
 	return NewUser(rf), nil
+}
+
+func parseTime(str string) (time.Time, error) {
+	var re = regexp.MustCompile(`\s\((.*)\)`)
+	s := re.ReplaceAllString(str, ``)
+	t, err := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700", s)
+	return t, err
 }
 
 func NewUser(rf registerForm) User {

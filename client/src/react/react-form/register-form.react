@@ -69,10 +69,10 @@ class RegisterForm extends Component {
                         dropdownMode='select'
                     />
                     <SnackBar
-                        show={true}                            //Boolean  - Required and Default - `false`
-                        timer={6000}                           //Number   - Optional and Default - `4000` (4 secs)
+                        show={this.props.app.register.fail}                            //Boolean  - Required and Default - `false`
+                        timer={4000}                           //Number   - Optional and Default - `4000` (4 secs)
                     >
-                        <p>Loading...</p>
+                        {this.props.app.register.err}
                     </SnackBar>
                     <input type="hidden" name="birthday" value={this.state.startDate}/>
                     <br/>
@@ -89,7 +89,8 @@ class RegisterForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        login: state.login,
+        app: state.app
     };
 };
 

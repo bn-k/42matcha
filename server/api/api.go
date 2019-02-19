@@ -3,9 +3,8 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"gopkg.in/go-playground/validator.v9"
 )
-
-var app App
 
 func (app *App) newApp() {
 	app.R = gin.Default()
@@ -17,6 +16,7 @@ func Run() {
 	go app.routerAPI()
 	app.Db = pSql()
 	app.fetchUsers()
+	app.validate = validator.New()
 
 	fmt.Printf("Print Users: %#v", app.Users)
 	app.R.Run(":81")

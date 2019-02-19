@@ -1,4 +1,4 @@
-import {REGISTER} from "../action/types-action";
+import {REGISTER, REGISTER_FAIL} from "../action/types-action";
 
 const initial = () => {
 
@@ -8,8 +8,19 @@ export function appReducer (state = initial, action) {
     switch (action.type) {
         case REGISTER:
             return {
-                loggedIn: false,
-                token: "",
+                register: {
+                    success: true,
+                    fail: false,
+                    err: ""
+                }
+            };
+        case REGISTER_FAIL:
+            return {
+                register : {
+                    success: false,
+                    fail: true,
+                    err: action.err
+                }
             };
         default:
             return state

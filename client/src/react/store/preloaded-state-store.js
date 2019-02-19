@@ -25,6 +25,13 @@ const stillLogged = (file) => {
 };
 
 const preloadedState = {
+    app: {
+        register: {
+            success: false,
+            fail: false,
+            err: ""
+        }
+    },
     login : {
         loggedIn: stillLogged('token'),
         data: parseToken('token'),

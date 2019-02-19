@@ -3,13 +3,17 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
+	"gopkg.in/go-playground/validator.v9"
 	"time"
 )
 
+var app App
+
 type App struct {
-	Db    *sqlx.DB
-	R     *gin.Engine
-	Users []User
+	Db       *sqlx.DB
+	R        *gin.Engine
+	Users    []User
+	validate *validator.Validate
 }
 
 type User struct {
@@ -40,4 +44,15 @@ type User struct {
 	Rating      float32   `json:"rating" db:"rating"`
 	Admin       bool      `json:"admin" db:"admin"`
 	Token       string    `json:"token" db:"token"`
+}
+
+type registerForm struct {
+	Username  string `db:"username" validate:"required,min=6,max=20,alphanumunicode"`
+	Email     string `db:"email" validate:"required,email"`
+	Password  string `db:"password" validate:"required,min=6,max=32"`
+	Confirm   string `db:"confirm" validate:"required, eqfield=Password"`
+	Lastname  string `db:"lastname" validate:"required,min=2,max=32,alphaunicode"`
+	Firstname string `db:"firstname" validate:"required,min=2,max=32,alphaunicode"`
+	Birthday  string `db:"birthday" validate:"required,"`
+	Admin     bool   `db:"admin"`
 }
