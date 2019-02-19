@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {Route, Redirect} from  'react-router-dom';
 import storeMatcha from '../store/matcha-store';
 
-function logged (props, cm) {
-    console.log( props);
-    console.log( cm);
+function logged (props) {
     return false
 }
 
@@ -12,12 +10,12 @@ const PublicRoute= ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            !logged(props, Component) ? (
+            !logged(props) ? (
                 <Component {...props} />
             ) : (
                 <Redirect
                     to={{
-                        pathname: "/home",
+                        pathname: "/",
                         state: { from: props.location }
                     }}
                 />

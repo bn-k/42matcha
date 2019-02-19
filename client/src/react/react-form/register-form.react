@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import storeMatcha from '../store/matcha-store';
 import {registerAction} from '../action/register-action';
 import DatePicker from 'react-datepicker';
+import SnackBar from 'react-material-snackbar';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -58,6 +59,8 @@ class RegisterForm extends Component {
                     <br/>
                     <label>Firstname</label><input type="text" name="firstname" onChange={e => this.change(e)} value={this.state.firstname}/>
                     <br/>
+                    <label>Lastname</label><input type="text" name="lastname" onChange={e => this.change(e)} value={this.state.lastname}/>
+                    <br/>
                     <label>Birthday</label>
                     <DatePicker
                         selected={this.state.startDate}
@@ -65,6 +68,12 @@ class RegisterForm extends Component {
                         onChange={this.changeDate}
                         dropdownMode='select'
                     />
+                    <SnackBar
+                        show={true}                            //Boolean  - Required and Default - `false`
+                        timer={6000}                           //Number   - Optional and Default - `4000` (4 secs)
+                    >
+                        <p>Loading...</p>
+                    </SnackBar>
                     <input type="hidden" name="birthday" value={this.state.startDate}/>
                     <br/>
                     <button>submit</button>

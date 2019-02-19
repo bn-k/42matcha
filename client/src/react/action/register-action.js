@@ -21,7 +21,7 @@ export const registerAction = (formData, history) => dispatch => {
                             user: json,
                         });
                             console.log("redirectHome");
-                            history.push('/home');
+                            history.push('/');
                     });
             }
         }

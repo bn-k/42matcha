@@ -26,7 +26,6 @@ const Root = () => (
                 <Switch>
                     <PrivateRoute exact path="/" component={Home}/>
                     <Route path="/401" component={Error401}/>
-                    <PrivateRoute path="/home" component={Home}/>
                     <PrivateRoute path="/user" component={User}/>
                     <PublicRoute path="/login" component={Login}/>
                     <PublicRoute path="/register" component={Register}/>

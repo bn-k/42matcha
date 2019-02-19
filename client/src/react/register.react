@@ -3,17 +3,7 @@ import storeMatcha from "./store/matcha-store";
 import RegisterForm from './react-form/register-form.react'
 
 export const Register = withRouter(() => {
-    if (storeMatcha.getState().login.loggedIn){
-        return (
-            <Redirect
-                to={{
-                    pathname: "/home",
-                }}
-            />
-        )
-    } else {
-        return <RegisterForm/>
-    }
+    return <RegisterForm/>
 });
 
 const mapStateToProps = (state) => {
