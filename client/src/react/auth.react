@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import {withRouter, Redirect} from "react-router-dom";
 import storeMatcha from './store/matcha-store';
 
-const User = {
-    isAuthenticated: storeMatcha.getState().login.loggedIn,
+function auth() {
+    console.log(storeMatcha.getState().login.loggedIn);
+    return storeMatcha.getState().login.loggedIn
 };
 
 const Auth = withRouter(
     () =>
-        User.isAuthenticated ? (
+        auth ? (
             <Redirect
                 to={{
                     pathname: "/home",

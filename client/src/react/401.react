@@ -4,10 +4,9 @@ import {connect} from "react-redux";
 
 class Error401 extends Component{
     redirect (props) {
-        setInterval(function () {
+        setTimeout(function () {
             props.history.push('/');
         }, 2000)
-
     }
     render() {
         return (

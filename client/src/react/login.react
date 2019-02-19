@@ -3,17 +3,7 @@ import storeMatcha from "./store/matcha-store";
 import LoginForm from './react-form/login-form.react'
 
 export const Login = withRouter(() => {
-    if (storeMatcha.getState().login.loggedIn){
-        return (
-        <Redirect
-            to={{
-                pathname: "/home",
-            }}
-        />
-        )
-    } else {
         return <LoginForm/>
-    }
 });
 
 const mapStateToProps = (state) => {

@@ -33,10 +33,11 @@ export const loginAction = (formData, history) => dispatch => {
         .catch(error => console.log(error))
 };
 
-export const logoutAction = () => dispatch => {
+export const logoutAction = (history) => dispatch => {
     console.log('logoutAction');
     localStorage.removeItem('token');
     dispatch({
         type: LOGOUT,
     });
+    history.push('/')
 };

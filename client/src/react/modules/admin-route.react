@@ -3,8 +3,8 @@ import {Route, Redirect} from  'react-router-dom';
 import storeMatcha from '../store/matcha-store';
 
 function admin() {
-    return storeMatcha.getState().login.loggedIn && storeMatcha.getState().login.data.user.admin;
-    // return true
+    // return storeMatcha.getState().login.loggedIn && storeMatcha.getState().login.data.user.admin;
+    return false
 }
 
 const AdminRoute= ({ component: Component, ...rest }) => (

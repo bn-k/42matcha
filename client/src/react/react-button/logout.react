@@ -5,14 +5,12 @@ import {logoutAction} from '../action/login-action';
 class Logout extends Component {
     constructor (props) {
         super(props);
-        this.state = {
-        };
         this.submit = this.submit.bind(this);
     }
     submit (e) {
-        e.preventDefault();
-        this.props.logoutAction(e);
-        this.props.history.push('/login');
+        // e.preventDefault();
+        this.props.logoutAction(this.props.history);
+        // this.props.history.push('/login');
     };
     render () {
         return (

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Route, Redirect} from  'react-router-dom';
 import storeMatcha from '../store/matcha-store';
 
-function logged() {
-    return storeMatcha.getState().login.loggedIn;
+function logged () {
+    return storeMatcha.getState().login.loggedIn
 }
 
 const PrivateRoute= ({ component: Component, ...rest }) => (
@@ -32,4 +32,10 @@ const mapStateToProps = (state) => {
 
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
-export default withRouter(connect(mapStateToProps)(PrivateRoute))
+export default withRouter(connect(mapStateToProps,
+    null,
+    null,
+    {
+        pure: false
+    }
+    )(PrivateRoute))
