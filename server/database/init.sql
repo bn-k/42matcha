@@ -1,10 +1,3 @@
-create user postgres
-  superuser
-  createdb
-  createrole
-  replication
-  bypassrls;
-
 create table users
 (
   id                        serial                not null
@@ -39,4 +32,6 @@ create table users
 );
 
 alter table users
-  owner to postgres;
+  owner to matcha;
+
+INSERT INTO "public"."users" ("id", "username", "email", "lastname", "firstname", "password", "created_at", "random_token", "img1", "img2", "img3", "img4", "img5", "biography", "birthday", "genre", "interest", "city", "zip", "country", "latitude", "longitude", "geo_allowed", "online", "online_status_update_date", "rating", "admin") VALUES (DEFAULT, 'user test', 'email_test', 'lastname', 'firstname', 'password', '2019-03-01 16:28:47.687000', 'fasdfi', 'asdf', 'fasdf', 'dsf', 'adsf', '', 'dasfdi', '2019-03-01 15:28:59.522000', 'genre_test', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, null, DEFAULT, DEFAULT)
