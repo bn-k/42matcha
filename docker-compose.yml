@@ -1,27 +1,51 @@
-version: '3'
+version: '3.5'
 services:
-  db:
+  postgres:
     image: postgres
+    environment:
+      POSTGRES_USER: matcha
+      POSTGRES_PASSWORD: secret
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
     ports:
       - "5432:5432"
-    volumes:
-      - ./server/database:/docker-entrypoint-initdb.d/
+    networks:
+      - postgres
+    restart: unless-stopped
+  
+  pgadmin:
+    image: dpage/pgadmin4
     environment:
-      POSTGRES_PASSWORD: secret
-      POSTGRES_USER: matcha
-      POSTGRES_DB: matcha
+      PGADMIN_DEFAULT_EMAIL: abbenham@student.42.fr
+      PGADMIN_DEFAULT_PASSWORD: secret
+    volumes:
+       - pgadmin:/root/.pgadmin
+    ports:
+      - "82:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
   api:
     build: ./server
     volumes:
       - ${GOPATH}/src:/go/src
       - ./server:/matcha/server
-    environment:
-      POSTGRES_PASSWORD: secret
-      POSTGRES_USER: matcha
-      POSTGRES_DB: matcha
     ports:
     - "81:81"
     depends_on:
-    - db
+      - postgres
     links:
-    - db
+      - postgres
+    networks:
+      - postgres
+    restart: unless-stopped
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+    postgres:
+    pgadmin:
+    api:
