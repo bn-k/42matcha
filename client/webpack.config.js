@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
     template: './src/index.html',
@@ -26,35 +27,55 @@ module.exports = {
                     loader: "babel-loader"
                 }
             },
-            { test: /\.css$/, loader: "style-loader!css-loader" },
+            {
+                test: /\.css$/, loader:
+                    "style-loader!css-loader"
+            },
             { test: /\.png$/, loader: "url-loader?limit=100000" },
             { test: /\.jpg$/, loader: "file-loader" },
-            // {
-            //
-            //     test: /\.css$/,
-            //     use: [
-            //         {
-            //             loader: "style-loader",
-            //             options: {
-            //                 modules: true,
-            //                 importLoaders: 1,
-            //                 localIdentName: "[name]_[local]_[hash:base64]",
-            //                 sourceMap: true,
-            //                 minimize: true
-            //             }
-            //         }
-            //     ]
-            // }
         ]
     },
     devServer: {
         proxy: {
-            '/api': 'http://localhost:81',
-            '/admin': 'http://localhost:81',
-            '/auth': 'http://localhost:81'
+            '/api': {
+                target: {
+                    host: "matcha_api_1",
+                    protocol: 'http:',
+                    port: 81
+                },
+                ignorePath: true,
+                changeOrigin: true,
+                secure: false
+            },
+            '/auth': {
+                target: {
+                    host: "matcha_api_1",
+                    protocol: 'http:',
+                    port: 81
+                },
+                ignorePath: false,
+                changeOrigin: true,
+                secure: false
+            },
+            '/admin': {
+                target: {
+                    host: "matcha_api_1",
+                    protocol: 'http:',
+                    port: 81
+                },
+                ignorePath: true,
+                changeOrigin: true,
+                secure: false
+            },
         },
         publicPath: '/',
         historyApiFallback: true,
     },
-    plugins: [htmlWebpackPlugin]
+    plugins: [
+        htmlWebpackPlugin,
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        })
+    ]
 };

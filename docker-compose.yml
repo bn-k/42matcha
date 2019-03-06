@@ -11,7 +11,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgres
+      - default
     restart: unless-stopped
   
   pgadmin:
@@ -24,7 +24,7 @@ services:
     ports:
       - "82:80"
     networks:
-      - postgres
+      - default
     restart: unless-stopped
 
   api:
@@ -36,10 +36,11 @@ services:
     - "81:81"
     depends_on:
       - postgres
+      - web
     links:
       - postgres
     networks:
-      - postgres
+      - default
     restart: unless-stopped
     environment:
       - POSTGRES_HOST=matcha_postgres_1
@@ -48,12 +49,16 @@ services:
     volumes:
     - ./client:/app
     ports:
-    - "80:8080"
+      - "8080:8080"
     depends_on:
       - postgres
     command: npm run dev
 networks:
-  postgres:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.33.0.0/16
     driver: bridge
 
 volumes:

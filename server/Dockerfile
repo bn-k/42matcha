@@ -1,6 +1,7 @@
 FROM golang
 
-WORKDIR /matcha/server
+RUN go get github.com/oxequa/realize
 EXPOSE 81
 
-CMD go run main.go
+WORKDIR /go/src/github.com/Newcratie/matcha-api
+CMD ["realize", "start"]

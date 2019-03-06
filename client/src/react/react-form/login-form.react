@@ -27,18 +27,39 @@ class LoginForm extends Component {
     render () {
         console.log("Render Login Form");
         return (
-            <div>
-                <form onSubmit={e => this.submit(e)}>
-                    <label>Username</label><input type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
-                    <br/>
-                    <label>Email</label><input type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
-                    <br/>
-                    <label>Password</label><input type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
-                    <br/>
-                    <button>submit</button>
-                    <br/>
-                    <p>Not registered?</p>
-                </form>
+            <div className="container fluid">
+                <div className="notification">
+                    <form onSubmit={e => this.submit(e)}>
+                        <div className="field">
+                            <label className="label">Username</label>
+                            <div className="control">
+                                <input className="input has-icons-left has-icons-right" type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
+                                <span className="icon is-small is-left">
+                                    <i className="fas fa-user"></i>
+                                </span>
+                                <span className="icon is-small is-right">
+                                    <i className="fas fa-check"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">Password</label>
+                            <div className="control">
+                                <input className="input" type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
+                            </div>
+                        </div>
+                        <div className="field is-grouped">
+                            <div className="control">
+                                <button className="button is-link">Submit</button>
+                            </div>
+                            <div className="control">
+                                <button className="button is-text">Cancel</button>
+                            </div>
+                        </div>
+
+                        <p>Not registered?</p>
+                    </form>
+                </div>
             </div>
         )
     }

@@ -47,21 +47,50 @@ class RegisterForm extends Component {
     render () {
         console.log("Render Register Form");
         return (
-            <div>
+            <div className="container fluid">
+                <div className="notification">
+
                 <form onSubmit={e => this.submit(e)}>
-                    <label>Username</label><input type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
-                    <br/>
-                    <label>Email</label><input type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
-                    <br/>
-                    <label>Password</label><input type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
-                    <br/>
-                    <label>Confirm</label><input type="password" name="confirm" onChange={e => this.change(e)} value={this.state.confirm}/>
-                    <br/>
-                    <label>Firstname</label><input type="text" name="firstname" onChange={e => this.change(e)} value={this.state.firstname}/>
-                    <br/>
-                    <label>Lastname</label><input type="text" name="lastname" onChange={e => this.change(e)} value={this.state.lastname}/>
-                    <br/>
-                    <label>Birthday</label>
+
+                    <div className="field">
+                        <label className="label">Username</label>
+                        <div className="control">
+                        <input className="input" type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Email</label>
+                        <div className="control">
+                        <input  className="input" type="text" name="email" onChange={e => this.change(e)} value={this.state.email}/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Password</label>
+                        <div className="control">
+                        <input  className="input" type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Confirm</label>
+                        <div className="control">
+                        <input  className="input" type="password" name="confirm" onChange={e => this.change(e)} value={this.state.confirm}/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Firstname</label>
+                        <div className="control">
+                        <input  className="input" type="text" name="firstname" onChange={e => this.change(e)} value={this.state.firstname}/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Lastname</label>
+                        <div className="control">
+                        <input  className="input" type="text" name="lastname" onChange={e => this.change(e)} value={this.state.lastname}/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Birthday</label>
+                    </div>
                     <DatePicker
                         selected={this.state.startDate}
                         name="birthday"
@@ -69,8 +98,8 @@ class RegisterForm extends Component {
                         dropdownMode='select'
                     />
                     <SnackBar
-                        show={this.props.app.register.fail}                            //Boolean  - Required and Default - `false`
-                        timer={4000}                           //Number   - Optional and Default - `4000` (4 secs)
+                        show={this.props.app.register.fail}
+                        timer={4000}
                     >
                         {this.props.app.register.err}
                     </SnackBar>
@@ -80,6 +109,7 @@ class RegisterForm extends Component {
                     <br/>
                     <p>Already registered?</p>
                 </form>
+                </div>
             </div>
         )
     }
