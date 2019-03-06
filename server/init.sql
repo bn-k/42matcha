@@ -26,7 +26,6 @@ create table users
   longitude                 numeric(20, 6)           default 0.0,
   geo_allowed               boolean default false not null,
   online                    boolean default false not null,
-  online_status_update_date timestamp with time zone,
   rating                    numeric(9, 6)            default 2.5,
   admin                     boolean                  default false
 );
@@ -34,4 +33,4 @@ create table users
 alter table users
   owner to matcha;
 
-INSERT INTO "public"."users" ("id", "username", "email", "lastname", "firstname", "password", "created_at", "random_token", "img1", "img2", "img3", "img4", "img5", "biography", "birthday", "genre", "interest", "city", "zip", "country", "latitude", "longitude", "geo_allowed", "online", "online_status_update_date", "rating", "admin") VALUES (DEFAULT, 'user test', 'email_test', 'lastname', 'firstname', 'password', '2019-03-01 16:28:47.687000', 'fasdfi', 'asdf', 'fasdf', 'dsf', 'adsf', '', 'dasfdi', '2019-03-01 15:28:59.522000', 'genre_test', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, null, DEFAULT, DEFAULT)
+INSERT INTO "public"."users" ("id", "username", "email", "lastname", "firstname", "password", "created_at", "random_token", "img1", "img2", "img3", "img4", "img5", "biography", "birthday", "genre", "interest", "city", "zip", "country", "latitude", "longitude", "geo_allowed", "online", "rating", "admin") VALUES (DEFAULT, 'username', 'email_test', 'lastname', 'firstname', 'password', '2019-03-01 16:28:47.687000', 'fasdfi', 'asdf', 'fasdf', 'dsf', 'adsf', '', 'dasfdi', '2019-03-01 15:28:59.522000', 'genre_test', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
