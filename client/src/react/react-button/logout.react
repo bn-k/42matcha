@@ -8,15 +8,11 @@ class Logout extends Component {
         this.submit = this.submit.bind(this);
     }
     submit (e) {
-        // e.preventDefault();
         this.props.logoutAction(this.props.history);
-        // this.props.history.push('/login');
     };
     render () {
         return (
-            <React.Fragment>
-                <button onClick={e => this.submit(e)}>Logout</button>
-            </React.Fragment>
+                <button className="button" onClick={e => this.submit(e)}>Logout</button>
         )
     }
 

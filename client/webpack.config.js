@@ -1,5 +1,15 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const api = {
+    target: {
+        host: "api",
+            protocol: 'http:',
+            port: 81
+    },
+    ignorePath: false,
+        changeOrigin: true,
+        secure: false
+};
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
     template: './src/index.html',
@@ -37,36 +47,9 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/api': {
-                target: {
-                    host: "matcha_api_1",
-                    protocol: 'http:',
-                    port: 81
-                },
-                ignorePath: true,
-                changeOrigin: true,
-                secure: false
-            },
-            '/auth': {
-                target: {
-                    host: "matcha_api_1",
-                    protocol: 'http:',
-                    port: 81
-                },
-                ignorePath: false,
-                changeOrigin: true,
-                secure: false
-            },
-            '/admin': {
-                target: {
-                    host: "matcha_api_1",
-                    protocol: 'http:',
-                    port: 81
-                },
-                ignorePath: true,
-                changeOrigin: true,
-                secure: false
-            },
+            '/api': api,
+            '/auth': api,
+            '/admin': api,
         },
         publicPath: '/',
         historyApiFallback: true,

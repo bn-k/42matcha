@@ -11,7 +11,7 @@ class Home extends React.Component {
         this.next()
     }
     next () {
-        fetch('api/next')
+        fetch('/api/next')
             .then(results => {
                 return results.json();
             }).then(data => {
@@ -26,13 +26,19 @@ class Home extends React.Component {
     }
     render () {
         return (
-            <div>
-                <h3>{this.state.next['name']}</h3>
-                <img src="https://source.unsplash.com/user/erondu/300x450"/>
-                <br/>
-                <button onClick={() => this.next()}>love</button>
-                <button onClick={() => this.next()}>f***</button>
-            </div>
+            <section className="hero is-success is-fullheight">
+                <div className="hero-body">
+                    <div className="container has-text-centered">
+                        <div className="column is-4 is-offset-4">
+                            <h3>{this.state.next['name']}</h3>
+                            <img alt="rien" src="https://source.unsplash.com/user/erondu/300x450"/>
+                            <br/>
+                            <button onClick={() => this.next()}>love</button>
+                            <button onClick={() => this.next()}>f***</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         )
     }
 }

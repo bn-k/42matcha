@@ -55,10 +55,10 @@ services:
     command: npm run dev
 networks:
   default:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.33.0.0/16
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 172.33.0.0/16
     driver: bridge
 
 volumes:
