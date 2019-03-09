@@ -22,7 +22,7 @@ module.exports = {
     },
     entry: [
         '@babel/polyfill',
-        './src/app.react',
+        './src/app.jsx',
     ],
     output: {
         filename: 'app.js',
@@ -31,7 +31,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.react$/,
+                test: /\.jsx$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"
