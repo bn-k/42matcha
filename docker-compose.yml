@@ -46,7 +46,7 @@ services:
       - default
     restart: unless-stopped
     environment:
-      - POSTGRES_HOST=matcha_postgres_1
+      - POSTGRES_HOST=postgres
   web:
     build: ./client
     volumes:
