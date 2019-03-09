@@ -1,5 +1,4 @@
 import React from 'react';
-import storeMatcha from "./store/matcha-store";
 import RegisterForm from './react-form/register-form.react'
 
 export const Register = withRouter(() => {
@@ -12,6 +11,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-import {withRouter, Redirect} from "react-router-dom"
+import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 export default withRouter(connect(mapStateToProps)(Register))

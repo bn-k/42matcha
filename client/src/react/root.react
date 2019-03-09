@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Route, Switch} from  'react-router-dom';
 import {Provider} from 'react-redux';
 
 import Login from "./login.react";
-import Auth from "./auth.react";
 import Home from "./home.react";
 import User from "./user.react";
 import Register from "./register.react";
@@ -29,7 +28,6 @@ const Root = () => (
                     <PrivateRoute path="/user" component={User}/>
                     <PublicRoute path="/login" component={Login}/>
                     <PublicRoute path="/register" component={Register}/>
-                    <AdminRoute path="/adm" component={Admin}/>
                     <PublicRoute component={Error}/>
                 </Switch>
             </div>

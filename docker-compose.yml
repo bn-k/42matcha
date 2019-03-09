@@ -12,6 +12,7 @@ services:
       - "5432:5432"
     networks:
       - default
+    tty: true
     restart: unless-stopped
   
   pgadmin:
@@ -25,6 +26,7 @@ services:
       - "82:80"
     networks:
       - default
+    tty: true
     restart: unless-stopped
 
   api:
@@ -37,6 +39,7 @@ services:
     depends_on:
       - postgres
       - web
+    tty: true
     links:
       - postgres
     networks:
@@ -52,13 +55,10 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+    tty: true
     command: npm run dev
 networks:
   default:
-#    ipam:
-#      driver: default
-#      config:
-#        - subnet: 172.33.0.0/16
     driver: bridge
 
 volumes:

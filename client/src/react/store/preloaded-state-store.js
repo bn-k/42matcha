@@ -24,12 +24,51 @@ const stillLogged = (file) => {
     return true
 };
 
+export const registerData = {
+        valid: false,
+        fail: false,
+        type: '',
+        errs : {
+            user_alpha: {
+                status: true,
+                message: ''
+            },
+            user_len: {
+                status: true,
+                message: ''
+            },
+            user_exist: {
+                status: true,
+                message: ''
+            },
+            email_invalid: {
+                status: true,
+                message: ''
+            },
+            password_invalid: {
+                status: true,
+                message: ''
+            },
+            password_match: {
+                status: true,
+                message: ''
+            },
+            firstname: {
+                status: true,
+                message: ''
+            },
+            birthday: {
+                status: true,
+                message: ''
+            }
+        }
+};
+
 const preloadedState = {
     app: {
         register: {
-            success: false,
-            fail: false,
-            err: ""
+            type: '',
+            data: registerData,
         }
     },
     login : {

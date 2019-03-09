@@ -1,0 +1,30 @@
+
+html,body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    background: #F0F2F4;
+}
+.navbar.is-white {
+    background: #F0F2F4;
+}
+.navbar-brand .brand-text {
+    font-size: 1.11rem;
+    font-weight: bold;
+}
+.hero-body  {
+}
+
+.snackbar {
+    /*visibility: hidden;*/
+    width: 80vw;
+    margin-left: 10vw;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    /*left: 50%;*/
+    bottom: 3px;
+    font-size: 17px;
+}

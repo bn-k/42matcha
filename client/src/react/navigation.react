@@ -3,6 +3,20 @@ import {NavLink} from "react-router-dom"
 import ButtonLogout from "./react-button/logout.react";
 
 class Navigation extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isActive : '',
+            toggle : false,
+        },
+        this.toggleMenu = this.toggleMenu.bind(this)
+    }
+
+    toggleMenu (e) {
+        e.preventDefault();
+        this.setState({toggle: !this.state.toggle});
+        this.setState({isActive: (this.state.toggle ? '' : 'is-active')})
+    }
     Button () {
         if (this.props.login.loggedIn) {
             return (<ButtonLogout/>)
@@ -11,7 +25,7 @@ class Navigation extends Component {
     render () {
         return (
             <React.Fragment>
-                <nav className="navbar" role="navigation" aria-label="main navigation">
+                <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
                     <div className="navbar-brand">
                         <NavLink className="navbar-item" to="/">
                             <img src="http://cdn.onlinewebfonts.com/svg/img_296650.png"
@@ -19,33 +33,34 @@ class Navigation extends Component {
                                  height="28"/>
                         </NavLink>
 
-                        <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                           data-target="navbarBasicExample">
-                            <span aria-hidden="true">
-
-                            </span>
+                        <a role="button" className={"navbar-burger burger " + this.state.isActive} aria-label="menu" aria-expanded="false"
+                           data-target="nav-menu" onClick={(e) => this.toggleMenu(e)}>
+                            <span aria-hidden="true"></span>
                             <span aria-hidden="true"></span>
                             <span aria-hidden="true"></span>
                         </a>
                     </div>
 
-                    <div className="navbar-menu">
+                    <div id="nav-menu" className={"navbar-menu " + this.state.isActive}>
                         <div className="navbar-start">
                             <a className="navbar-item">
                                 Chill
                             </a>
 
+                        </div>
+
+                        <div className="navbar-end">
                             <div className="navbar-item has-dropdown is-hoverable">
                                 <a className="navbar-link">
-                                    More
+                                    ME(link to self-admin)
                                 </a>
 
                                 <div className="navbar-dropdown">
                                     <a className="navbar-item">
-                                        About
+                                        Wth??
                                     </a>
                                     <a className="navbar-item">
-                                        Jobs
+                                        IDK
                                     </a>
                                     <a className="navbar-item">
                                         Contact
@@ -56,9 +71,6 @@ class Navigation extends Component {
                                     </a>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="navbar-end">
                             <div className="navbar-item">
                                 <div className="buttons">
                                         {this.Button()}
@@ -71,8 +83,6 @@ class Navigation extends Component {
                         </div>
                     </div>
                 </nav>
-                <div className="nav">
-                </div>
             </React.Fragment>
         )
     }

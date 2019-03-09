@@ -1,4 +1,5 @@
-import {REGISTER, REGISTER_FAIL} from './types-action';
+import {REGISTER, REGISTER_FAIL, RESET} from './types-action';
+import {registerData} from "../store/preloaded-state-store";
 
 export const registerAction = (formData, history) => dispatch => {
     fetch('/auth/register', {
@@ -12,17 +13,21 @@ export const registerAction = (formData, history) => dispatch => {
                         res.json().then(json =>{
                             dispatch({
                                 type: REGISTER_FAIL,
-                                err: json.err,
+                                data : json
                             });
-                            console.log(json.err);
                         });
+                        setTimeout(() => {
+                            dispatch({
+                                type: RESET,
+                                data : registerData,
+                            });}, 3000);
                         break;
                     case 200:
                         res.json().then(json =>{
                             localStorage.setItem("token", json['token']);
                             dispatch({
                                 type: REGISTER,
-                                user: json,
+                                data : json,
                             });
                             console.log("redirectHome");
                             history.push('/');

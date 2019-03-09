@@ -1,5 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const api = {
     target: {
         host: "api",
@@ -38,6 +38,16 @@ module.exports = {
                 }
             },
             {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                })
+            },
+            {
                 test: /\.css$/, loader:
                     "style-loader!css-loader"
             },
@@ -56,9 +66,6 @@ module.exports = {
     },
     plugins: [
         htmlWebpackPlugin,
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
-        })
+        new ExtractTextPlugin('./src/public/css/bulma.css'),
     ]
 };
