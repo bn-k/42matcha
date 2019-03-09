@@ -56,6 +56,7 @@ module.exports = {
         ]
     },
     devServer: {
+        disableHostCheck: true,   // That solved it
         proxy: {
             '/api': api,
             '/auth': api,

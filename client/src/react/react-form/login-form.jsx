@@ -27,40 +27,38 @@ class LoginForm extends Component {
     render () {
         console.log("Render Login Form");
         return (
-            <div className="container fluid">
-                <div className="notification">
-                    <form onSubmit={e => this.submit(e)}>
-                        <div className="field">
-                            <label className="label">Username</label>
-                            <div className="control">
-                                <input className="input has-icons-left has-icons-right" type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
-                                <span className="icon is-small is-left">
-                                    <i className="fas fa-user"></i>
-                                </span>
-                                <span className="icon is-small is-right">
-                                    <i className="fas fa-check"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">Password</label>
-                            <div className="control">
-                                <input className="input" type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
-                            </div>
-                        </div>
-                        <div className="field is-grouped">
-                            <div className="control">
-                                <button className="button is-link">Submit</button>
-                            </div>
-                            <div className="control">
-                                <button className="button is-text">Cancel</button>
-                            </div>
-                        </div>
+            <section className="hero">
+                <div className="hero-body">
+                    <div className="container has-text-centered">
+                        <div className="column is-4 is-offset-4">
+                            <form onSubmit={e => this.submit(e)}>
+                                <div className="field">
+                                    <label className="label">Username</label>
+                                    <div className="control">
+                                        <input className="input has-icons-left has-icons-right" type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label className="label">Password</label>
+                                    <div className="control">
+                                        <input className="input" type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
+                                    </div>
+                                </div>
+                                <div className="field is-grouped is-centered">
+                                    <div className="control">
+                                        <button className="button is-link">Submit</button>
+                                    </div>
+                                    <div className="box">
+                                        <p className="is-size-8">Not registered?</p>
+                                        <a className="button is-text is-size-8" href={"/register"}>Register</a>
+                                    </div>
+                                </div>
 
-                        <p>Not registered?</p>
-                    </form>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         )
     }
 }

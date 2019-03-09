@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import {NavLink} from "react-router-dom"
 import ButtonLogout from "./react-button/logout";
 
@@ -8,82 +8,75 @@ class Navigation extends Component {
         this.state = {
             isActive : '',
             toggle : false,
-        },
+        };
         this.toggleMenu = this.toggleMenu.bind(this)
     }
 
     toggleMenu (e) {
         e.preventDefault();
         this.setState({toggle: !this.state.toggle});
-        this.setState({isActive: (this.state.toggle ? '' : 'is-active')})
+        this.setState({isActive: (this.state.toggle ? '' : 'is-active')});
     }
-    Button () {
+    nav () {
         if (this.props.login.loggedIn) {
-            return (<ButtonLogout/>)
+            return (
+                <React.Fragment>
+                    <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+                        <div className="navbar-brand">
+                            <NavLink className="navbar-item" to="/" onClick={(e) => this.toggleMenu(e)}>
+                                <img src="http://cdn.onlinewebfonts.com/svg/img_296650.png"
+                                     alt="Find partenaire(s) for having fun and/or make babies"
+                                     height="28"/>
+                            </NavLink>
+
+                            <a role="button" className={"navbar-burger burger " + this.state.isActive} aria-label="menu" aria-expanded="false"
+                               data-target="nav-menu" onClick={(e) => this.toggleMenu(e)}>
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                            </a>
+                        </div>
+
+                        <div id="nav-menu" className={"navbar-menu " + this.state.isActive}>
+                            <div className="navbar-start">
+                                <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
+                                    Chill
+                                </a>
+                            </div>
+
+                            <div className="navbar-end">
+                                <div className="navbar-item has-dropdown is-hoverable">
+                                    <a className="navbar-link">
+                                        {this.props.login.data.user.username}
+                                    </a>
+
+                                    <div className="navbar-dropdown">
+                                        <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
+                                            Settings
+                                        </a>
+                                        <hr className="navbar-divider"/>
+                                        <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
+                                            Contact
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="navbar-item">
+                                    <div className="buttons">
+                                        <ButtonLogout/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </React.Fragment>
+            )
+        } else {
+            return (null)
         }
-    };
+    }
     render () {
         return (
-            <React.Fragment>
-                <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-                    <div className="navbar-brand">
-                        <NavLink className="navbar-item" to="/">
-                            <img src="http://cdn.onlinewebfonts.com/svg/img_296650.png"
-                                 alt="Find partenaire(s) for having fun and/or make babies"
-                                 height="28"/>
-                        </NavLink>
-
-                        <a role="button" className={"navbar-burger burger " + this.state.isActive} aria-label="menu" aria-expanded="false"
-                           data-target="nav-menu" onClick={(e) => this.toggleMenu(e)}>
-                            <span aria-hidden="true"></span>
-                            <span aria-hidden="true"></span>
-                            <span aria-hidden="true"></span>
-                        </a>
-                    </div>
-
-                    <div id="nav-menu" className={"navbar-menu " + this.state.isActive}>
-                        <div className="navbar-start">
-                            <a className="navbar-item">
-                                Chill
-                            </a>
-
-                        </div>
-
-                        <div className="navbar-end">
-                            <div className="navbar-item has-dropdown is-hoverable">
-                                <a className="navbar-link">
-                                    ME(link to self-admin)
-                                </a>
-
-                                <div className="navbar-dropdown">
-                                    <a className="navbar-item">
-                                        Wth??
-                                    </a>
-                                    <a className="navbar-item">
-                                        IDK
-                                    </a>
-                                    <a className="navbar-item">
-                                        Contact
-                                    </a>
-                                    <hr className="navbar-divider"/>
-                                    <a className="navbar-item">
-                                        Report an issue
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="navbar-item">
-                                <div className="buttons">
-                                        {this.Button()}
-                                        <NavLink className="button is-link" to="/register">Register</NavLink>
-                                    <a className="button is-light">
-                                        Log in
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </React.Fragment>
+            this.nav()
         )
     }
 }
