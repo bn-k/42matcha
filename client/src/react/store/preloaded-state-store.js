@@ -12,56 +12,18 @@ const parseToken = (file) => {
 
 const stillLogged = (file) => {
     const token = parseToken(file);
-    console.log("still Logged token:", token);
     if (!token) {
-        console.log("still Logged token: return false");
         return false
-    } else {
-        if (token.exp < Date.now() / 1000) {
-            return false
-        }
+    } else if (token.exp < Date.now() / 1000) {
+        return false
     }
     return true
 };
 
 export const registerData = {
-        valid: false,
-        fail: false,
-        type: '',
-        errs : {
-            user_alpha: {
-                status: true,
-                message: ''
-            },
-            user_len: {
-                status: true,
-                message: ''
-            },
-            user_exist: {
-                status: true,
-                message: ''
-            },
-            email_invalid: {
-                status: true,
-                message: ''
-            },
-            password_invalid: {
-                status: true,
-                message: ''
-            },
-            password_match: {
-                status: true,
-                message: ''
-            },
-            firstname: {
-                status: true,
-                message: ''
-            },
-            birthday: {
-                status: true,
-                message: ''
-            }
-        }
+    valid: false,
+    fail: false,
+    errs: [],
 };
 
 const preloadedState = {

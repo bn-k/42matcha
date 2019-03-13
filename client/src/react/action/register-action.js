@@ -24,7 +24,6 @@ export const registerAction = (formData, history) => dispatch => {
                         break;
                     case 200:
                         res.json().then(json =>{
-                            localStorage.setItem("token", json['token']);
                             dispatch({
                                 type: REGISTER,
                                 data : json,

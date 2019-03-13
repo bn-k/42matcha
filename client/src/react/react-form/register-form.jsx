@@ -9,9 +9,9 @@ class Danger extends Component {
     }
     render() {
         return (
-            <article className={"message is-danger " + (!this.props.message.status ? "": " is-hidden")}>
+            <article className={"message is-danger " + (!this.props.status ? "": " is-hidden")}>
                 <div className="message-body">
-                    {this.props.message.message}
+                    {this.props.message}
                 </div>
             </article>
         )
@@ -29,6 +29,7 @@ class RegisterForm extends Component {
             firstname: "",
             lastname: "",
             admin: false,
+            birthday_iso: "",
             birthday: new Date()
         };
         this.changeDate = this.changeDate.bind(this);
@@ -41,8 +42,10 @@ class RegisterForm extends Component {
         })
     }
     changeDate (date) {
+        const ISO = date.toISOString();
         this.setState({birthday: date});
-        console.log(this.state.birthday);
+        this.setState({birthday_iso: ISO});
+        console.log(this.state.birthday_iso);
     }
     submit (e) {
         e.preventDefault();
@@ -50,11 +53,15 @@ class RegisterForm extends Component {
         storeMatcha.dispatch(registerAction(formData, this.props.history));
     };
     snack () {
-        const msgs = this.props.app.register.data.errs;
+        const errors = this.props.app.register.data.errs;
         let arr = [];
-        for (var key in msgs) {
-            console.log(key);
-            arr.push(<Danger key={key} message={msgs[key]}/>);
+        let key = 0;
+        if (this.props.app.register.data.fail) {
+            errors.forEach((err) => {
+                console.log("err: ", err.message);
+                arr.push(<Danger key={key} status={false} message={err.message}/>);
+                key++;
+            });
         }
         return (arr)
     }
@@ -104,7 +111,7 @@ class RegisterForm extends Component {
                                         </div>
                                     </div>
                                     <label className="label">Birthday</label>
-                                    <input type="hidden" name="birthday" value={this.state.birthday}/>
+                                    <input type="hidden" name="birthday" value={this.state.birthday_iso}/>
                                     <Calendar
                                         className=""
                                         onChange={this.changeDate}
@@ -135,5 +142,4 @@ const mapStateToProps = (state) => {
 
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
-import {registerData} from "../store/preloaded-state-store";
 export default withRouter(connect(mapStateToProps)(RegisterForm))
