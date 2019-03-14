@@ -12,48 +12,44 @@ function getJsonFromUrl(url) {
 }
 
 class ValidEmail extends Component {
-    get () {
-        const url = getJsonFromUrl(this.props.location.search);
-        fetch('/auth/valid_email/' + url.token)
-            .then((res) => {
-                console.log(res);
-                if (res.status == 200) {
-                    res.json().then((json) => {
-                        return (
-                            <div id="snackbar" className="snackbar">
-                                <article className={"message is-info "}>
-                                    <div className="message-body">
-                                        <p>{json.status}</p>
-                                    </div>
-                                </article>
-                            </div>
-                        )
-                    })
-                } else if (res.status == 401) {
-                    res.json().then((json) => {
-                        conso
-                        return (
-                            <div id="snackbar" className="snackbar">
-                                <article className={"message is-danger "}>
-                                    <div className="message-body">
-                                        <p>{json.err}</p>
-                                    </div>
-                                </article>
-                            </div>
-                        )
-                    })
-                }
-            })
-    }
     constructor (props) {
         super(props);
         this.state = {
+            message : "",
+            class : "",
         };
+    }
+    componentWillMount() {
+        let url = getJsonFromUrl(this.props.location.search);
+        fetch('/auth/valid_email/' + url.token)
+            .then((res) => {
+                if (res.status == 200) {
+                    this.setState({message: "Email successfully activated", class: " is-info"})
+                } else if (res.status == 401) {
+                    res.json().then((json) => {
+                        this.setState({message: json.err, class: " is-danger"})
+                    })
+                }
+            });
+        setTimeout(() => {
+            this.props.history.push('/');
+        }, 2000)
+    }
+    snack () {
+        return (
+            <div id="snackbar" className="snackbar valid-email">
+                <article className={"message  " + this.state.class}>
+                    <div className="message-body">
+                        <p>{this.state.message}</p>
+                    </div>
+                </article>
+            </div>
+        )
     }
     render () {
         return (
             <React.Fragment>
-                {this.get()}
+                {this.snack()}
             </React.Fragment>
         )
     }

@@ -27,3 +27,6 @@ html,body {
     bottom: 3px;
     font-size: 17px;
 }
+.valid-email {
+    top: 3px;
+}
