@@ -27,8 +27,7 @@ create table users
   geo_allowed               boolean default false not null,
   online                    boolean default false not null,
   rating                    numeric(9, 6)            default 2.5,
-  access_lvl                int                      default 0,
+  access_lvl                int                      default 0
 );
-
 alter table users
   owner to matcha;

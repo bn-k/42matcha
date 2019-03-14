@@ -13,6 +13,7 @@ import Navigation from "./navigation";
 import PrivateRoute from './modules/private-route';
 import PublicRoute from './modules/public-route';
 import storeMatcha from './store/matcha-store';
+import ValidEmail from './valid-email'
 
 
 const Root = () => (
@@ -23,6 +24,7 @@ const Root = () => (
                 <Switch>
                     <PrivateRoute exact path="/" component={Home}/>
                     <Route path="/401" component={Error401}/>
+                    <Route path="/valid_email" component={ValidEmail}/>
                     <PrivateRoute path="/user" component={User}/>
                     <PublicRoute path="/login" component={Login}/>
                     <PublicRoute path="/register" component={Register}/>
