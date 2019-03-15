@@ -27,6 +27,12 @@ class LoginForm extends Component {
     render () {
         console.log("Render Login Form");
         return (
+            <div>
+                <article className={"snackbar message is-danger " + this.props.login.class}>
+                    <div className="message-body">
+                        <p>{this.props.login.err}</p>
+                    </div>
+                </article>
             <section className="hero">
                 <div className="hero-body">
                     <div className="container has-text-centered">
@@ -58,6 +64,7 @@ class LoginForm extends Component {
                     </div>
                 </div>
             </section>
+            </div>
         )
     }
 }

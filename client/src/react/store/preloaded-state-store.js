@@ -38,6 +38,7 @@ const preloadedState = {
     },
     login : {
         loggedIn: stillLogged('jwt'),
+        class: " is-hidden",
     },
 };
 

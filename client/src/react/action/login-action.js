@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT} from './types-action';
+import {LOGIN, LOGIN_FAIL, LOGOUT} from './types-action';
 
 export const loginAction = (formData, history) => dispatch => {
     fetch('/auth/login', {
@@ -6,18 +6,24 @@ export const loginAction = (formData, history) => dispatch => {
         body: formData,
         credentials: 'same-origin'
     })
-        .catch(err => {
-            throw  Error(err)
-        })
         .then(res => {
                 switch (res.status) {
                     case 401:
                         res.json().then(json =>{
+                            dispatch({
+                                type: LOGIN_FAIL,
+                                class: " is-danger",
+                                err: json.err
+                            });
+                            setTimeout(() => {
+                                dispatch({
+                                    type: LOGIN_FAIL,
+                                    class: " is-hidden"
+                                });}, 3000);
                            console.log(json.err);
                         });
                         break;
                     case 200:
-                        console.log("login action 200");
                         res.json().then(json =>{
                             localStorage.setItem("jwt", json);
                             dispatch({
