@@ -4,13 +4,16 @@ export const loginAction = (formData, history) => dispatch => {
     fetch('/auth/login', {
         method: 'POST',
         body: formData,
-        credentials: 'same-origin',
+        credentials: 'same-origin'
     })
+        .catch(err => {
+            throw  Error(err)
+        })
         .then(res => {
                 switch (res.status) {
                     case 401:
                         res.json().then(json =>{
-                            console.log(json.err);
+                           console.log(json.err);
                         });
                         break;
                     case 200:
@@ -25,11 +28,9 @@ export const loginAction = (formData, history) => dispatch => {
                 }
             }
         )
-        .catch(error => console.log(error))
 };
 
 export const logoutAction = (history) => dispatch => {
-    console.log('logoutAction');
     localStorage.removeItem('jwt');
     dispatch({
         type: LOGOUT,

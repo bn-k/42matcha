@@ -16,8 +16,8 @@ export const startAction = () => dispatch => {
                         console.log("Start failed");
                         break;
                     case 200:
+                        console.log(res);
                         res.json().then(json =>{
-                            console.log(json);
                             dispatch({
                                 type: START,
                                 basic: json,

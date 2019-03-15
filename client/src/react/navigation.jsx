@@ -19,7 +19,9 @@ class Navigation extends Component {
         this.setState({isActive: (this.state.toggle ? '' : 'is-active')});
     }
     componentWillMount() {
-        storeMatcha.dispatch(startAction());
+        if (this.props.login.loggedIn) {
+            storeMatcha.dispatch(startAction());
+        }
     }
     nav () {
         if (this.props.login.loggedIn) {
