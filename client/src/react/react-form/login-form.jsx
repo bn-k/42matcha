@@ -53,7 +53,6 @@ class LoginForm extends Component {
                                         <a className="button is-text is-size-8" href={"/register"}>Register</a>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>

@@ -9,14 +9,10 @@ export function loginReducer (state = initial, action) {
         case LOGIN:
             return {
                 loggedIn: true,
-                data: {
-                    user: action.user
-                },
             };
         case LOGOUT:
             return {
                 loggedIn: false,
-                token: "",
             };
         default:
             return state

@@ -28,16 +28,17 @@ export const registerData = {
 
 const preloadedState = {
     app: {
+        start : {
+
+        },
         register: {
             type: '',
             data: registerData,
         }
     },
     login : {
-        loggedIn: stillLogged('token'),
-        data: parseToken('token'),
+        loggedIn: stillLogged('jwt'),
     },
-    users : [],
 };
 
 export default preloadedState;

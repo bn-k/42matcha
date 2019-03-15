@@ -6,36 +6,31 @@ export const loginAction = (formData, history) => dispatch => {
         body: formData,
         credentials: 'same-origin',
     })
-        .then(function (response) {
-            if (!response.ok) {
-                throw Error("Horror");
-            }
-            return response;
-        })
         .then(res => {
-            switch (res.status) {
-                case 401:
-                    console.log("Non Authorized");
-                    break;
-                case 200:
-                    res.json().then(json =>{
-                        localStorage.setItem("token", json['token']);
-                        dispatch({
-                            type: LOGIN,
-                            user: json,
+                switch (res.status) {
+                    case 401:
+                        res.json().then(json =>{
+                            console.log(json.err);
                         });
-                            console.log("redirectHome");
+                        break;
+                    case 200:
+                        console.log("login action 200");
+                        res.json().then(json =>{
+                            localStorage.setItem("jwt", json);
+                            dispatch({
+                                type: LOGIN,
+                            });
                             history.push('/');
-                    });
+                        });
+                }
             }
-        }
-    )
+        )
         .catch(error => console.log(error))
 };
 
 export const logoutAction = (history) => dispatch => {
     console.log('logoutAction');
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     dispatch({
         type: LOGOUT,
     });

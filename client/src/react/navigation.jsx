@@ -1,6 +1,8 @@
-import React, {Component, Fragment} from "react";
+import React, {Component} from "react";
 import {NavLink} from "react-router-dom"
 import ButtonLogout from "./react-button/logout";
+import {startAction} from './action/app-action';
+import storeMatcha from './store/matcha-store';
 
 class Navigation extends Component {
     constructor(props) {
@@ -11,11 +13,13 @@ class Navigation extends Component {
         };
         this.toggleMenu = this.toggleMenu.bind(this)
     }
-
     toggleMenu (e) {
         e.preventDefault();
         this.setState({toggle: !this.state.toggle});
         this.setState({isActive: (this.state.toggle ? '' : 'is-active')});
+    }
+    componentWillMount() {
+        storeMatcha.dispatch(startAction());
     }
     nav () {
         if (this.props.login.loggedIn) {
@@ -47,7 +51,7 @@ class Navigation extends Component {
                             <div className="navbar-end">
                                 <div className="navbar-item has-dropdown is-hoverable">
                                     <a className="navbar-link">
-                                        {this.props.login.data.user.username}
+                                        {/*{this.props.login.data.user.username}*/}
                                     </a>
 
                                     <div className="navbar-dropdown">
