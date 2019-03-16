@@ -29,5 +29,6 @@ create table users
   rating                    numeric(9, 6)            default 2.5,
   access_lvl                int                      default 0
 );
+
 alter table users
   owner to matcha;

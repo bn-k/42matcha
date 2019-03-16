@@ -13,7 +13,9 @@ export const startAction = () => dispatch => {
         .then(res => {
                 switch (res.status) {
                     case 401:
-                        console.log("Start failed");
+                        res.json().then(json =>{
+                            console.log(json.err);
+                        });
                         break;
                     case 200:
                         console.log(res);

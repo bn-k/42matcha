@@ -29,7 +29,35 @@ export const registerData = {
 const preloadedState = {
     app: {
         start : {
-
+            basic: {
+                user: {},
+                dates : [
+                    {
+                        id: "",
+                        username: '',
+                        email: '',
+                        lastname: '',
+                        firstname: '',
+                        img1: '',
+                        img2: '',
+                        img3: '',
+                        img4: '',
+                        img5: '',
+                        biography: '',
+                        birthday: '',
+                        genre: '',
+                        interest: '',
+                        city: '',
+                        zip: 0,
+                        country: '',
+                        latitude: 0,
+                        longitude: 0,
+                        geo_allowed: false,
+                        online: false,
+                        rating: 0,
+                    },
+                ],
+            },
         },
         register: {
             type: '',

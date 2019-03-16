@@ -13,6 +13,7 @@ class LoginForm extends Component {
         };
         this.change = this.change.bind(this);
         this.submit = this.submit.bind(this);
+        this.fTest = this.fTest.bind(this);
     }
     change (e) {
         this.setState({
@@ -24,6 +25,10 @@ class LoginForm extends Component {
         const formData = new FormData(e.target);
         storeMatcha.dispatch(loginAction(formData, this.props.history));
     };
+    fTest (e) {
+        e.preventDefault();
+        this.setState({test: "test2"});
+    }
     render () {
         console.log("Render Login Form");
         return (

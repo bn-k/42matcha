@@ -4,7 +4,6 @@ import {Provider} from 'react-redux';
 
 import Login from "./login";
 import Home from "./home";
-import User from "./user";
 import Register from "./register";
 import Error from "./error";
 import Error401 from "./401";
@@ -19,18 +18,17 @@ import ValidEmail from './valid-email'
 const Root = () => (
     <Provider store={storeMatcha}>
         <Router>
-            <div>
+            <React.Fragment>
                 <Navigation/>
                 <Switch>
                     <PrivateRoute exact path="/" component={Home}/>
                     <Route path="/401" component={Error401}/>
                     <Route path="/valid_email" component={ValidEmail}/>
-                    <PrivateRoute path="/user" component={User}/>
                     <PublicRoute path="/login" component={Login}/>
                     <PublicRoute path="/register" component={Register}/>
                     <PublicRoute component={Error}/>
                 </Switch>
-            </div>
+            </React.Fragment>
         </Router>
     </Provider>
 );

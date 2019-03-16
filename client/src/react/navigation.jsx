@@ -27,9 +27,10 @@ class Navigation extends Component {
         if (this.props.login.loggedIn) {
             return (
                 <React.Fragment>
-                    <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+                    <div className={"hero-head"}>
+                    <nav className="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
                         <div className="navbar-brand">
-                            <NavLink className="navbar-item" to="/" onClick={(e) => this.toggleMenu(e)}>
+                            <NavLink className="navbar-item" to="/">
                                 <img src="http://cdn.onlinewebfonts.com/svg/img_296650.png"
                                      alt="Find partenaire(s) for having fun and/or make babies"
                                      height="28"/>
@@ -74,6 +75,7 @@ class Navigation extends Component {
                             </div>
                         </div>
                     </nav>
+                    </div>
                 </React.Fragment>
             )
         } else {
