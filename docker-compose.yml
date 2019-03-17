@@ -1,69 +1,55 @@
 version: '3.5'
 services:
-  postgres:
-    image: postgres
+  neo4j:
+    image: neo4j:latest
+    container_name: 'neo4j'
     volumes:
-    - ./db/init:/docker-entrypoint-initdb.d/
-    environment:
-      POSTGRES_USER: matcha
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: matcha
-      PGDATA: /data/postgres
+    - ./neo4j/data:/data
+    - ./neo4j/conf/:/conf
     ports:
-      - "5432:5432"
+    - 7474:7474
+    - 7687:7687
+    restart: on-failure
     networks:
-      - default
-    tty: true
-    restart: unless-stopped
-  
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: abbenham@student.42.fr
-      PGADMIN_DEFAULT_PASSWORD: secret
-    volumes:
-       - pgadmin:/root/.pgadmin
-    ports:
-      - "82:80"
-    networks:
-      - default
-    tty: true
-    restart: unless-stopped
+    - neo4j_go_net
 
   api:
     build: ./server
+    container_name: 'api'
     volumes:
       - ${GOPATH}/src:/go/src
       - ./server:/matcha/server
     ports:
     - "81:81"
     depends_on:
-      - postgres
+      - neo4j
       - web
     tty: true
     links:
-      - postgres
+      - neo4j
     networks:
       - default
     restart: unless-stopped
-    environment:
-      - POSTGRES_HOST=postgres
+
   web:
     build: ./client
+    container_name: 'web'
     volumes:
     - ./client:/app
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      - neo4j
     tty: true
     working_dir: /app
     command: sh run.sh
+
 networks:
   default:
     driver: bridge
+  neo4j_go_net:
+    driver: bridge
 
 volumes:
-    postgres:
-    pgadmin:
+    neo4j:
     api:
