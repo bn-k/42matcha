@@ -11,7 +11,7 @@ services:
     - 7687:7687
     restart: on-failure
     networks:
-    - neo4j_go_net
+    - default
 
   api:
     build: ./server
@@ -24,6 +24,8 @@ services:
     depends_on:
       - neo4j
       - web
+    environment:
+      NEO_HOST: neo4j
     tty: true
     links:
       - neo4j
@@ -43,11 +45,11 @@ services:
     tty: true
     working_dir: /app
     command: sh run.sh
+    networks:
+      - default
 
 networks:
   default:
-    driver: bridge
-  neo4j_go_net:
     driver: bridge
 
 volumes:
