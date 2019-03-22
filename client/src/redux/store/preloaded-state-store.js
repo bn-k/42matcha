@@ -1,0 +1,73 @@
+import JwtDecode from 'jwt-decode'
+
+const parseToken = (file) => {
+    if (!localStorage.getItem(file) || !localStorage.getItem(file) == undefined) {
+        localStorage.removeItem(file);
+        return null
+    } else {
+        console.log("Token parse: ", file, JwtDecode(localStorage.getItem(file)));
+        return JwtDecode(localStorage.getItem(file))
+    }
+};
+
+const stillLogged = (file) => {
+    const token = parseToken(file);
+    if (!token) {
+        return false
+    } else if (token.exp < Date.now() / 1000) {
+        return false
+    }
+    return true
+};
+
+export const registerData = {
+    valid: false,
+    fail: false,
+    errs: [],
+};
+
+const preloadedState = {
+    // app: {
+    //     start : {
+    //         basic: {
+    //             user: {},
+    //             dates : [
+    //                 {
+    //                     id: "",
+    //                     username: '',
+    //                     email: '',
+    //                     lastname: '',
+    //                     firstname: '',
+    //                     img1: '',
+    //                     img2: '',
+    //                     img3: '',
+    //                     img4: '',
+    //                     img5: '',
+    //                     biography: '',
+    //                     birthday: '',
+    //                     genre: '',
+    //                     interest: '',
+    //                     city: '',
+    //                     zip: 0,
+    //                     country: '',
+    //                     latitude: 0,
+    //                     longitude: 0,
+    //                     geo_allowed: false,
+    //                     online: false,
+    //                     rating: 0,
+    //                 },
+    //             ],
+    //         },
+    //     },
+    //     register: {
+    //         type: '',
+    //         data: registerData,
+    //     }
+    // },
+    login : {
+        loggedIn: stillLogged('jwt'),
+        class: " is-hidden",
+    },
+};
+
+export default preloadedState;

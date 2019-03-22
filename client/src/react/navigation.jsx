@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {NavLink} from "react-router-dom"
 import ButtonLogout from "./react-button/logout";
-import {startAction} from './action/app-action';
-import storeMatcha from './store/matcha-store';
+import {startAction} from '../redux/action/app-action';
+import storeMatcha from '../redux/store/matcha-store';
 
 class Navigation extends Component {
     constructor(props) {
@@ -28,53 +28,53 @@ class Navigation extends Component {
             return (
                 <React.Fragment>
                     <div className={"hero-head"}>
-                    <nav className="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
-                        <div className="navbar-brand">
-                            <NavLink className="navbar-item" to="/">
-                                <img src="http://cdn.onlinewebfonts.com/svg/img_296650.png"
-                                     alt="Find partenaire(s) for having fun and/or make babies"
-                                     height="28"/>
-                            </NavLink>
+                        <nav className="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
+                            <div className="navbar-brand">
+                                <NavLink className="navbar-item" to="/">
+                                    <img src="http://cdn.onlinewebfonts.com/svg/img_296650.png"
+                                         alt="Find partenaire(s) for having fun and/or make babies"
+                                         height="28"/>
+                                </NavLink>
 
-                            <a role="button" className={"navbar-burger burger " + this.state.isActive} aria-label="menu" aria-expanded="false"
-                               data-target="nav-menu" onClick={(e) => this.toggleMenu(e)}>
-                                <span aria-hidden="true"></span>
-                                <span aria-hidden="true"></span>
-                                <span aria-hidden="true"></span>
-                            </a>
-                        </div>
-
-                        <div id="nav-menu" className={"navbar-menu " + this.state.isActive}>
-                            <div className="navbar-start">
-                                <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
-                                    Chill
+                                <a role="button" className={"navbar-burger burger " + this.state.isActive} aria-label="menu" aria-expanded="false"
+                                   data-target="nav-menu" onClick={(e) => this.toggleMenu(e)}>
+                                    <span aria-hidden="true"></span>
+                                    <span aria-hidden="true"></span>
+                                    <span aria-hidden="true"></span>
                                 </a>
                             </div>
 
-                            <div className="navbar-end">
-                                <div className="navbar-item has-dropdown is-hoverable">
-                                    <a className="navbar-link">
-                                        {/*{this.props.login.data.user.username}*/}
+                            <div id="nav-menu" className={"navbar-menu " + this.state.isActive}>
+                                <div className="navbar-start">
+                                    <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
+                                        Chill
                                     </a>
-
-                                    <div className="navbar-dropdown">
-                                        <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
-                                            Settings
-                                        </a>
-                                        <hr className="navbar-divider"/>
-                                        <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
-                                            Contact
-                                        </a>
-                                    </div>
                                 </div>
-                                <div className="navbar-item">
-                                    <div className="buttons">
-                                        <ButtonLogout/>
+
+                                <div className="navbar-end">
+                                    <div className="navbar-item has-dropdown is-hoverable">
+                                        <a className="navbar-link">
+                                            {/*{this.props.login.data.user.username}*/}
+                                        </a>
+
+                                        <div className="navbar-dropdown">
+                                            <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
+                                                Settings
+                                            </a>
+                                            <hr className="navbar-divider"/>
+                                            <a className="navbar-item" onClick={(e) => this.toggleMenu(e)}>
+                                                Contact
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div className="navbar-item">
+                                        <div className="buttons">
+                                            <ButtonLogout/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </nav>
+                        </nav>
                     </div>
                 </React.Fragment>
             )

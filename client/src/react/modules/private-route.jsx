@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Route, Redirect} from  'react-router-dom';
-import storeMatcha from '../store/matcha-store';
+import storeMatcha from '../../redux/store/matcha-store';
 
 function logged () {
     return storeMatcha.getState().login.loggedIn

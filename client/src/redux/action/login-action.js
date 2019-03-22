@@ -1,4 +1,4 @@
-import {LOGIN, LOGIN_FAIL, LOGOUT} from './types-action';
+import {LOGIN, LOGIN_FAIL, LOGOUT, LOGIN_RESET} from './types-action';
 
 export const loginAction = (formData, history) => dispatch => {
     fetch('/auth/login', {
@@ -17,7 +17,7 @@ export const loginAction = (formData, history) => dispatch => {
                             });
                             setTimeout(() => {
                                 dispatch({
-                                    type: LOGIN_FAIL,
+                                    type: LOGIN_RESET,
                                     class: " is-hidden"
                                 });}, 3000);
                            console.log(json.err);
