@@ -1,7 +1,6 @@
-import {LOGIN, LOGIN_FAIL, LOGOUT} from "../action/types-action";
+import {LOGIN, LOGIN_FAIL, LOGIN_RESET, LOGOUT} from "../action/types-action";
 
 const initial = () => {
-
 };
 
 export function loginReducer (state = initial, action) {
@@ -13,8 +12,14 @@ export function loginReducer (state = initial, action) {
         case LOGIN_FAIL:
             return {
                 loggedIn: false,
-                class: action.class,
+                class: " is-danger",
                 err: action.err
+            };
+        case LOGIN_RESET:
+            return {
+                loggedIn: false,
+                class: " is-hidden",
+                err: ""
             };
         case LOGOUT:
             return {

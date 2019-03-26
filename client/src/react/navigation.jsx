@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {NavLink} from "react-router-dom"
 import ButtonLogout from "./react-button/logout";
-import {startAction} from '../redux/action/app-action';
 import storeMatcha from '../redux/store/matcha-store';
 
 class Navigation extends Component {
@@ -20,7 +19,6 @@ class Navigation extends Component {
     }
     componentWillMount() {
         if (this.props.login.loggedIn) {
-            storeMatcha.dispatch(startAction());
         }
     }
     nav () {

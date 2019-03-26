@@ -31,17 +31,17 @@ class Home extends React.Component {
         return diff;
     }
     date() {
-        const date = this.props.app.start.basic.dates[this.state.i];
-        const age = this.age(date.birthday);
-        return (
-            <div>
-                <p>{date.username}</p>
-                <p>{age} years old</p>
-                <p>{date.genre}</p>
-                <img src={date.img1} alt=""/>
-                <p>{date.biography}</p>
-            </div>
-        )
+        // const date;
+        // const age = this.age(date.birthday);
+        // return (
+        //     <div>
+        //         <p>{date.username}</p>
+        //         <p>{age} years old</p>
+        //         <p>{date.genre}</p>
+        //         <img src={date.img1} alt=""/>
+        //         <p>{date.biography}</p>
+        //     </div>
+        // )
     }
     like(e) {
         e.preventDefault();
