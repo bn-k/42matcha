@@ -1,7 +1,7 @@
 import JwtDecode from 'jwt-decode'
 
 const parseToken = (file) => {
-    if (!localStorage.getItem(file) || !localStorage.getItem(file) == undefined) {
+    if (!localStorage.getItem(file) || !localStorage.getItem(file) === undefined) {
         localStorage.removeItem(file);
         return null
     } else {
@@ -20,20 +20,56 @@ const stillLogged = (file) => {
     return true
 };
 
-export const registerData = {
+export const registerPreloaded = {
     valid: false,
     fail: false,
-    errs: [],
+    username: {
+        status: true,
+        message: ""
+    },
+    email: {
+        status: true,
+        message: ''
+    },
+    password: {
+        status: true,
+        message: ''
+    },
+    confirm: {
+        status: true,
+        message: ''
+    },
+    lastname: {
+        status: true,
+        message: ''
+    },
+    firstname: {
+        status: true,
+        message: ''
+    },
+    birthday: {
+        status: true,
+        message: ''
+    },
+    other: {
+        status: true,
+        message: ''
+    },
+    type: ''
+};
+
+export const homePreloaded = {
+};
+
+export const loginPreloaded = {
+    loggedIn: stillLogged('jwt'),
+    err: {status: false, message: ""}
 };
 
 const preloadedState = {
-    login : {
-        loggedIn: stillLogged('jwt'),
-        class: " is-hidden",
-    },
-    register: {
-
-    },
+    login : loginPreloaded,
+    register: registerPreloaded,
+    home: homePreloaded,
 };
 
 export default preloadedState;

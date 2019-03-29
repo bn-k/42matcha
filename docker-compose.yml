@@ -14,11 +14,11 @@ services:
     - default
 
   api:
-    build: ./server
+    build: api
     container_name: 'api'
     volumes:
       - ${GOPATH}/src:/go/src
-      - ./server:/matcha/server
+      - ./api:/matcha/api
     ports:
     - "81:81"
     depends_on:

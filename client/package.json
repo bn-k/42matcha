@@ -64,6 +64,7 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "sass-loader": "^7.1.0",
+    "semantic-ui-react": "^0.86.0",
     "style-loader": "^0.23.1"
   }
 }

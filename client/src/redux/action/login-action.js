@@ -8,19 +8,13 @@ export const loginAction = (formData, history) => dispatch => {
     })
         .then(res => {
                 switch (res.status) {
-                    case 401:
+                    case 201:
                         res.json().then(json =>{
+                            console.log(201);
                             dispatch({
                                 type: LOGIN_FAIL,
-                                class: " is-danger",
-                                err: json.err
+                                err: {status: true, message: json.err}
                             });
-                            setTimeout(() => {
-                                dispatch({
-                                    type: LOGIN_RESET,
-                                    class: " is-hidden"
-                                });}, 3000);
-                           console.log(json.err);
                         });
                         break;
                     case 200:

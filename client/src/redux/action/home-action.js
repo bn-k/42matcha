@@ -1,6 +1,6 @@
-import {START} from './types-action';
+import {LOAD} from './types-action';
 
-export const startAction = () => dispatch => {
+export const homeAction = () => dispatch => {
     let init = {
         method: 'GET',
         headers:{
@@ -21,8 +21,8 @@ export const startAction = () => dispatch => {
                         console.log(res);
                         res.json().then(json =>{
                             dispatch({
-                                type: START,
-                                basic: json,
+                                type: HOME,
+                                json: json,
                             });
                         });
                 }

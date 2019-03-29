@@ -1,4 +1,29 @@
 import React from "react";
+import {withRouter} from "react-router-dom"
+import {connect} from "react-redux";
+
+const getAge = (iso) =>  {
+    const dateold = new Date(iso);
+    const datenew = new Date();
+    console.log(datenew, dateold);
+    var ynew = datenew.getFullYear();
+    var mnew = datenew.getMonth();
+    var dnew = datenew.getDate();
+    var yold = dateold.getFullYear();
+    var mold = dateold.getMonth();
+    var dold = dateold.getDate();
+    var diff = ynew - yold;
+    console.log("date: ", diff);
+    if(mold > mnew) diff--;
+    else
+    {
+        if(mold == mnew)
+        {
+            if(dold > dnew) diff--;
+        }
+    }
+    return diff;
+};
 
 class Home extends React.Component {
     constructor (props) {
@@ -6,29 +31,6 @@ class Home extends React.Component {
         this.state = {
             i : 0,
         };
-    }
-    age(iso)
-    {
-        const dateold = new Date(iso);
-        const datenew = new Date();
-        console.log(datenew, dateold);
-        var ynew = datenew.getFullYear();
-        var mnew = datenew.getMonth();
-        var dnew = datenew.getDate();
-        var yold = dateold.getFullYear();
-        var mold = dateold.getMonth();
-        var dold = dateold.getDate();
-        var diff = ynew - yold;
-        console.log("date: ", diff);
-        if(mold > mnew) diff--;
-        else
-        {
-            if(mold == mnew)
-            {
-                if(dold > dnew) diff--;
-            }
-        }
-        return diff;
     }
     date() {
         // const date;
@@ -54,21 +56,6 @@ class Home extends React.Component {
     render () {
         return (
             <React.Fragment>
-                <div className="hero-body is-success is-flex has-text-centered">
-                    <div className="container date">
-                        {this.date()}
-                    </div>
-                    <div className={"container"}>
-                        <button className="button is-big is-rounded is-danger" onClick={e => this.like(e)}>
-                            <span className={"icon"}><i className="fas fa-heart"></i></span>
-                        </button>
-                        <button className="button is-big is-rounded is-info">
-                            <span className={"icon"} onClick={e => this.dislike(e)}><i className="fas fa-times"></i></span>
-                        </button>
-                    </div>
-                </div>
-                <div className="hero-foot has-text-centered">
-                </div>
             </React.Fragment>
         )
     }
@@ -77,10 +64,8 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
     return {
         login: state.login,
-        app: state.app
+        home: state.home
     };
 };
 
-import {withRouter} from "react-router-dom"
-import {connect} from "react-redux";
 export default withRouter(connect(mapStateToProps)(Home))

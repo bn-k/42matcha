@@ -1,4 +1,5 @@
-import {REGISTER, REGISTER_FAIL, RESET} from "../action/types-action";
+import {REGISTER, REGISTER_FAIL} from "../action/types-action";
+import {registerPreloaded} from "../store/preloaded-state-store";
 
 const initial = () => {
 
@@ -7,18 +8,10 @@ const initial = () => {
 export function registerReducer (state = initial, action) {
     console.log("app Reducer: action: ", action.type);
     switch (action.type) {
-        case RESET:
-            return {
-                register : action
-            };
         case REGISTER:
-            return {
-                register : action
-            };
+            return registerPreloaded;
         case REGISTER_FAIL:
-            return {
-                register : action
-            };
+            return action;
         default:
             return state
     }

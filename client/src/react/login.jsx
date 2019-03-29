@@ -1,82 +1,110 @@
 import React, {Component} from 'react';
-import storeMatcha from '../redux/store/matcha-store';
+import {connect} from "react-redux";
+import {withRouter} from 'react-router-dom';
+import store from '../redux/store/matcha-store';
 import {loginAction} from '../redux/action/login-action';
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 class Login extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            redirect: false,
             username: "",
             email: "",
             password: "",
+            confirm: "",
+            firstname: "",
+            lastname: "",
+            gender: "",
+            interest: "",
+            geo: false,
+            day: 1,
+            month: 1,
+            year: 1900,
         };
-        this.change = this.change.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.submit = this.submit.bind(this);
-        this.fTest = this.fTest.bind(this);
     }
-    change (e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-    }
+    handleChange = (e, data) => {
+        this.setState({[data.name]: data.value});
+    };
+    handleToggle = (e, data) => {
+        this.setState({[data.name]: data.checked});
+    };
     submit (e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-        storeMatcha.dispatch(loginAction(formData, this.props.history));
+        formData.append("username", this.state.username);
+        formData.append("password", this.state.password);
+
+        store.dispatch(loginAction(formData, this.props.history));
     };
-    fTest (e) {
-        e.preventDefault();
-        this.setState({test: "test2"});
+    alertMessage(status, message) {
+        if (status) {
+            return (
+                <Message negative attached={"bottom"}>
+                    {message}
+                </Message>
+            )
+        } else {
+            return null;
+        }
     }
     render () {
-        console.log("Render Login Form");
+        const lgn = this.props.login;
         return (
-            <div>
-            <section className="hero">
-                <div className="hero-body">
-                    <div className="container has-text-centered">
-                        <div className="column is-4 is-offset-4">
-                            <form onSubmit={e => this.submit(e)}>
-                                <div className="field">
-                                    <label className="label">Username</label>
-                                    <div className="control">
-                                        <input className="input has-icons-left has-icons-right" type="text" name="username" onChange={e => this.change(e)} value={this.state.username}/>
-                                    </div>
-                                </div>
-                                <div className="field">
-                                    <label className="label">Password</label>
-                                    <div className="control">
-                                        <input className="input" type="password" name="password" onChange={e => this.change(e)} value={this.state.password}/>
-                                    </div>
-                                </div>
-                                <div className="field is-grouped is-centered">
-                                    <div className="control">
-                                        <button className="button is-link">Submit</button>
-                                    </div>
-                                    <div className="box">
-                                        <p className="is-size-8">Not registered?</p>
-                                        <a className="button is-text is-size-8" href={"/register"}>Register</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <React.Fragment>
+                <div className='login-form'>
+                    <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+                        <Grid.Column style={{ maxWidth: 450 }}>
+                            <Header as='h2' color='teal' textAlign='center'>
+                                <Image src='/logo.png' /> Create your account
+                            </Header>
+                            <Form size='large'>
+                                <Segment stacked>
+                                    <Form.Input
+                                        fluid
+                                        label={"Username"}
+                                        icon='user'
+                                        type={"text"}
+                                        iconPosition='left'
+                                        placeholder='Username'
+                                        name={"username"}
+                                        value={this.state.username}
+                                        error={lgn.err.status}
+                                        onChange={this.handleChange}
+                                    />
+                                    <Form.Input
+                                        fluid
+                                        label={"Password"}
+                                        icon='lock'
+                                        iconPosition='left'
+                                        placeholder='********'
+                                        type={"password"}
+                                        name={"password"}
+                                        value={this.state.password}
+                                        error={lgn.err.status}
+                                        onChange={this.handleChange}
+                                    />
+                                    <Button
+                                        color='teal'
+                                        fluid
+                                        size='large'
+                                        onClick={this.submit}
+                                    >Login</Button>
+                                </Segment>
+                            </Form>
+                            {this.alertMessage(lgn.err.status, lgn.err.message)}
+                            <Message>
+                                Not registered? <a href='/register'>Sign Up</a>
+                            </Message>
+                        </Grid.Column>
+                    </Grid>
                 </div>
-                <div className="hero-foot">
-                    <article className={"is-danger " + this.props.login.class}>
-                        <div className="notification id-danger">
-                            <p>{this.props.login.err}</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
-            </div>
+            </React.Fragment>
         )
     }
 }
-
-// Redux dependencies,setting and export
 
 const mapStateToProps = (state) => {
     return {
@@ -84,6 +112,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-import {connect} from "react-redux";
-import {withRouter} from 'react-router-dom';
 export default withRouter(connect(mapStateToProps)(Login))

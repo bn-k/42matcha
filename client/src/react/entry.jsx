@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, {} from 'react';
 import {Route, Redirect} from  'react-router-dom';
-import store from '../../redux/store/matcha-store'
+import store from '../redux/store/matcha-store'
 
 function logged () {
     return store.getState().login.loggedIn
@@ -10,12 +10,17 @@ const PublicRoute= ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            !logged(props) ? (
-                <Component {...props} />
+            logged(props) ? (
+                <Redirect
+                    to={{
+                        pathname: "/home",
+                        state: { from: props.location }
+                    }}
+                />
             ) : (
                 <Redirect
                     to={{
-                        pathname: "/",
+                        pathname: "/login",
                         state: { from: props.location }
                     }}
                 />
@@ -24,12 +29,4 @@ const PublicRoute= ({ component: Component, ...rest }) => (
     />
 );
 
-const mapStateToProps = (state) => {
-    return {
-        login: state.login,
-    };
-};
-
-import {withRouter} from "react-router-dom"
-import {connect} from "react-redux";
 export default PublicRoute
