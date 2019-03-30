@@ -1,4 +1,4 @@
-import {LOAD} from "../action/types-action";
+import {LOAD_PEOPLE} from "../action/types-action";
 
 const initial = () => {
 
@@ -6,8 +6,12 @@ const initial = () => {
 
 export function peopleReducer (state = initial, action) {
     switch (action.type) {
-        case LOAD:
-            return action.json;
+        case LOAD_PEOPLE:
+            return ({
+                data: action.data,
+                isLoading: false,
+                done: true,
+            });
         default:
             return state
     }

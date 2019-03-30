@@ -6,3 +6,11 @@ body > div > div > div.login-form {
 body > div > div > div.register-form {
     /*height: 100%;*/
 }
+
+.home {
+    background: #ffdce6;
+}
+
+.skip-board {
+    background: #abf0ff;
+}

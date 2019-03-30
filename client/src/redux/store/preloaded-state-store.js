@@ -15,6 +15,7 @@ const stillLogged = (file) => {
     if (!token) {
         return false
     } else if (token.exp < Date.now() / 1000) {
+        localStorage.removeItem(file);
         return false
     }
     return true
@@ -61,6 +62,87 @@ export const registerPreloaded = {
 export const homePreloaded = {
 };
 
+export const filterPreloaded = {
+    isLoading: true,
+    done: false,
+    settings: [
+
+    ],
+    data: [
+        {
+            NodeIdentity: 0,
+            Labels: [
+                'User'
+            ],
+            Properties: {
+                biography: '',
+                birthday: '0000-00-00T00:00:00Z',
+                city: '',
+                country: '',
+                email: '',
+                firstname: '',
+                genre: '',
+                geo_allowed: false,
+                img1: '',
+                img2: '',
+                img3: '',
+                img4: '',
+                img5: '',
+                interest: '',
+                lastname: '',
+                latitude: 0,
+                longitude: 0,
+                name: '',
+                online: false,
+                password: '',
+                random_token: '',
+                rating: 0,
+                username: '',
+                zip: ''
+            }
+        },
+    ],
+};
+
+export const peoplePreloaded = {
+    isLoading: true,
+    done: false,
+    data: [
+        {
+            NodeIdentity: 0,
+            Labels: [
+                'User'
+            ],
+            Properties: {
+                biography: '',
+                birthday: '0000-00-00T00:00:00Z',
+                city: '',
+                country: '',
+                email: '',
+                firstname: '',
+                genre: '',
+                geo_allowed: false,
+                img1: '',
+                img2: '',
+                img3: '',
+                img4: '',
+                img5: '',
+                interest: '',
+                lastname: '',
+                latitude: 0,
+                longitude: 0,
+                name: '',
+                online: false,
+                password: '',
+                random_token: '',
+                rating: 0,
+                username: '',
+                zip: ''
+            }
+        },
+    ],
+};
+
 export const loginPreloaded = {
     loggedIn: stillLogged('jwt'),
     err: {status: false, message: ""}
@@ -70,6 +152,7 @@ const preloadedState = {
     login : loginPreloaded,
     register: registerPreloaded,
     home: homePreloaded,
+    people: peoplePreloaded,
 };
 
 export default preloadedState;
