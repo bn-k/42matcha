@@ -109,12 +109,12 @@ class SkipBoard extends React.Component {
                             </Segment>
                         </Grid.Row>
                         <Grid.Row>
-                            <ButtonGroup>
-                                <Button icon={"heart"} onClick={e => this.like(e)}/>
+                            <ButtonGroup widths='3'>
+                                <Button icon={"heart"} color={"red"} onClick={e => this.like(e)}/>
                                 <Button.Or/>
-                                <Button icon={"question"} onClick={e => this.confused(e)}/>
+                                <Button icon={"question"} color={"yellow"} onClick={e => this.confused(e)}/>
                                 <Button.Or/>
-                                <Button icon={"delete"} onClick={e => this.dislike(e)}/>
+                                <Button icon={"delete"} color={"blue"} onClick={e => this.dislike(e)}/>
                             </ButtonGroup>
                         </Grid.Row>
                     </Segment>
