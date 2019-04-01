@@ -10,6 +10,7 @@ import PublicRoute from './react/modules/public-route';
 
 import Entry from "./react/entry";
 import Home from "./react/home";
+import User from "./react/user";
 import Login from "./react/login";
 import Register from "./react/register";
 import Error from "./react/error";
@@ -25,6 +26,7 @@ const App = () => (
                 <Switch>
                     <Route exact path="/" component={Entry}/>
                     <PrivateRoute path="/home" component={Home}/>
+                    <PrivateRoute path="/user" component={User}/>
                     <Route path="/401" component={Error}/>
                     <Route path="/valid_email" component={ValidEmail}/>
                     <PublicRoute path="/login" component={Login}/>

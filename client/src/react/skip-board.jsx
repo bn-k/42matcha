@@ -93,15 +93,14 @@ class SkipBoard extends React.Component {
         const properties = this.props.people.data[this.state.i].Properties;
         const age = getAge(properties.birthday);
         return (
-            <Container
-                className={"skip-board"}
-            >
-                <Grid>
-                    <Segment>
+            <Container className={"skip-board"}>
+                <Grid centered>
                         <Grid.Row>
                             <Header>{properties.username}</Header>
                             <p>{age} years</p>
-                            <ImageCarousel {...properties}/>
+                            <Container>
+                                <ImageCarousel {...properties}/>
+                            </Container>
                         </Grid.Row>
                         <Grid.Row>
                             <Segment>
@@ -117,7 +116,6 @@ class SkipBoard extends React.Component {
                                 <Button icon={"delete"} color={"blue"} onClick={e => this.dislike(e)}/>
                             </ButtonGroup>
                         </Grid.Row>
-                    </Segment>
                 </Grid>
             </Container>
         )

@@ -6,7 +6,7 @@ function logged () {
     return store.getState().login.loggedIn
 }
 
-const PublicRoute= ({ component: Component, ...rest }) => (
+const Entry = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
@@ -29,4 +29,4 @@ const PublicRoute= ({ component: Component, ...rest }) => (
     />
 );
 
-export default PublicRoute
+export default Entry
