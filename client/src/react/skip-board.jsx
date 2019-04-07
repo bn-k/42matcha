@@ -14,26 +14,6 @@ import {
     Grid,
 } from 'semantic-ui-react';
 
-const getAge = (iso) =>  {
-    const dateold = new Date(iso);
-    const datenew = new Date();
-    var ynew = datenew.getFullYear();
-    var mnew = datenew.getMonth();
-    var dnew = datenew.getDate();
-    var yold = dateold.getFullYear();
-    var mold = dateold.getMonth();
-    var dold = dateold.getDate();
-    var diff = ynew - yold;
-    if(mold > mnew) diff--;
-    else
-    {
-        if(mold == mnew)
-        {
-            if(dold > dnew) diff--;
-        }
-    }
-    return diff;
-};
 const slide = (img, key) => (
     <Slide tag="a" index={0} key={key}>
         <Image src={img}/>
@@ -41,33 +21,17 @@ const slide = (img, key) => (
 );
 
 const img = (props) => {
-    let images = [];
-    if (props.img1 !== '')  {images.push(slide(props.img1, 1))}
-    if (props.img2 !== '')  {images.push(slide(props.img2, 2))}
-    if (props.img3 !== '')  {images.push(slide(props.img3, 3))}
-    if (props.img4 !== '')  {images.push(slide(props.img4, 4))}
-    if (props.img5 !== '')  {images.push(slide(props.img5, 5))}
-    return images
+    let ret = {
+        slides : [],
+        i : 0,
+    };
+    if (props.img1 !== '')  {ret.slides.push(slide(props.img1, 1));ret.i++;}
+    if (props.img2 !== '')  {ret.slides.push(slide(props.img2, 2));ret.i++;}
+    if (props.img3 !== '')  {ret.slides.push(slide(props.img3, 3));ret.i++;}
+    if (props.img4 !== '')  {ret.slides.push(slide(props.img4, 4));ret.i++;}
+    if (props.img5 !== '')  {ret.slides.push(slide(props.img5, 5));ret.i++;}
+    return ret;
 };
-
-const countImg = (props) => {
-    return (props.img1 !== '')+(props.img2 !== '')+(props.img3 !== '')+(props.img4 !== '')+(props.img5 !== '')
-};
-
-const ImageCarousel = (props) => (
-    <CarouselProvider
-        naturalSlideWidth={1}
-        naturalSlideHeight={1}
-        totalSlides={countImg(props)}
-    >
-        <Slider>
-            {img(props)}
-        </Slider>
-
-        <CustomDotGroup slides={countImg(props)} />
-        <Divider />
-    </CarouselProvider>
-);
 
 class SkipBoard extends React.Component {
     constructor (props) {
@@ -91,23 +55,34 @@ class SkipBoard extends React.Component {
     render () {
         const id = this.props.people.data[this.state.i].NodeIdentity;
         const properties = this.props.people.data[this.state.i].Properties;
+        const images = img(properties);
         const age = getAge(properties.birthday);
         return (
             <Container className={"skip-board"}>
-                <Grid centered>
-                        <Grid.Row>
-                            <Header>{properties.username}</Header>
-                            <p>{age} years</p>
-                            <Container>
-                                <ImageCarousel {...properties}/>
-                            </Container>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Segment>
-                                <p>{properties.biography}</p>
-                            </Segment>
-                        </Grid.Row>
-                        <Grid.Row>
+                <Segment>
+                    <Grid stackable columns={4}>
+                        <Grid.Column style={{border: '5px solid pink'}} columns={2}>
+                            <Grid.Column>
+                                <Header>{properties.username}</Header>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <p>{age} years</p>
+                            </Grid.Column>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <CarouselProvider
+                                naturalSlideWidth={1}
+                                naturalSlideHeight={1}
+                                totalSlides={images.i}
+                                className={this.carousel}
+                            >
+                                <Slider>
+                                    {images.slides}
+                                </Slider>
+                                <CustomDotGroup slides={images.i} />
+                            </CarouselProvider>
+                        </Grid.Column>
+                        <Grid.Column>
                             <ButtonGroup widths='3'>
                                 <Button icon={"heart"} color={"red"} onClick={e => this.like(e)}/>
                                 <Button.Or/>
@@ -115,8 +90,15 @@ class SkipBoard extends React.Component {
                                 <Button.Or/>
                                 <Button icon={"delete"} color={"blue"} onClick={e => this.dislike(e)}/>
                             </ButtonGroup>
-                        </Grid.Row>
-                </Grid>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Segment>
+                                <Header as={'h3'}>Biography</Header>
+                                <p>{properties.biography}</p>
+                            </Segment>
+                        </Grid.Column>
+                    </Grid>
+                </Segment>
             </Container>
         )
     }

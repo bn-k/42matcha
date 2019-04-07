@@ -8,4 +8,6 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 
 export const LOAD_PEOPLE = 'LOAD_PEOPLE';
 
-export const REFRESH_FILTER = 'REFRESH_FILTER';
+export const NAVBAR_HEIGHT = 'NAVBAR_HEIGHT';
+
+

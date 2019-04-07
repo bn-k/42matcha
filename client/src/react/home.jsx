@@ -1,10 +1,11 @@
 import React from "react";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
-import storeMatcha from "../redux/store/matcha-store";
+import store from "../redux/store/matcha-store";
 import {getPeopleAction} from "../redux/action/people-action";
 import SkipBoard from './skip-board';
-import { Container} from "semantic-ui-react";
+import { Container, Sticky} from "semantic-ui-react";
+import Gallery from "./gallery";
 
 class Home extends React.Component {
     constructor (props) {
@@ -12,14 +13,12 @@ class Home extends React.Component {
         this.state = {};
     }
     componentDidMount() {
-        storeMatcha.dispatch(getPeopleAction());
+        store.dispatch(getPeopleAction());
     }
     render () {
         return (
-            <Container className={"home"}>
-                <SkipBoard/>
-            </Container>
-            )
+            <Gallery/>
+        )
     }
 }
 
@@ -27,6 +26,7 @@ const mapStateToProps = (state) => {
     return {
         login: state.login,
         people: state.people,
+        app: state.app,
     };
 };
 

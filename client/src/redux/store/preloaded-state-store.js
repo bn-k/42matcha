@@ -148,11 +148,21 @@ export const loginPreloaded = {
     err: {status: false, message: ""}
 };
 
+export const appPreloaded = {
+    css : {
+        navbar: {
+            height: 0,
+        },
+        windowHeight: 0,
+    },
+};
+
 const preloadedState = {
     login : loginPreloaded,
     register: registerPreloaded,
     home: homePreloaded,
     people: peoplePreloaded,
+    app: appPreloaded,
 };
 
 export default preloadedState;

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Route, Redirect} from  'react-router-dom';
-import storeMatcha from '../../redux/store/matcha-store';
+import store from '../../redux/store/matcha-store';
 
 function logged () {
-    return storeMatcha.getState().login.loggedIn
+    return store.getState().login.loggedIn
 }
 
 const PrivateRoute= ({ component: Component, ...rest }) => (

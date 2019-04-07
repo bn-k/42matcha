@@ -3,11 +3,11 @@ import { createStore} from 'redux';
 import preloadedState from './preloaded-state-store';
 import middlewares from "./middleware-store";
 
-const storeMatcha = createStore(
+const store = createStore(
     rootReducer,
     preloadedState,
     middlewares,
 );
 
 
-export default storeMatcha;
+export default store;

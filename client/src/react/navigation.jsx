@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
+import {HashRouter} from "react-router-dom";
 import _ from 'lodash';
 import {
     Button,
@@ -14,41 +15,45 @@ import {
     List,
     Menu,
     Segment,
+    Responsive,
     Visibility,
 } from 'semantic-ui-react'
 import {logoutAction} from "../redux/action/login-action";
+import Nav from "./components/navbar";
+import {computerButtons, mobileButtons} from "./components/nav-buttons";
+import Measure from "react-measure";
+import {navbarCss} from "../redux/action/app-action";
+import withSizes from 'react-sizes'
 
-
+@withSizes(({ height}) => ({ height: height }))
 class Navigation extends Component {
     logout = () => {
         this.props.dispatch(logoutAction(this.props.history));
+
     };
     render() {
         if (this.props.login.loggedIn) {
             return (
-                <div>
-                    <Menu pointing>
-                        <Container>
-                            <Menu.Item
-                                       header
-                                       href={'/home'}
-                                       active={this.props.location.pathname === '/home'}
-                            >
-                                <Image size='mini' src='/logo.png' style={{marginRight: '1.5em'}}/>
-                                42Matcha
-                            </Menu.Item>
-                            <Menu.Item
-                                href={'/user'}
-                                active={this.props.location.pathname === '/user'}
-                            >User</Menu.Item>
-                            <Menu.Item
-                                href={'/messenger'}
-                                active={this.props.location.pathname === '/messenger'}
-                            >Messenger</Menu.Item>
-                            <Menu.Item onClick={this.logout}>Logout</Menu.Item>
-                        </Container>
-                    </Menu>
-                </div>
+                <Measure
+                    bounds
+                    onResize={contentRect => {
+                        this.props.dispatch(navbarCss(this.props.app ,contentRect.entry.height, this.props.height));
+                    }}
+                >
+                    {({ measureRef }) => (
+                        <div ref={measureRef}>
+                            <Responsive {...Responsive.onlyMobile}>
+                                <Nav buttons={mobileButtons} mobile/>
+                            </Responsive>
+                            <Responsive {...Responsive.onlyTablet}>
+                                <Nav buttons={mobileButtons} mobile/>
+                            </Responsive>
+                            <Responsive {...Responsive.onlyComputer}>
+                                <Nav buttons={computerButtons} icon={"labeled"}/>
+                            </Responsive>
+                        </div>
+                    )}
+                </Measure>
             )
         } else {
             return null
@@ -58,7 +63,8 @@ class Navigation extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        login: state.login,
+        app: state.app,
     };
 };
 
