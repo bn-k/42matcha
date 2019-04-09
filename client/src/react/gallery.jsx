@@ -17,42 +17,30 @@ import {
     Image,
 } from 'semantic-ui-react';
 
-const User = (username, img1, id) => (
-    <Card>
-        <Image src={img1}/>
-        <Card.Content>
-            <Card.Header>{username}</Card.Header>
-            <Card.Meta>
-                <span className='date'>Joined in 2015</span>
-            </Card.Meta>
-            <Card.Description>Matthew is a musician living in Nashville.</Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-            <a>
-                <Icon name='user' />
-                22 Friends
-            </a>
-        </Card.Content>
-    </Card>
+const User = (properties) => (
+    <Card
+        image='/images/avatar/large/elliot.jpg'
+        header={properties.username}
+        meta='Friend'
+        description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+    />
 );
 
 
 class Gallery extends React.Component {
     state = {
         i : 0,
-    };
-    group = () => {
-        let arr = [];
+        group : [],
     };
     user = (props) => (
-        <Card>
-            <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' />
+        <Card size='small'>
+            <Image src={props.img1} size='medium'/>
             <Card.Content>
-                <Card.Header>Matthew</Card.Header>
+                <Card.Header>{props.username}</Card.Header>
                 <Card.Meta>
                     <span className='date'>Joined in 2015</span>
                 </Card.Meta>
-                <Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+                <Card.Description>{props.biography}</Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <a>
@@ -61,14 +49,26 @@ class Gallery extends React.Component {
                 </a>
             </Card.Content>
         </Card>
-    )
+    );
+    group = () => {
+        const people = this.props.people.data;
 
+        people.forEach((person) => {
+            const id = person.NodeIdentity;
+            const properties = person.Properties;
+            this.state.group.push(this.user(person.Properties))
+        });
+    };
     render () {
         const id = this.props.people.data[this.state.i].NodeIdentity;
         const properties = this.props.people.data[this.state.i].Properties;
         return (
             <Container className={"gallery"}>
-                {this.user(properties)}
+                <Divider/>
+                {this.group()}
+                <Card.Group>
+                {this.state.group}
+                </Card.Group>
             </Container>
         )
     }
