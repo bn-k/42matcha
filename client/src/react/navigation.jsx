@@ -34,14 +34,7 @@ class Navigation extends Component {
     render() {
         if (this.props.login.loggedIn) {
             return (
-                <Measure
-                    bounds
-                    onResize={contentRect => {
-                        this.props.dispatch(navbarCss(this.props.app ,contentRect.entry.height, this.props.height));
-                    }}
-                >
-                    {({ measureRef }) => (
-                        <div ref={measureRef}>
+                        <div>
                             <Responsive {...Responsive.onlyMobile}>
                                 <Nav buttons={mobileButtons} mobile/>
                             </Responsive>
@@ -52,8 +45,6 @@ class Navigation extends Component {
                                 <Nav buttons={computerButtons} icon={"labeled"}/>
                             </Responsive>
                         </div>
-                    )}
-                </Measure>
             )
         } else {
             return null

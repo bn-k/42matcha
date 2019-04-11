@@ -1,16 +1,19 @@
 import {LOAD_PEOPLE} from './types-action';
 
-export const getPeopleAction = () => dispatch => {
+export const getPeopleAction = (filters) => dispatch => {
+
     let init = {
-        method: 'GET',
+        method: 'POST',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
+            'Filters': JSON.stringify(filters),
         }
     };
     fetch('/api/get_people', init)
         .then(res => {
+            console.log("fetch");
                 switch (res.status) {
                     case 201:
                         res.json().then(json =>{
@@ -22,6 +25,7 @@ export const getPeopleAction = () => dispatch => {
                             dispatch({
                                 type: LOAD_PEOPLE,
                                 data: data,
+                                filters: filters,
                             });
                         });
                 }

@@ -62,85 +62,15 @@ export const registerPreloaded = {
 export const homePreloaded = {
 };
 
-export const filterPreloaded = {
-    isLoading: true,
-    done: false,
-    settings: [
-
-    ],
-    data: [
-        {
-            NodeIdentity: 0,
-            Labels: [
-                'User'
-            ],
-            Properties: {
-                biography: '',
-                birthday: '0000-00-00T00:00:00Z',
-                city: '',
-                country: '',
-                email: '',
-                firstname: '',
-                genre: '',
-                geo_allowed: false,
-                img1: '',
-                img2: '',
-                img3: '',
-                img4: '',
-                img5: '',
-                interest: '',
-                lastname: '',
-                latitude: 0,
-                longitude: 0,
-                name: '',
-                online: false,
-                password: '',
-                random_token: '',
-                rating: 0,
-                username: '',
-                zip: ''
-            }
-        },
-    ],
-};
-
 export const peoplePreloaded = {
+    filters: {
+        age: [16, 120],
+        score : [0, 100],
+        location: [0 , 20000],
+    },
     isLoading: true,
     done: false,
-    data: [
-        {
-            NodeIdentity: 0,
-            Labels: [
-                'User'
-            ],
-            Properties: {
-                biography: '',
-                birthday: '0000-00-00T00:00:00Z',
-                city: '',
-                country: '',
-                email: '',
-                firstname: '',
-                genre: '',
-                geo_allowed: false,
-                img1: '',
-                img2: '',
-                img3: '',
-                img4: '',
-                img5: '',
-                interest: '',
-                lastname: '',
-                latitude: 0,
-                longitude: 0,
-                name: '',
-                online: false,
-                password: '',
-                random_token: '',
-                rating: 0,
-                username: '',
-                zip: ''
-            }
-        },
-    ],
+    data: []
 };
 
 export const loginPreloaded = {

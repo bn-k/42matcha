@@ -44,10 +44,6 @@ class Register extends Component {
         formData.append("interest", this.state.interest);
         formData.append("geo", this.state.geo);
         formData.append("birthday", birthday);
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
-        }
-
         store.dispatch(registerAction(formData, this.props.history));
     };
     alertMessage(status, message) {

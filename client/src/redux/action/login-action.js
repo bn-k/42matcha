@@ -10,7 +10,6 @@ export const loginAction = (formData, history) => dispatch => {
                 switch (res.status) {
                     case 201:
                         res.json().then(json =>{
-                            console.log(201);
                             dispatch({
                                 type: LOGIN_FAIL,
                                 err: {status: true, message: json.err}

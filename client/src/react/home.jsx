@@ -6,6 +6,7 @@ import {getPeopleAction} from "../redux/action/people-action";
 import SkipBoard from './skip-board';
 import { Container, Sticky} from "semantic-ui-react";
 import Gallery from "./gallery";
+import GallerySettings from "./gallery-settings";
 
 class Home extends React.Component {
     constructor (props) {
@@ -13,11 +14,14 @@ class Home extends React.Component {
         this.state = {};
     }
     componentDidMount() {
-        store.dispatch(getPeopleAction());
+        store.dispatch(getPeopleAction(this.props.people.filters));
     }
     render () {
         return (
+            <Container>
+            <GallerySettings/>
             <Gallery/>
+            </Container>
         )
     }
 }

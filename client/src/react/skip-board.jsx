@@ -13,7 +13,6 @@ import {
     ButtonGroup,
     Grid,
 } from 'semantic-ui-react';
-
 const slide = (img, key) => (
     <Slide tag="a" index={0} key={key}>
         <Image src={img}/>

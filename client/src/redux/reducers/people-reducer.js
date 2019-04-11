@@ -9,6 +9,7 @@ export function peopleReducer (state = initial, action) {
         case LOAD_PEOPLE:
             return ({
                 data: action.data,
+                filters: action.filters,
                 isLoading: false,
                 done: true,
             });

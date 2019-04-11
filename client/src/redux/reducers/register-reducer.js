@@ -6,7 +6,6 @@ const initial = () => {
 };
 
 export function registerReducer (state = initial, action) {
-    console.log("app Reducer: action: ", action.type);
     switch (action.type) {
         case REGISTER:
             return registerPreloaded;
