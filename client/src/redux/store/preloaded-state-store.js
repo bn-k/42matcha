@@ -1,4 +1,5 @@
 import JwtDecode from 'jwt-decode'
+import _ from 'lodash'
 
 const parseToken = (file) => {
     if (!localStorage.getItem(file) || !localStorage.getItem(file) === undefined) {
@@ -67,6 +68,7 @@ export const peoplePreloaded = {
         age: [16, 120],
         score : [0, 100],
         location: [0 , 20000],
+        tags: [],
     },
     isLoading: true,
     done: false,
@@ -91,7 +93,7 @@ const preloadedState = {
     login : loginPreloaded,
     register: registerPreloaded,
     home: homePreloaded,
-    people: peoplePreloaded,
+    people: _.merge({}, peoplePreloaded),
     app: appPreloaded,
 };
 

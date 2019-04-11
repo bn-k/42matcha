@@ -13,7 +13,6 @@ export const getPeopleAction = (filters) => dispatch => {
     };
     fetch('/api/get_people', init)
         .then(res => {
-            console.log("fetch");
                 switch (res.status) {
                     case 201:
                         res.json().then(json =>{
