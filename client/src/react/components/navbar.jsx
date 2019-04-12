@@ -50,6 +50,7 @@ const Nav = (props) => (
         <Menu.Item
             header
             active={props.location.pathname === '/messenger'}
+            onClick={() => props.history.push('/messenger')}
         >
             <Icon
                 disabled={props.location.pathname === '/messenger'}

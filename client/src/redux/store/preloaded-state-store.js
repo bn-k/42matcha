@@ -63,6 +63,7 @@ export const registerPreloaded = {
 export const homePreloaded = {
 };
 
+
 export const peoplePreloaded = {
     filters: {
         age: [16, 120],
@@ -89,12 +90,16 @@ export const appPreloaded = {
     },
 };
 
+export const messengerPreloaded = {
+};
+
 const preloadedState = {
     login : loginPreloaded,
     register: registerPreloaded,
     home: homePreloaded,
     people: _.merge({}, peoplePreloaded),
     app: appPreloaded,
+    messenger: messengerPreloaded,
 };
 
 export default preloadedState;

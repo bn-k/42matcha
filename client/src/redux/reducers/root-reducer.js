@@ -4,6 +4,7 @@ import {registerReducer} from "./register-reducer";
 import {homeReducer} from "./home-reducer";
 import {peopleReducer} from "./people-reducer";
 import {appReducer} from "./app-reducer";
+import {messengerReducer} from "./messenger-reducer";
 
 export default combineReducers({
     login: loginReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     home: homeReducer,
     people: peopleReducer,
     app: appReducer,
+    messenger: messengerReducer,
 });
