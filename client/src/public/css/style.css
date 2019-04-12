@@ -31,3 +31,14 @@ body > div > div > div.register-form {
     .ui > .segment {
     }
 }
+
+.compose {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-top: 1px solid #eeeef1;
+    position: fixed;
+    width: calc(100% - 20px);
+    bottom: 0px;
+}

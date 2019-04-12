@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import Compose from '../Compose/index';
-import Toolbar from '../Toolbar/index';
-import ToolbarButton from '../ToolbarButton/index';
 import Message from '../Message/index';
-import moment from 'moment';
 
 import './MessageList.css';
 import {withRouter} from "react-router-dom";
@@ -36,41 +32,39 @@ class MessageList extends Component {
         this.state = {
             messages: [
                 {
-                    id: 1,
+                    id: 0,
                     author: 'apple',
                     message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
                     timestamp: new Date().getTime()
                 },
                 {
-                    id: 2,
+                    id: 1,
                     author: 'orange',
                     message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
                     timestamp: new Date().getTime()
                 },
             ],
+
             new: "",
             i : 0,
         };
         this.handleChange = this.handleChange.bind(this);
-        ws.onopen = (e) => {console.log("event: ", e)};
         ws.onmessage = (msg) => {
-            console.log("msg received: ", msg);
-            this.setState(prevState => {
-                return {
-                    ...prevState,
-                    messages: [
-                        {
-                            id: 56,
-                            author: 'apple',
-                            message: "asfsd",
-                            timestamp: new Date().getTime()
-                        },
-                    ]
-                };
-            });
+            this.setState({i : this.state.i + 1});
+            this.setState(prevState => ({
+                messages: [...prevState.messages,
+                    {
+                        id: this.state.i,
+                        author: 'apple',
+                        message: msg.data,
+                        timestamp: new Date().getTime()
+                    }
+                ]
+            }));
         };
     }
     componentDidMount() {
+        this.setState({i : this.state.messages.length})
     }
     renderMessages = () => (
         <>
@@ -91,13 +85,14 @@ class MessageList extends Component {
         this.setState({[data.name]: data.value});
     };
     send = () => {
+        this.setState({i : this.state.i + 1});
         ws.send(this.state.new);
     };
     render() {
         return(
             <div className="message-list">
                 <div className="message-list-container">{this.renderMessages()}</div>
-                <Container >
+                <Container className={'compose'}>
                 <Input
                     fluid
                     icon='user'

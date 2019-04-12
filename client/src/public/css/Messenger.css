@@ -8,6 +8,7 @@
   grid-template-rows: 60px auto 60px;
   grid-column-gap: 1px;
   grid-row-gap: 1px;
+  overflow: hidden;
 }
 
 .container {
