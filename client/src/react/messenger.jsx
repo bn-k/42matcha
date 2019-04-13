@@ -23,19 +23,19 @@ import {
 } from 'semantic-ui-react';
 
 class Messenger extends Component {
-  render() {
-    return (
-      <div className="messenger">
-        <div className="scrollable sidebar">
-          <ConversationList />
-        </div>
+    render() {
+        return (
+            <div className="messenger">
+                <div className="scrollable sidebar">
+                    <ConversationList />
+                </div>
 
-        <div className="scrollable content">
-          <MessageList />
-        </div>
-      </div>
-    );
-  }
+                <div className="scrollable content">
+                    <MessageList />
+                </div>
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
