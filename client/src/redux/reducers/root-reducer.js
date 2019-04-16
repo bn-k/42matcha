@@ -5,6 +5,7 @@ import {homeReducer} from "./home-reducer";
 import {peopleReducer} from "./people-reducer";
 import {appReducer} from "./app-reducer";
 import {messengerReducer} from "./messenger-reducer";
+import {matchsReducer} from "./matchs-reducer";
 
 export default combineReducers({
     login: loginReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     people: peopleReducer,
     app: appReducer,
     messenger: messengerReducer,
+    matchs: matchsReducer,
 });

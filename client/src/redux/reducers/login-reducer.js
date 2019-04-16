@@ -7,6 +7,7 @@ export function loginReducer (state = initial, action) {
     switch (action.type) {
         case LOGIN:
             return {
+                ...action,
                 loggedIn: true,
                 err: {status: false, message: ""}
             };

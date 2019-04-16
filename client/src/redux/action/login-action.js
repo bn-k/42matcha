@@ -1,4 +1,5 @@
 import {LOGIN, LOGIN_FAIL, LOGOUT, LOGIN_RESET} from './types-action';
+import jwtDecode from 'jwt-decode';
 
 export const loginAction = (formData, history) => dispatch => {
     fetch('/auth/login', {
@@ -19,7 +20,9 @@ export const loginAction = (formData, history) => dispatch => {
                     case 200:
                         res.json().then(json =>{
                             localStorage.setItem("jwt", json);
+                            const data = jwtDecode(json);
                             dispatch({
+                                ...data,
                                 type: LOGIN,
                             });
                             history.push('/');

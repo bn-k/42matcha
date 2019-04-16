@@ -1,16 +1,15 @@
-import {LOAD_PEOPLE} from './types-action';
+import {LOAD_MATCHS, LOAD_PEOPLE} from './types-action';
 
-export const getPeopleAction = (filters) => dispatch => {
+export const getMatchsAction = () => dispatch => {
     let init = {
         method: 'POST',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
-            'Filters': JSON.stringify(filters),
         }
     };
-    fetch('/api/get_people', init)
+    fetch('/api/get_matchs', init)
         .then(res => {
                 switch (res.status) {
                     case 201:
@@ -21,9 +20,8 @@ export const getPeopleAction = (filters) => dispatch => {
                     case 200:
                         res.json().then(data => {
                             dispatch({
-                                type: LOAD_PEOPLE,
+                                type: LOAD_MATCHS,
                                 data: data,
-                                filters: filters,
                             });
                         });
                 }

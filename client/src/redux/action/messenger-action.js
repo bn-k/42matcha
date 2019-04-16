@@ -1,31 +1,16 @@
-import {LOAD_HISTORY_MESSENGER} from "./types-action";
+import {LOAD_HISTORY_MESSENGER, UPDATE_SUITOR} from "./types-action";
+import {wsApi} from "../store/preloaded-state-store";
 
-export const loadHistoryMessengerAction = () => dispatch => {
-    let init = {
-        method: 'GET',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-            'Authorization': localStorage.getItem('jwt'),
-        }
-    };
-    fetch('/api/start', init)
-        .then(res => {
-                switch (res.status) {
-                    case 401:
-                        res.json().then(json =>{
-                            console.log(json.err);
-                        });
-                        break;
-                    case 200:
-                        res.json().then(json =>{
-                            dispatch({
-                                type: LOAD_HISTORY_MESSENGER,
-                                messages: json,
-                            });
-                        });
-                }
-            }
-        )
-        .catch(error => console.log(error))
+const join = (a, b) => {
+    const ret =  (a <= b ? a + '/' + b : b + '/' + a);
+    console.log(wsApi + ret);
+    return (ret)
+};
+export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
+    prevState.ws.close();
+    dispatch({
+        ws: new WebSocket(wsApi + join(userId, suitorId)),
+        type: UPDATE_SUITOR,
+        suitorId: suitorId,
+    });
 };

@@ -21,60 +21,54 @@ import {
     Image,
     Label,
 } from 'semantic-ui-react';
-
-
 import './ConversationList.css';
+import './ConversationListItem.css';
+import withRouter from "react-router/es/withRouter";
+import connect from "react-redux/es/connect/connect";
+import {updateSuitorAction} from "../../../redux/action/messenger-action";
 
-export default class ConversationList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      conversations: []
+class ConversationList extends Component {
+    selectSuitor = (e, suitorId) => {
+        this.props.dispatch(updateSuitorAction(this.props.messenger, suitorId, this.props.login.id))
     };
-  }
-
-  componentDidMount() {
-    this.getConversations();
-  }
-
-  getConversations = () => {
-    axios.get('https://randomuser.me/api/?results=20').then(response => {
-      this.setState(prevState => {
-        let conversations = response.data.results.map(result => {
-          return {
-            photo: result.picture.large,
-            name: `${result.name.first} ${result.name.last}`,
-            text: 'Hello world! This is a long message that needs to be truncated.'
-          };
-        });
-
-        return { ...prevState, conversations };
-      });
-    });
-  }
-
-  render() {
-    return (
-      <div className="conversation-list">
-        <Toolbar
-          title="Messenger"
-          leftItems={[
-            <ToolbarButton key="cog" icon="cog" />
-          ]}
-          rightItems={[
-            <ToolbarButton key="add" icon="add circle" />
-          ]}
-        />
-        <ConversationSearch />
-        {
-          this.state.conversations.map(conversation =>
-            <ConversationListItem
-              key={conversation.name}
-              data={conversation}
-            />
-          )
-        }
-      </div>
+    people = () => (
+        <>
+            {this.props.matchs.map((person) => (
+                    <div className="conversation-list-item" key={person.NodeIdentity}>
+                        <img className="conversation-photo" src={person.Properties.img1} alt="conversation" />
+                        <div className="conversation-info">
+                            <h1 className="conversation-title" onClick={e => this.selectSuitor(e, person.NodeIdentity)}>{person.Properties.firstname} {person.Properties.lastname}</h1>
+                            <p className="conversation-snippet">{ 'Hello world! This is a long message that needs to be truncated.' }</p>
+                        </div>
+                    </div>
+            ))}
+        </>
     );
-  }
+    render() {
+        return (
+            <div className="conversation-list">
+                <Toolbar
+                    title="Messenger"
+                    leftItems={[
+                        <ToolbarButton key="cog" icon="cog" />
+                    ]}
+                    rightItems={[
+                        <ToolbarButton key="add" icon="add circle" />
+                    ]}
+                />
+                <ConversationSearch />
+                {this.people()}
+            </div>
+        );
+    }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        matchs: state.matchs,
+        login: state.login,
+        messenger: state.messenger,
+    };
+};
+
+export default withRouter(connect(mapStateToProps)(ConversationList))

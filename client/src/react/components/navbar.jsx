@@ -40,11 +40,12 @@ const Nav = (props) => (
             active={props.location.pathname === '/user'}
             onClick={() => props.history.push('/user')}
         >
-            <Icon
-                disabled={props.location.pathname === '/user'}
-                name='user'
+            <Image
+                src={props.login.img1}
+                size={'tiny'}
+                circular
             />
-            {props.buttons.user.name}
+            {/*{props.buttons.user.name}*/}
         </Menu.Item>
 
         <Menu.Item
@@ -59,13 +60,13 @@ const Nav = (props) => (
             {props.buttons.messenger.name}
         </Menu.Item>
 
-            <Menu.Item
-                header
-                onClick={() => props.dispatch(logoutAction(props.history))}
-            >
-                <Icon name='log out'/>
-                {props.buttons.logout.name}
-            </Menu.Item>
+        <Menu.Item
+            header
+            onClick={() => props.dispatch(logoutAction(props.history))}
+        >
+            <Icon name='log out'/>
+            {props.buttons.logout.name}
+        </Menu.Item>
     </Menu>
 );
 

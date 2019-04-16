@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ConversationList from './messenger-components/ConversationList/index';
-import MessageList from './messenger-components/MessageList/index';
+import MessageList from './messenger-components/MessageList/message-list';
 import '../public/css/Messenger.css';
 import withRouter from "react-router/es/withRouter";
 import connect from "react-redux/es/connect/connect";
@@ -21,8 +21,17 @@ import {
     Image,
     Label,
 } from 'semantic-ui-react';
+import store from "../redux/store/matcha-store";
+import {getMatchsAction} from "../redux/action/matchs-action";
 
 class Messenger extends Component {
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount() {
+        store.dispatch(getMatchsAction());
+    }
+
     render() {
         return (
             <div className="messenger">

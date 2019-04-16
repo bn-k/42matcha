@@ -2,3 +2,7 @@
   padding: 10px;
   padding-bottom: 70px;
 }
+
+.message-input {
+  bottom: 0px;
+}

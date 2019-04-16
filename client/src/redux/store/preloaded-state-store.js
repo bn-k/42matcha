@@ -22,6 +22,19 @@ const stillLogged = (file) => {
     return true
 };
 
+const getFromToken = (name) => {
+    const tok = parseToken('jwt');
+    if (!tok) {
+        return (-1)
+    }
+
+    if (tok !== undefined) {
+        return tok.name;
+    } else {
+        return -1;
+    }
+};
+
 export const registerPreloaded = {
     valid: false,
     fail: false,
@@ -63,7 +76,6 @@ export const registerPreloaded = {
 export const homePreloaded = {
 };
 
-
 export const peoplePreloaded = {
     filters: {
         age: [16, 120],
@@ -76,9 +88,16 @@ export const peoplePreloaded = {
     data: []
 };
 
+const user = () => {
+    if (localStorage.getItem('jwt') !== undefined) {
+        const parsed =  JwtDecode(localStorage.getItem('jwt'));
+        return parsed;
+    }
+};
 export const loginPreloaded = {
+    ...parseToken('jwt'),
     loggedIn: stillLogged('jwt'),
-    err: {status: false, message: ""}
+    err: {status: false, message: ""},
 };
 
 export const appPreloaded = {
@@ -90,7 +109,12 @@ export const appPreloaded = {
     },
 };
 
+export const wsApi = "ws://localhost:81/api/ws/";
+export const wsUrl = wsApi + loginPreloaded.id + "/" + loginPreloaded.id;
 export const messengerPreloaded = {
+    suitorId: -1,
+    url : wsUrl,
+    ws : new WebSocket(wsUrl),
 };
 
 const preloadedState = {
@@ -100,6 +124,7 @@ const preloadedState = {
     people: _.merge({}, peoplePreloaded),
     app: appPreloaded,
     messenger: messengerPreloaded,
+    matchs: [],
 };
 
 export default preloadedState;

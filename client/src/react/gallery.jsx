@@ -33,6 +33,7 @@ class Gallery extends Component {
                           <Card.Header>{person.Properties.username}</Card.Header>
                           <Card.Meta>
                               <span className='date'>{getAge(person.Properties.birthday)}</span>
+                              <p>{person.Properties.firstname} {person.Properties.lastname}</p>
                           </Card.Meta>
                           <Card.Description>{person.Properties.biography}</Card.Description>
                       </Card.Content>
