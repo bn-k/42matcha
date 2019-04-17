@@ -22,6 +22,7 @@ import {
     Image,
     Label,
 } from 'semantic-ui-react';
+import {incrementMessageAction} from "../../../redux/action/messenger-action";
 
 
 class MessageInput extends Component {
@@ -33,10 +34,19 @@ class MessageInput extends Component {
         this.send = this.send.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    send = (e, ws) => {
-        const token = jwtDecode(localStorage.getItem('jwt'));
-        console.log("Send: ", this.state.new);
-        this.props.messenger.ws.send(this.state.new)
+    send = (e) => {
+        const token = localStorage.getItem('jwt');
+        const msg = {
+            id: this.props.messenger.i + 1,
+            token: token,
+            msg: this.state.new,
+            author: this.props.login.id,
+            timestamp: new Date().getTime(),
+            to: this.props.messenger.suitorId,
+        };
+        const json = JSON.stringify(msg);
+        this.props.messenger.ws.send(json);
+        this.props.dispatch(incrementMessageAction(this.props.messenger));
     };
     handleChange = (e, data) => {
         this.setState({[data.name]: data.value});
@@ -64,6 +74,7 @@ class MessageInput extends Component {
 const mapStateToProps = (state) => {
     return {
         people: state.people,
+        login: state.login,
         messenger: state.messenger,
     };
 };

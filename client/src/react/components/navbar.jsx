@@ -37,19 +37,6 @@ const Nav = (props) => (
 
         <Menu.Item
             header
-            active={props.location.pathname === '/user'}
-            onClick={() => props.history.push('/user')}
-        >
-            <Image
-                src={props.login.img1}
-                size={'tiny'}
-                circular
-            />
-            {/*{props.buttons.user.name}*/}
-        </Menu.Item>
-
-        <Menu.Item
-            header
             active={props.location.pathname === '/messenger'}
             onClick={() => props.history.push('/messenger')}
         >
@@ -58,6 +45,19 @@ const Nav = (props) => (
                 name='chat'
             />
             {props.buttons.messenger.name}
+        </Menu.Item>
+
+        <Menu.Item
+            header
+            active={props.location.pathname === '/user'}
+            onClick={() => props.history.push('/user')}
+        >
+            <Image
+                src={props.login.img1}
+                size={'mini'}
+                circular
+            />
+            {/*{props.buttons.user.name}*/}
         </Menu.Item>
 
         <Menu.Item

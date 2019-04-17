@@ -115,6 +115,7 @@ export const messengerPreloaded = {
     suitorId: -1,
     url : wsUrl,
     ws : new WebSocket(wsUrl),
+    i: 0,
 };
 
 const preloadedState = {

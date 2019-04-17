@@ -12,5 +12,6 @@ export const NAVBAR_HEIGHT = 'NAVBAR_HEIGHT';
 
 export const LOAD_HISTORY_MESSENGER = 'LOAD_HISTORY_MESSENGER';
 export const UPDATE_SUITOR = 'UPDATE_SUITOR';
+export const INCR_I = 'INCR_I';
 
 export const LOAD_MATCHS = 'LOAD_MATCHS';

@@ -23,6 +23,7 @@ import {
     Label,
 } from 'semantic-ui-react';
 import MessageInput from "./message-input";
+import {incrementeMessageAction, incrementMessageAction} from "../../../redux/action/messenger-action";
 
 
 class MessageList extends Component {
@@ -33,7 +34,6 @@ class MessageList extends Component {
             new: "",
             i : 0,
         };
-        this.send = this.send.bind(this);
     }
     componentDidMount() {
         this.setState({i : this.state.messages.length});
@@ -43,7 +43,7 @@ class MessageList extends Component {
             {this.state.messages.map((msg) => (
                 <Message
                     key={msg.id}
-                    isMine={true}
+                    isMine={msg.author == this.props.login.id}
                     startsSequence={true}
                     endsSequence={false}
                     showTimestamp={true}
@@ -52,25 +52,25 @@ class MessageList extends Component {
             ))}
         </>
     );
-    send = (e) => {
-        const token = jwtDecode(localStorage.getItem('jwt'));
-        console.log("Send: ", this.state.new);
-        this.props.messenger.ws.send(this.state.new)
-    };
-    componentWillUpdate () {
-    }
     componentDidUpdate () {
-        this.props.messenger.ws.onmessage = (msg) => {
-            console.log("On Message: ", msg);
-            this.setState({i : this.state.i + 1});
+        this.props.messenger.ws.onmessage = (res) => {
+            const json = res.data;
+            const msg = JSON.parse(json);
+            console.log(msg);
+            if (this.props.login.id !== msg.author) {
+                this.props.dispatch(incrementMessageAction(this.props.messenger));
+            }
+            const newMessage = {
+                id: msg.id,
+                author: msg.author,
+                message: msg.msg,
+                timestamp: msg.timestamp,
+                to: this.props.people.suitorId,
+            };
             this.setState(prevState => ({
-                messages: [...prevState.messages,
-                    {
-                        id: this.state.i,
-                        author: 'apple',
-                        message: msg.data,
-                        timestamp: new Date().getTime()
-                    }
+                messages: [
+                    ...prevState.messages,
+                    newMessage,
                 ]
             }));
         };
@@ -88,6 +88,7 @@ class MessageList extends Component {
 const mapStateToProps = (state) => {
     return {
         people: state.people,
+        login : state.login,
         messenger: state.messenger,
     };
 };
