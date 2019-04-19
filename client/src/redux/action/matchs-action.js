@@ -1,6 +1,7 @@
 import {LOAD_MATCHS, LOAD_PEOPLE} from './types-action';
+import {updateSuitorAction} from "./messenger-action";
 
-export const getMatchsAction = () => dispatch => {
+export const getMatchsAction = (messenger, userId) => dispatch => {
     let init = {
         method: 'POST',
         headers:{
@@ -23,6 +24,7 @@ export const getMatchsAction = () => dispatch => {
                                 type: LOAD_MATCHS,
                                 data: data,
                             });
+                            dispatch(updateSuitorAction(messenger, data[0].NodeIdentity, userId));
                         });
                 }
             }

@@ -23,24 +23,22 @@ import {
     Label,
 } from 'semantic-ui-react';
 import MessageInput from "./message-input";
-import {incrementeMessageAction, incrementMessageAction} from "../../../redux/action/messenger-action";
+import {addMessageAction, incrementMessageAction} from "../../../redux/action/messenger-action";
 
 
 class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [],
             new: "",
             i : 0,
         };
     }
     componentDidMount() {
-        this.setState({i : this.state.messages.length});
     }
     renderMessages = () => (
         <>
-            {this.state.messages.map((msg) => (
+            {this.props.messenger.messages.map((msg) => (
                 <Message
                     key={msg.id}
                     isMine={msg.author == this.props.login.id}
@@ -56,7 +54,6 @@ class MessageList extends Component {
         this.props.messenger.ws.onmessage = (res) => {
             const json = res.data;
             const msg = JSON.parse(json);
-            console.log(msg);
             if (this.props.login.id !== msg.author) {
                 this.props.dispatch(incrementMessageAction(this.props.messenger));
             }
@@ -67,12 +64,7 @@ class MessageList extends Component {
                 timestamp: msg.timestamp,
                 to: this.props.people.suitorId,
             };
-            this.setState(prevState => ({
-                messages: [
-                    ...prevState.messages,
-                    newMessage,
-                ]
-            }));
+            this.props.dispatch(addMessageAction(this.props.messenger, newMessage))
         };
     }
     render() {

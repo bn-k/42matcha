@@ -116,6 +116,7 @@ export const messengerPreloaded = {
     url : wsUrl,
     ws : new WebSocket(wsUrl),
     i: 0,
+    messages: [],
 };
 
 const preloadedState = {
@@ -125,7 +126,39 @@ const preloadedState = {
     people: _.merge({}, peoplePreloaded),
     app: appPreloaded,
     messenger: messengerPreloaded,
-    matchs: [],
+    matchs: [
+        {
+            NodeIdentity: -1,
+            Labels: [
+                'User'
+            ],
+            Properties: {
+                access_lvl: 0,
+                biography: '',
+                birthday: '',
+                city: '',
+                country: '',
+                email: '',
+                firstname: '',
+                genre: '',
+                geo_allowed: false,
+                img1: '',
+                img2: '',
+                img3: '',
+                img4: '',
+                img5: '',
+                interest: '',
+                lastname: '',
+                latitude: 0,
+                longitude: 0,
+                name: '',
+                online: true,
+                rating: 0,
+                username: '',
+                zip: ''
+            }
+        },
+    ],
 };
 
 export default preloadedState;

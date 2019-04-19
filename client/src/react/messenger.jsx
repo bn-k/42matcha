@@ -23,13 +23,14 @@ import {
 } from 'semantic-ui-react';
 import store from "../redux/store/matcha-store";
 import {getMatchsAction} from "../redux/action/matchs-action";
+import {updateSuitorAction} from "../redux/action/messenger-action";
 
 class Messenger extends Component {
     constructor(props) {
         super(props);
     }
     componentDidMount() {
-        store.dispatch(getMatchsAction());
+        store.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
     }
 
     render() {
@@ -50,6 +51,9 @@ class Messenger extends Component {
 const mapStateToProps = (state) => {
     return {
         people: state.people,
+        login: state.login,
+        messenger: state.messenger,
+        matchs: state.matchs,
     };
 };
 

@@ -16,7 +16,7 @@ class ConversationListItem extends Component {
         shave('.conversation-snippet', 20);
     }
     selectSuitor = (e, suitorId) => {
-        this.props.dispatch(updateSuitorAction(this.props.messenger, suitorId))
+        this.props.dispatch(updateSuitorAction(this.props.messenger,suitorId, this.props.login.id))
     };
     render() {
         const { photo, name, text, id } = this.props.data;
