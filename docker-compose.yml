@@ -2,7 +2,7 @@ version: '3.5'
 services:
   neo4j:
     image: neo4j:latest
-    container_name: 'neo4j'
+    container_name: 'neo4j_database'
     volumes:
     - ./neo4j/data:/data
     - ./neo4j/conf/:/conf
@@ -15,7 +15,7 @@ services:
 
   api:
     build: api
-    container_name: 'api'
+    container_name: 'go_api'
     volumes:
       - ${GOPATH}/src:/go/src
       - ./api:/matcha/api
@@ -35,7 +35,7 @@ services:
 
   web:
     build: ./client
-    container_name: 'web'
+    container_name: 'react_web'
     volumes:
     - ./client:/app
     ports:
