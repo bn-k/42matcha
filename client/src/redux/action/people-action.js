@@ -18,6 +18,12 @@ export const getPeopleAction = (filters) => dispatch => {
                             console.log(json.err);
                         });
                         break;
+                    case 202:
+                        localStorage.removeItem('jwt');
+                        res.json().then(json =>{
+                            console.log(json.err);
+                        });
+                        break;
                     case 200:
                         res.json().then(data => {
                             dispatch({

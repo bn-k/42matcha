@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import ConversationSearch from '../ConversationSearch/index';
-import ConversationListItem from '../ConversationListItem/index';
-import Toolbar from '../Toolbar/index';
-import ToolbarButton from '../ToolbarButton/index';
-import axios from 'axios';
 import {
     Divider,
     Segment,
@@ -34,33 +29,22 @@ class ConversationList extends Component {
     people = () => (
         <>
             {this.props.matchs.map((person) => (
-                    <div
-                        className="conversation-list-item"
-                        key={person.NodeIdentity}
-                        onClick={e => this.selectSuitor(e, person.NodeIdentity)}
-                    >
-                        <img className="conversation-photo" src={person.Properties.img1} alt="conversation" />
-                        <div className="conversation-info">
-                            <h1 className="conversation-title">{person.Properties.name}</h1>
-                            <p className="conversation-snippet">{ 'Hello world! This is a long message that needs to be truncated.' }</p>
-                        </div>
+                <div
+                    className="conversation-list-item"
+                    key={person.NodeIdentity}
+                    onClick={e => this.selectSuitor(e, person.NodeIdentity)}
+                >
+                    <img className="conversation-photo" src={person.Properties.img1} alt="conversation" />
+                    <div className="conversation-info">
+                        <h1 className="conversation-title">{person.Properties.name}</h1>
                     </div>
+                </div>
             ))}
         </>
     );
     render() {
         return (
             <div className="conversation-list">
-                <Toolbar
-                    title="Messenger"
-                    leftItems={[
-                        <ToolbarButton key="cog" icon="cog" />
-                    ]}
-                    rightItems={[
-                        <ToolbarButton key="add" icon="add circle" />
-                    ]}
-                />
-                <ConversationSearch />
                 {this.people()}
             </div>
         );

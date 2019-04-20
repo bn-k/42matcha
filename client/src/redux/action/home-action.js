@@ -12,6 +12,12 @@ export const homeAction = () => dispatch => {
     fetch('/api/start', init)
         .then(res => {
                 switch (res.status) {
+                    case 202:
+                        localStorage.removeItem('jwt');
+                        res.json().then(json =>{
+                            console.log(json.err);
+                        });
+                        break;
                     case 401:
                         res.json().then(json =>{
                             console.log(json.err);

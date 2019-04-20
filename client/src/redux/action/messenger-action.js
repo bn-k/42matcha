@@ -21,6 +21,12 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
     fetch('/api/get_messages', init)
         .then(res => {
                 switch (res.status) {
+                    case 202:
+                        localStorage.removeItem('jwt');
+                        res.json().then(json =>{
+                            console.log(json.err);
+                        });
+                        break;
                     case 201:
                         res.json().then(json =>{
                             console.log(json.err);
@@ -38,6 +44,7 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
                                 type: UPDATE_SUITOR,
                                 suitorId: suitorId,
                                 messages: data,
+                                i: data.length,
                             });
                         });
                 }

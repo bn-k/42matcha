@@ -32,8 +32,14 @@ class MessageInput extends Component {
             new: "",
         };
         this.send = this.send.bind(this);
+        this.keyDown = this.keyDown.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+    keyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.send(e);
+        }
+    };
     send = (e) => {
         const token = localStorage.getItem('jwt');
         const msg = {
@@ -47,6 +53,7 @@ class MessageInput extends Component {
         const json = JSON.stringify(msg);
         this.props.messenger.ws.send(json);
         this.props.dispatch(incrementMessageAction(this.props.messenger));
+        this.setState({new: ""});
     };
     handleChange = (e, data) => {
         this.setState({[data.name]: data.value});
@@ -60,6 +67,8 @@ class MessageInput extends Component {
                 name={"new"}
                 value={this.state.new}
                 onChange={this.handleChange}
+                onKeyDown={e => this.keyDown(e)}
+                autoComplete={'off'}
                 label={{
                     icon: "send",
                     onClick: e => this.send(e),
