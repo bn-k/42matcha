@@ -101,12 +101,7 @@ export const loginPreloaded = {
 };
 
 export const appPreloaded = {
-    css : {
-        navbar: {
-            height: 0,
-        },
-        windowHeight: 0,
-    },
+    profileId: -1,
 };
 
 export const wsApi = "ws://localhost:81/api/ws/";

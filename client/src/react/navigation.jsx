@@ -21,8 +21,6 @@ import {
 import {logoutAction} from "../redux/action/login-action";
 import Nav from "./components/navbar";
 import {computerButtons, mobileButtons} from "./components/nav-buttons";
-import Measure from "react-measure";
-import {navbarCss} from "../redux/action/app-action";
 import withSizes from 'react-sizes'
 
 @withSizes(({ height}) => ({ height: height }))
@@ -39,7 +37,7 @@ class Navigation extends Component {
                         <Nav buttons={mobileButtons} mobile/>
                     </Responsive>
                     <Responsive {...Responsive.onlyTablet}>
-                        <Nav buttons={mobileButtons} mobile/>
+                        <Nav buttons={computerButtons} icon={"labeled"}/>
                     </Responsive>
                     <Responsive {...Responsive.onlyComputer}>
                         <Nav buttons={computerButtons} icon={"labeled"}/>

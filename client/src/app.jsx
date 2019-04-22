@@ -11,6 +11,7 @@ import PublicRoute from './react/modules/public-route';
 import Entry from "./react/entry";
 import Home from "./react/home";
 import User from "./react/user";
+import Profile from "./react/profile";
 import Login from "./react/login";
 import Register from "./react/register";
 import Error from "./react/error";
@@ -28,6 +29,7 @@ const App = () => (
                     <Route exact path="/" component={Entry}/>
                     <PrivateRoute path="/home" component={Home}/>
                     <PrivateRoute path="/user" component={User}/>
+                    <PrivateRoute path="/profile" component={Profile}/>
                     <PrivateRoute path="/messenger" component={Messenger}/>
                     <Route path="/401" component={Error}/>
                     <Route path="/valid_email" component={ValidEmail}/>
