@@ -13,13 +13,16 @@
 - A bunch of packages
 
 ### Middleware auth: 
-* JWT
+* Jason Web Token [JWT](https://jwt.io/) 
 
 ### API-REST:
-* ~~NodeJs~~ Golang
+* Written in ~~NodeJs~~ Go: [API](https://github.com/Newcratie/matcha-api)
+* Micro-framework[Gin-Gonic](https://github.com/gin-gonic/gin/)
+* WebSocket [Melody](https://github.com/olahol/melody)
+* Neo Driver [Driver](github.com/johnnadratowski/golang-neo4j-bolt-driver)
 
 ### DB: 
-* ~~PostgresSQL~~ Neo4j
+* ~~PostgresSQL~~ Neo4j 
 
 **How to run?**
 
