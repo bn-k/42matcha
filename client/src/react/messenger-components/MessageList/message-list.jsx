@@ -35,7 +35,7 @@ class MessageList extends Component {
         };
     }
     componentDidMount() {
-        setTimeout(() => this.scrollToBottom(), 900)
+        this.scrollToBottom()
     }
     renderMessages = () => (
         <>
@@ -76,7 +76,7 @@ class MessageList extends Component {
         return(
             <div className="message-list">
                 <Segment className="message-list-container">{this.renderMessages()}</Segment>
-                <div style={{padding: "14px"}} ref={el => { this.el = el; }} />
+                <div style={{padding: "10px"}} ref={el => { this.el = el; }} />
                 <MessageInput/>
 
             </div>

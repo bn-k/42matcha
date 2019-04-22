@@ -1,10 +1,9 @@
-import {NAVBAR_HEIGHT} from "./types-action";
+import {UPDATE_PROFILE} from "./types-action";
 
-export const navbarCss = (previous, height, windowHeight) => dispatch => {
+export const updateProfileAction = (prev, id, i) => dispatch => {
     dispatch({
-        type: NAVBAR_HEIGHT,
-        previous: previous,
-        height: height,
-        windowHeight: windowHeight,
+        type: UPDATE_PROFILE,
+        profileId: id,
+        i: i,
     });
 };

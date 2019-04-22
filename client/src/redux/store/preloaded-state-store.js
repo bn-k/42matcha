@@ -22,19 +22,6 @@ const stillLogged = (file) => {
     return true
 };
 
-const getFromToken = (name) => {
-    const tok = parseToken('jwt');
-    if (!tok) {
-        return (-1)
-    }
-
-    if (tok !== undefined) {
-        return tok.name;
-    } else {
-        return -1;
-    }
-};
-
 export const registerPreloaded = {
     valid: false,
     fail: false,
@@ -101,12 +88,7 @@ export const loginPreloaded = {
 };
 
 export const appPreloaded = {
-    css : {
-        navbar: {
-            height: 0,
-        },
-        windowHeight: 0,
-    },
+    profileId: -1,
 };
 
 export const wsApi = "ws://localhost:81/api/ws/";

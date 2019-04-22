@@ -19,15 +19,24 @@ import {
     Image,
     Label,
 } from 'semantic-ui-react';
+import {updateProfileAction} from "../redux/action/app-action";
 
 class Gallery extends Component {
+    constructor(props) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
     state = {
         i : 0,
     };
+    handleClick (e, id, i) {
+        this.props.dispatch(updateProfileAction(this.props.app, id, i));
+        this.props.history.push('/profile');
+    }
     people = () => (
         <>
-            {this.props.people.data.map((person) => (
-                  <Card key={person.NodeIdentity}>
+            {this.props.people.data.map((person, i) => (
+                  <Card key={person.NodeIdentity} onClick={e => this.handleClick(e, person.NodeIdentity, i)}>
                       <Image src={person.Properties.img1} size='big'/>
                       <Card.Content>
                           <Card.Header>{person.Properties.username}</Card.Header>
@@ -35,11 +44,9 @@ class Gallery extends Component {
                               <span className='date'>{getAge(person.Properties.birthday)}</span>
                               <p>{person.Properties.firstname} {person.Properties.lastname}</p>
                           </Card.Meta>
-                          <Card.Description>{person.Properties.biography}</Card.Description>
                       </Card.Content>
                   </Card>
-              ))}
-              </>
+            ))}</>
     );
     render () {
         return (
@@ -66,6 +73,7 @@ class Gallery extends Component {
 const mapStateToProps = (state) => {
     return {
         people: state.people,
+        app: state.app,
     };
 };
 
