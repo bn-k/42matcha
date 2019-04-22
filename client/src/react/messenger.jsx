@@ -24,6 +24,7 @@ import {
 import store from "../redux/store/matcha-store";
 import {getMatchsAction} from "../redux/action/matchs-action";
 import {updateSuitorAction} from "../redux/action/messenger-action";
+import Switcher from "./messenger-mobile/switcher";
 
 class Messenger extends Component {
     constructor(props) {
@@ -31,7 +32,6 @@ class Messenger extends Component {
     }
     componentDidMount() {
         store.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
-
     }
     componentWillMount() {
         document.body.style.overflow = "hidden";
@@ -41,14 +41,22 @@ class Messenger extends Component {
     }
     render() {
         return (
-            <div className="messenger">
-                <div className="scrollable sidebar">
-                    <ConversationList />
-                </div>
-
-                <div className="scrollable content">
-                    <MessageList />
-                </div>
+            <div>
+                <Responsive {...Responsive.onlyMobile}>
+                    <Switcher mobile/>
+                </Responsive>
+                <Responsive {...Responsive.onlyTablet}>
+                    <div className="messenger">
+                        <div className="scrollable sidebar"><ConversationList/></div>
+                        <div className="scrollable content"><MessageList/></div>
+                    </div>
+                </Responsive>
+                <Responsive {...Responsive.onlyComputer}>
+                    <div className="messenger">
+                        <div className="scrollable sidebar"><ConversationList/></div>
+                        <div className="scrollable content"><MessageList/></div>
+                    </div>
+                </Responsive>
             </div>
         );
     }

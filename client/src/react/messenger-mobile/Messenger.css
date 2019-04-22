@@ -1,10 +1,11 @@
-.messenger {
+.messenger-mobile {
   display: grid;
   width: 100%;
-  height: calc(100vh - 84px);
+  height: calc(100vh - 66px);
   background: #eeeef1;
 
-  grid-template-columns: 30% auto;
+  grid-template-columns: auto;
+  grid-template-rows: 60px auto 60px;
   grid-column-gap: 1px;
   grid-row-gap: 1px;
   overflow: hidden;
