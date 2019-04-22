@@ -1,12 +1,14 @@
 # 42matcha
-Tinder like application. Front: Nodejs/react. Middleware: JWT API: GO/Postgres (educational purpose)
+Tinder-like application. 
+Front: react. 
+Middleware auth: JWT
+API-REST language: Golang
 
-Admiting you have Go and Docker installed
+Admiting you have Docker installed.
 
-Add the API dependencie by running:
-go get github.com/Newcratie/matcha-api
-
-Deploy website with:
+Deploy with:
 docker-compose up
 
-visit localhost:80
+visit localhost:8080
+
+(educational purpose 42.fr)
