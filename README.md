@@ -3,6 +3,7 @@ Tinder-like application.
 Front: react. 
 Middleware auth: JWT
 API-REST language: Golang
+DB: Neo4j
 
 Admiting you have Docker installed.
 
