@@ -11,7 +11,6 @@ export default class Message extends Component {
       endsSequence,
       showTimestamp
     } = this.props;
-
     const friendlyTimestamp = moment(data.timestamp).format('LLLL');
     return (
       <div className={[

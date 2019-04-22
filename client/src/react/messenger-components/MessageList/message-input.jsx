@@ -61,6 +61,11 @@ class MessageInput extends Component {
     render() {
         return(
             <Input
+                style={{
+                    position:"absolute",
+                    bottom: "0px",
+                    width: "100%",
+                }}
                 fluid
                 placeholder='Write your message here...'
                 type={"text"}

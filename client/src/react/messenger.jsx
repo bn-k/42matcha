@@ -31,8 +31,14 @@ class Messenger extends Component {
     }
     componentDidMount() {
         store.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
-    }
 
+    }
+    componentWillMount() {
+        document.body.style.overflow = "hidden";
+    }
+    componentWillUnmount(){
+        document.body.style.overflow = "";
+    }
     render() {
         return (
             <div className="messenger">
