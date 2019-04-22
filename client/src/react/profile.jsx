@@ -2,7 +2,6 @@ import React from "react";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 import { Container} from "semantic-ui-react";
-import Grid from "semantic-ui-react/src/collections/Grid";
 
 class Profile extends React.Component {
     constructor (props) {
@@ -24,12 +23,6 @@ class Profile extends React.Component {
         return (
             this.state.loaded ? (
             <Container className={"profile"}>
-                <Grid>
-                    <Grid>
-
-                    </Grid>
-
-                </Grid>
             </Container>
             ):(null)
         )

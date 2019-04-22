@@ -35,7 +35,7 @@ class MessageList extends Component {
         };
     }
     componentDidMount() {
-        setTimeout(() => this.scrollToBottom(), 900)
+        this.scrollToBottom()
     }
     renderMessages = () => (
         <>
