@@ -88,7 +88,7 @@ export const loginPreloaded = {
 };
 
 export const appPreloaded = {
-    profileId: -1,
+    profileId: 0,
 };
 
 export const wsApi = "ws://localhost:81/api/ws/";
