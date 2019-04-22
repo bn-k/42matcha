@@ -34,17 +34,17 @@ class Navigation extends Component {
     render() {
         if (this.props.login.loggedIn) {
             return (
-                        <div>
-                            <Responsive {...Responsive.onlyMobile}>
-                                <Nav buttons={mobileButtons} mobile/>
-                            </Responsive>
-                            <Responsive {...Responsive.onlyTablet}>
-                                <Nav buttons={mobileButtons} mobile/>
-                            </Responsive>
-                            <Responsive {...Responsive.onlyComputer}>
-                                <Nav buttons={computerButtons} icon={"labeled"}/>
-                            </Responsive>
-                        </div>
+                <div>
+                    <Responsive {...Responsive.onlyMobile}>
+                        <Nav buttons={mobileButtons} mobile/>
+                    </Responsive>
+                    <Responsive {...Responsive.onlyTablet}>
+                        <Nav buttons={mobileButtons} mobile/>
+                    </Responsive>
+                    <Responsive {...Responsive.onlyComputer}>
+                        <Nav buttons={computerButtons} icon={"labeled"}/>
+                    </Responsive>
+                </div>
             )
         } else {
             return null

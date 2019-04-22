@@ -77,8 +77,7 @@ class MessageList extends Component {
             <div className="message-list">
                 <Segment className="message-list-container">{this.renderMessages()}</Segment>
                 <div style={{padding: "14px"}} ref={el => { this.el = el; }} />
-                <MessageInput/>
-
+                <MessageInput toConvList={this.props.toConvList}/>
             </div>
         );
     }

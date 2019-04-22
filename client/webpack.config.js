@@ -31,6 +31,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(png|svg|jpg|gif)$/,
+                use:['file-loader']
+            },
+            {
                 test: /\.jsx$/,
                 exclude: /node_modules/,
                 use: {
@@ -60,7 +64,6 @@ module.exports = {
         proxy: {
             '/api': api,
             '/auth': api,
-            '/admin': api,
         },
         publicPath: '/',
         historyApiFallback: true,

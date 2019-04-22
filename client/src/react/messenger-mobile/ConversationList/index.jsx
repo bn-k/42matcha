@@ -25,6 +25,7 @@ import {updateSuitorAction} from "../../../redux/action/messenger-action";
 class ConversationList extends Component {
     selectSuitor = (e, suitorId) => {
         this.props.dispatch(updateSuitorAction(this.props.messenger, suitorId, this.props.login.id))
+        this.props.toMsgList();
     };
     people = () => (
         <>

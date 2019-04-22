@@ -62,27 +62,50 @@ class MessageInput extends Component {
     };
     render() {
         return(
-            <Input
+            <Grid
                 style={{
                     position:"fixed",
                     bottom: "0px",
-                    width: "70%",
+                    width: "100%",
                 }}
-                fluid
-                placeholder='Write your message here...'
-                type={"text"}
-                name={"new"}
-                value={this.state.new}
-                onChange={this.handleChange}
-                onKeyDown={e => this.keyDown(e)}
-                autoComplete={'off'}
-                label={{
-                    icon: "send",
-                    onClick: e => this.send(e),
-                    position: "right"
-                }}
-                labelPosition='right'
-            />
+            >
+                <Grid.Column>
+                    <Button
+                        style={{
+                            position:"fixed",
+                            bottom: "0px",
+                            left: "0px",
+                            width: "14%",
+                        }}
+                        icon={"caret left"}
+                        onClick={e => this.props.toConvList(e)}
+                    />
+                </Grid.Column>
+                <Grid.Column>
+                    <Input
+                        style={{
+                            position:"fixed",
+                            bottom: "0px",
+                            width: "86%",
+                            right: "0px",
+                        }}
+                        fluid
+                        placeholder='Write your message here...'
+                        type={"text"}
+                        name={"new"}
+                        value={this.state.new}
+                        onChange={this.handleChange}
+                        onKeyDown={e => this.keyDown(e)}
+                        autoComplete={'off'}
+                        label={{
+                            icon: "send",
+                            onClick: e => this.send(e),
+                            position: "right"
+                        }}
+                        labelPosition='right'
+                    />
+                </Grid.Column>
+            </Grid>
         );
     }
 }

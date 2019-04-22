@@ -23,25 +23,40 @@ import {
 } from 'semantic-ui-react';
 import store from "../redux/store/matcha-store";
 import {getMatchsAction} from "../redux/action/matchs-action";
+import {updateSuitorAction} from "../redux/action/messenger-action";
+import Switcher from "./messenger-mobile/switcher";
 
 class Messenger extends Component {
     constructor(props) {
         super(props);
     }
     componentDidMount() {
-        store.dispatch(getMatchsAction());
+        store.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
     }
-
+    componentWillMount() {
+        document.body.style.overflow = "hidden";
+    }
+    componentWillUnmount(){
+        document.body.style.overflow = "";
+    }
     render() {
         return (
-            <div className="messenger">
-                <div className="scrollable sidebar">
-                    <ConversationList />
-                </div>
-
-                <div className="scrollable content">
-                    <MessageList />
-                </div>
+            <div>
+                <Responsive {...Responsive.onlyMobile}>
+                    <Switcher mobile/>
+                </Responsive>
+                <Responsive {...Responsive.onlyTablet}>
+                    <div className="messenger">
+                        <div className="scrollable sidebar"><ConversationList/></div>
+                        <div className="scrollable content"><MessageList/></div>
+                    </div>
+                </Responsive>
+                <Responsive {...Responsive.onlyComputer}>
+                    <div className="messenger">
+                        <div className="scrollable sidebar"><ConversationList/></div>
+                        <div className="scrollable content"><MessageList/></div>
+                    </div>
+                </Responsive>
             </div>
         );
     }
@@ -50,6 +65,9 @@ class Messenger extends Component {
 const mapStateToProps = (state) => {
     return {
         people: state.people,
+        login: state.login,
+        messenger: state.messenger,
+        matchs: state.matchs,
     };
 };
 

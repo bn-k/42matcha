@@ -1,44 +1,5 @@
-html, body {
-}
-body{
-}
-body > div,
-body > div > div,
-body > div > div > div.login-form {
-}
-body > div > div > div.register-form {
-}
-
-.carousel {
-    width: 100%;
-}
-
-
 @media only screen and (max-width: 600px) {
-    .skip-board {
-        border: 2px solid lightpink;
-        margin: 0;
-    }
-    .ui > .segment {
-        padding: 0;
-    }
 }
 
 @media only screen and (min-width: 601px) {
-    .skip-board {
-        border: 2px solid darkseagreen;
-    }
-    .ui > .segment {
-    }
-}
-
-.compose {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    background: white;
-    border-top: 1px solid #eeeef1;
-    position: fixed;
-    width: calc(100% - 20px);
-    bottom: 0px;
 }

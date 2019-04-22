@@ -1,4 +1,4 @@
-import {INCR_I, LOAD_HISTORY_MESSENGER, UPDATE_SUITOR} from "../action/types-action";
+import {ADD_MESSAGE, INCR_I, LOAD_HISTORY_MESSENGER, UPDATE_SUITOR} from "../action/types-action";
 
 const initial = () => {
 };
@@ -15,6 +15,11 @@ export function messengerReducer (state = initial, action) {
             return ({
                 ...action,
                 i: action.i,
+            });
+        case ADD_MESSAGE:
+            return ({
+                ...action,
+                messages: action.messages,
             });
         default:
             return state
