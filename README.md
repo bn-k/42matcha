@@ -1,9 +1,24 @@
 # 42matcha
-Tinder-like application,
-Front: react, 
-Middleware auth: JWT,
-API-REST language: Golang,
-DB: Neo4j,
+# A tinder-like app
+**What's Running?**
+
+* Deploy:
+- Docker and Docker compose
+
+* Front: WebPack
+- React
+- React-Router
+- Semantic
+- Redux
+- A bunch of packages
+
+*Middleware auth: JWT,
+
+*API-REST language: ~~NodeJs~~ Golang
+
+*DB: ~~PostgresSQL~~ Neo4j
+
+**How to run?**
 
 Admiting you have Docker installed.
 
@@ -12,4 +27,4 @@ docker-compose up
 
 visit localhost:8080
 
-(educational purpose 42.fr)
+(educational purpose, go visit 42.fr[42](https://42.fr/))
