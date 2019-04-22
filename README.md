@@ -2,7 +2,7 @@
 # A tinder-like app
 **What's Running?**
 
-### Deploy:
+### Pack:
 * Docker and docker-compose
 
 ### Front: WebPack
