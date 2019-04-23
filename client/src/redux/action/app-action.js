@@ -7,7 +7,6 @@ export const updateProfileAction = (prev, id, i) => dispatch => {
         i: i,
     });
 };
-
 export const userModifyAction = (prev, formData) => dispatch => {
     fetch('/api/user/modify', {
         method: 'POST',
@@ -23,7 +22,7 @@ export const userModifyAction = (prev, formData) => dispatch => {
                         });
                         break;
                     case 200:
-                        res.json().then(json =>{
+                        res.json().then(data =>{
                             dispatch({
                                 ...prev,
                                 type: LOAD_USER,
@@ -35,6 +34,7 @@ export const userModifyAction = (prev, formData) => dispatch => {
         )
         .catch(error => console.log(error))
 };
+
 export const userAction = (prev) => dispatch => {
     let init = {
         method: 'POST',
@@ -57,7 +57,7 @@ export const userAction = (prev) => dispatch => {
                             dispatch({
                                 ...prev,
                                 type: LOAD_USER,
-                                user: data[0].Properties,
+                                user: data.Properties,
                             });
                         });
                 }
@@ -80,6 +80,7 @@ export const disableFieldAction = (prev) => dispatch => {
         type: DISABLE_FIELD,
     });
 };
+
 export const userChangeAction = () => dispatch => {
     let init = {
         method: 'POST',
