@@ -89,6 +89,32 @@ export const loginPreloaded = {
 
 export const appPreloaded = {
     profileId: 0,
+    field: null,
+    user: {
+        access_lvl: 1,
+        biography: null,
+        birthday: null,
+        city: null,
+        country: null,
+        email: null,
+        firstname: null,
+        genre: null,
+        geo_allowed: null,
+        img1: null,
+        img2:null,
+        img3:null,
+        img4:null,
+        img5:null,
+        interest:null,
+        lastname:null,
+        latitude:null,
+        longitude:null,
+        name:null,
+        online:null,
+        rating: null,
+        username: null,
+        zip: null
+    }
 };
 
 export const wsApi = "ws://localhost:81/api/ws/";
