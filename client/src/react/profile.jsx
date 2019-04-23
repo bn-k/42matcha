@@ -49,7 +49,7 @@ class Profile extends React.Component {
                                     <p>Vous à déjà liké <Icon name={"heart"}/></p>
                                 </Grid.Column>
                                 <Grid.Column  style={{padding: "1px"}} mobile={16} tablet={6} computer={6}>
-                                    <Header as={"h3"}>Score 67/100</Header>
+                                    <Header as={"h3"}>Score {profile.rating}/100</Header>
                                 </Grid.Column>
                                 <Grid.Column  style={{padding: "1px"}} mobile={16} tablet={4} computer={4}>
                                     <p>Dernière connexion: il y a 3 jours</p>
