@@ -1,4 +1,4 @@
-import {LOAD_PEOPLE, NO_PEOPLE} from "../action/types-action";
+import {LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from "../action/types-action";
 
 const initial = () => {
 
@@ -6,6 +6,10 @@ const initial = () => {
 
 export function peopleReducer (state = initial, action) {
     switch (action.type) {
+        case UPDATE_FILTERS:
+            return ({
+                ...action,
+            });
         case NO_PEOPLE:
             return ({
                 data: [],

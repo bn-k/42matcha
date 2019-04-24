@@ -90,7 +90,9 @@ export const loginPreloaded = {
 export const appPreloaded = {
     profileId: 0,
     field: null,
-    tagList: [],
+    tagList: [
+        { key: 'angular', text: '#Angular', value: 'angular' },
+    ],
     user: {
         access_lvl: 1,
         biography: null,

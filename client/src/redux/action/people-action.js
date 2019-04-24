@@ -1,4 +1,4 @@
-import {LOAD_PEOPLE, NO_PEOPLE} from './types-action';
+import {LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from './types-action';
 
 export const getPeopleAction = (filters) => dispatch => {
     let init = {
@@ -40,4 +40,12 @@ export const getPeopleAction = (filters) => dispatch => {
             }
         )
         .catch(error => console.log(error))
+};
+
+export const updateFiltersAction = (prev, filters) => dispatch => {
+    dispatch({
+        ...prev,
+        type: UPDATE_FILTERS,
+        filters: filters,
+    });
 };
