@@ -2,11 +2,13 @@ import {DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE} from "./types-ac
 
 export const updateProfileAction = (prev, id, i) => dispatch => {
     dispatch({
+        ...prev,
         type: UPDATE_PROFILE,
         profileId: id,
         i: i,
     });
 };
+
 export const userModifyAction = (prev, formData, name) => dispatch => {
     fetch('/api/user/' + name, {
         method: 'PUT',
@@ -18,16 +20,11 @@ export const userModifyAction = (prev, formData, name) => dispatch => {
                     case 201:
                         res.json().then(json =>{
                             console.log(json);
-                            dispatch(json);
                         });
                         break;
                     case 200:
                         res.json().then(data =>{
-                            dispatch({
-                                ...prev,
-                                type: LOAD_USER,
-                                user: data[0].Properties,
-                            });
+                            dispatch(userAction(prev))
                         });
                 }
             }

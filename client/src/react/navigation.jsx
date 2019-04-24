@@ -25,6 +25,16 @@ import withSizes from 'react-sizes'
 
 @withSizes(({ height}) => ({ height: height }))
 class Navigation extends Component {
+    componentDidMount() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.updatePosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+    updatePosition(position) {
+        console.log(position.coords.latitude, position.coords.longitude)
+    }
     logout = () => {
         this.props.dispatch(logoutAction(this.props.history));
 

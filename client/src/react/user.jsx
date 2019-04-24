@@ -10,9 +10,11 @@ import {
     Button,
     Dropdown,
     Dimmer,
+    TextArea,
     Loader,
     ButtonGroup,
     Responsive,
+    Form,
     Grid,
     Card,
     Icon,
@@ -23,30 +25,28 @@ import {disableFieldAction, enableFieldAction, userAction} from "../redux/action
 
 const fields = [
     {
-        name: "position",
-        title: "Position",
-        entries: [
-        ],
-    },
-    {
         name: "firstname",
         title: "Firstname",
         entries: [
-            {type: (hc, s) => (<Input key={1} onChange={hc} name={"firstname"} value={s}/>)}
+            {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"firstname"} value={s}/>)}
         ],
     },
     {
         name: "lastname",
         title: "Lastname",
         entries: [
-            {type: (hc, s) => (<Input key={1} onChange={hc} name={"lastname"} value={s}/>)}
+            {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"lastname"} value={s}/>)}
         ],
     },
     {
         name: "biography",
         title: "Biography",
         entries: [
-            {type: (hc, s) => (<Input key={1} onChange={hc} name={"biography"} value={s}/>)}
+            {type: (hc, s) => (
+                <Form key={"form"}>
+                    <TextArea key={1} onChange={hc} name={"biography"} value={s} placeholder='Tell us who you are'  style={{ minHeight: 100 }} />
+                </Form>
+                )}
         ],
     },
     {
@@ -55,12 +55,12 @@ const fields = [
         entries: [
             {type: (hc, s) => (
                     <Grid key={"grid_password"}>
-                        <Grid.Column mobile={16} tablet={5} computer={5}>
+                        <Grid.Column mobile={16} tablet={6} computer={6}>
                             <Grid.Row>
                                 <Header as={'h4'}>Old Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input key={1} type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
+                                <Input fluid key={1} type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
@@ -68,7 +68,7 @@ const fields = [
                                 <Header as={'h4'}>New Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input key={2} type={'password'} key={1} onChange={hc} name={"new_password"} value={s}/>
+                                <Input fluid key={2} type={'password'} key={1} onChange={hc} name={"new_password"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
@@ -76,7 +76,7 @@ const fields = [
                                 <Header as={'h4'}>Confirm Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input key={3} type={'password'} key={1} onChange={hc} name={"confirm"} value={s}/>
+                                <Input fluid key={3} type={'password'} key={1} onChange={hc} name={"confirm"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                     </Grid>
@@ -112,6 +112,7 @@ const fields = [
                                 tag: true,
                                 content: 'Add Tag',
                                 onClick: props.addNewTag,
+                                color: "teal",
                             }}
                             labelPosition='right'
                             placeholder='Enter tags'
@@ -133,7 +134,7 @@ const Field = (props) => (
                     <Header as={'h3'}>{props.field.title}</Header>
                 </Grid.Column>
                 <Grid.Column mobile={8} tablet={6} computer={3}>
-                    <Button onClick={e => props.modify(e, props.field.name)}>Modify</Button>
+                    <Button fluid onClick={e => props.modify(e, props.field.name)}>Modify</Button>
                 </Grid.Column>
             </Grid>
             <Divider/>
@@ -143,7 +144,7 @@ const Field = (props) => (
                         entry.type(props.handleChange, props.field.state, props)
                     ))}
                     <Divider/>
-                    <Button onClick={e => props.save(e, props.field.name)}>Save</Button>
+                    <Button fluid basic color={"green"} onClick={e => props.save(e, props.field.name)}>Save</Button>
                 </>
                 :
                 <>
