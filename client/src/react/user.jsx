@@ -145,7 +145,7 @@ const fields = [
     },
 ];
 
-const Field = (props) => console.log("props: ", props) || (
+const Field = (props) => (
     <>
         <Segment>
             <Grid>
@@ -179,6 +179,7 @@ class User extends React.Component {
         super(props);
         this.state = {
             new: [],
+            tags: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.save = this.save.bind(this);
@@ -203,7 +204,6 @@ class User extends React.Component {
     addNewTag = () => {
         const val = this.state.newtag;
         options.unshift({ key: val, text: "#" + _.startCase(_.toLower(val)), value: val});
-        console.log(options);
     };
     render () {
         return (

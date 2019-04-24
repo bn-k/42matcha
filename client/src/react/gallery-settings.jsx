@@ -117,22 +117,6 @@ class GallerySettings extends React.Component {
                                 onChange={this.handleTagsChange}
                             />
                         </Grid.Column>
-                        <Grid.Column width={3}>
-                            <Input
-                                icon='tags'
-                                iconPosition='left'
-                                label={{
-                                    tag: true,
-                                    content: 'Add Tag',
-                                    onClick: this.addNewTag,
-                                }}
-                                labelPosition='right'
-                                placeholder='Enter tags'
-                                value={this.state.newtag}
-                                name={"newtag"}
-                                onChange={this.handleChange}
-                            />
-                        </Grid.Column>
                     </Grid.Row>
                 </Grid>
             </Segment>
