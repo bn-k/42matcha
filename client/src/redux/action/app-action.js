@@ -7,9 +7,9 @@ export const updateProfileAction = (prev, id, i) => dispatch => {
         i: i,
     });
 };
-export const userModifyAction = (prev, formData) => dispatch => {
-    fetch('/api/user/modify', {
-        method: 'POST',
+export const userModifyAction = (prev, formData, name) => dispatch => {
+    fetch('/api/user/' + name, {
+        method: 'PUT',
         body: formData,
         credentials: 'same-origin',
     })
@@ -57,7 +57,8 @@ export const userAction = (prev) => dispatch => {
                             dispatch({
                                 ...prev,
                                 type: LOAD_USER,
-                                user: data.Properties,
+                                user: data.user.Properties,
+                                tagList: data.tagList,
                             });
                         });
                 }
@@ -81,32 +82,5 @@ export const disableFieldAction = (prev) => dispatch => {
     });
 };
 
-export const userChangeAction = () => dispatch => {
-    let init = {
-        method: 'POST',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-            'Authorization': localStorage.getItem('jwt'),
-        }
-    };
-    fetch('/api/user_change', init)
-        .then(res => {
-                switch (res.status) {
-                    case 201:
-                        res.json().then(json =>{
-                            console.log(json.err);
-                        });
-                        break;
-                    case 200:
-                        res.json().then(data => {
-                            dispatch({
-                                type: LOAD_USER,
-                                user: data,
-                            });
-                        });
-                }
-            }
-        )
-        .catch(error => console.log(error))
+export const getTagListAction = () => dispatch => {
 };

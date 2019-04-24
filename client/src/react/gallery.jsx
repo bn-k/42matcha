@@ -19,7 +19,7 @@ import {
     Image,
     Label,
 } from 'semantic-ui-react';
-import {updateProfileAction} from "../redux/action/app-action";
+import {updateProfileAction, userAction} from "../redux/action/app-action";
 
 class Gallery extends Component {
     constructor(props) {

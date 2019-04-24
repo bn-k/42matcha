@@ -22,27 +22,8 @@ import 'rc-slider/assets/index.css';
 import {getPeopleAction, updateFiltersAction} from "../redux/action/people-action";
 import {peoplePreloaded} from "../redux/store/preloaded-state-store";
 import _ from 'lodash';
+import {userAction} from "../redux/action/app-action";
 
-let options = [
-    { key: 'angular', text: '#Angular', value: 'angular' },
-    { key: 'css', text: '#CSS', value: 'css' },
-    { key: 'design', text: 'Graphic Design', value: 'design' },
-    { key: 'ember', text: 'Ember', value: 'ember' },
-    { key: 'html', text: 'HTML', value: 'html' },
-    { key: 'ia', text: 'Information Architecture', value: 'ia' },
-    { key: 'javascript', text: 'Javascript', value: 'javascript' },
-    { key: 'mech', text: 'Mechanical Engineering', value: 'mech' },
-    { key: 'meteor', text: 'Meteor', value: 'meteor' },
-    { key: 'node', text: 'NodeJS', value: 'node' },
-    { key: 'plumbing', text: 'Plumbing', value: 'plumbing' },
-    { key: 'python', text: 'Python', value: 'python' },
-    { key: 'rails', text: 'Rails', value: 'rails' },
-    { key: 'react', text: 'React', value: 'react' },
-    { key: 'repair', text: 'Kitchen Repair', value: 'repair' },
-    { key: 'ruby', text: 'Ruby', value: 'ruby' },
-    { key: 'ui', text: 'UI Design', value: 'ui' },
-    { key: 'ux', text: 'User Experience', value: 'ux' },
-];
 
 class GallerySettings extends React.Component {
     constructor(props) {
@@ -54,6 +35,7 @@ class GallerySettings extends React.Component {
             tags: []
         };
         this.applyFilters = this.applyFilters.bind(this);
+        props.dispatch(userAction(props.app));
     }
     zut(r, name) {
         let filters = this.props.people.filters;
@@ -92,8 +74,7 @@ class GallerySettings extends React.Component {
     };
     addNewTag = () => {
         const val = this.state.newtag;
-        options.unshift({ key: val, text: "#" + _.startCase(_.toLower(val)), value: val});
-        console.log(options);
+        // options.unshift({ key: val, text: "#" + _.startCase(_.toLower(val)), value: val});
     };
     render () {
         return (
@@ -113,7 +94,7 @@ class GallerySettings extends React.Component {
                                 search
                                 multiple
                                 selection
-                                options={options}
+                                options={this.props.app.tagList}
                                 value={this.props.people.filters.tags}
                                 name={"tags"}
                                 onChange={this.handleTagsChange}
