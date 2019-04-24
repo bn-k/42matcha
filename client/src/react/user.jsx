@@ -8,6 +8,7 @@ import {
     Header,
     Input,
     Button,
+    Dropdown,
     Dimmer,
     Loader,
     ButtonGroup,
@@ -20,6 +21,26 @@ import {
 } from 'semantic-ui-react';
 import {disableFieldAction, enableFieldAction, userAction} from "../redux/action/app-action";
 
+let options = [
+    { key: 'angular', text: '#Angular', value: 'angular' },
+    { key: 'css', text: '#CSS', value: 'css' },
+    { key: 'design', text: 'Graphic Design', value: 'design' },
+    { key: 'ember', text: 'Ember', value: 'ember' },
+    { key: 'html', text: 'HTML', value: 'html' },
+    { key: 'ia', text: 'Information Architecture', value: 'ia' },
+    { key: 'javascript', text: 'Javascript', value: 'javascript' },
+    { key: 'mech', text: 'Mechanical Engineering', value: 'mech' },
+    { key: 'meteor', text: 'Meteor', value: 'meteor' },
+    { key: 'node', text: 'NodeJS', value: 'node' },
+    { key: 'plumbing', text: 'Plumbing', value: 'plumbing' },
+    { key: 'python', text: 'Python', value: 'python' },
+    { key: 'rails', text: 'Rails', value: 'rails' },
+    { key: 'react', text: 'React', value: 'react' },
+    { key: 'repair', text: 'Kitchen Repair', value: 'repair' },
+    { key: 'ruby', text: 'Ruby', value: 'ruby' },
+    { key: 'ui', text: 'UI Design', value: 'ui' },
+    { key: 'ux', text: 'User Experience', value: 'ux' },
+];
 const fields = [
     {
         name: "position",
@@ -53,14 +74,13 @@ const fields = [
         title: "Password",
         entries: [
             {type: (hc, s) => (
-                <>
-                    <Grid>
+                    <Grid key={"grid_password"}>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
                             <Grid.Row>
                                 <Header as={'h4'}>Old Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
+                                <Input key={1} type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
@@ -68,7 +88,7 @@ const fields = [
                                 <Header as={'h4'}>New Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input type={'password'} key={1} onChange={hc} name={"new_password"} value={s}/>
+                                <Input key={2} type={'password'} key={1} onChange={hc} name={"new_password"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
@@ -76,12 +96,51 @@ const fields = [
                                 <Header as={'h4'}>Confirm Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input type={'password'} key={1} onChange={hc} name={"confirm"} value={s}/>
+                                <Input key={3} type={'password'} key={1} onChange={hc} name={"confirm"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                     </Grid>
-                    </>
                 )}
+        ],
+    },
+    {
+        name: "tags",
+        title: "Tags",
+        entries: [
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"tags"} mobile={16} tablet={16} computer={8}>
+                        <Dropdown
+                            placeholder='Tags'
+                            fluid
+                            search
+                            multiple
+                            selection
+                            options={options}
+                            value={s}
+                            name={"tags"}
+                            onChange={props.handleTagsChange}
+                        />
+                    </Grid.Column>
+                )},
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"add_tag"} mobile={16} tablet={16} computer={8}>
+                        <Input
+                            fluid
+                            icon='tags'
+                            iconPosition='left'
+                            label={{
+                                tag: true,
+                                content: 'Add Tag',
+                                onClick: props.addNewTag,
+                            }}
+                            labelPosition='right'
+                            placeholder='Enter tags'
+                            value={s}
+                            name={"newtag"}
+                            onChange={props.handleChange}
+                        />
+                    </Grid.Column>
+                )},
         ],
     },
 ];
@@ -101,7 +160,7 @@ const Field = (props) => console.log("props: ", props) || (
             {props.app.field === props.field.name ?
                 <>
                     {props.field.entries.map((entry) => (
-                        entry.type(props.handleChange, props.field.state)
+                        entry.type(props.handleChange, props.field.state, props)
                     ))}
                     <Divider/>
                     <Button onClick={e => props.save(e, props.field.name)}>Save</Button>
@@ -137,9 +196,14 @@ class User extends React.Component {
         }
     };
     handleChange = (e, data) => {
-        console.log("HANDLE CHANGE");
         this.setState({[data.name]: data.value});
-        console.log(this.state)
+    };
+    handleTagsChange = (e, data) => {
+    };
+    addNewTag = () => {
+        const val = this.state.newtag;
+        options.unshift({ key: val, text: "#" + _.startCase(_.toLower(val)), value: val});
+        console.log(options);
     };
     render () {
         return (
@@ -149,6 +213,8 @@ class User extends React.Component {
                         {...this.props}
                         key={field.name}
                         handleChange={this.handleChange}
+                        handleTagChange={this.handleTagsChange}
+                        addNewTag={this.addNewTag}
                         save={this.save}
                         modify={this.modify}
                         state={this.state}

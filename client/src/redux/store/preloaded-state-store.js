@@ -72,7 +72,7 @@ export const peoplePreloaded = {
     },
     isLoading: true,
     done: false,
-    data: []
+    data: [],
 };
 
 const user = () => {
@@ -90,6 +90,7 @@ export const loginPreloaded = {
 export const appPreloaded = {
     profileId: 0,
     field: null,
+    tagList: [],
     user: {
         access_lvl: 1,
         biography: null,
@@ -113,7 +114,8 @@ export const appPreloaded = {
         online:null,
         rating: null,
         username: null,
-        zip: null
+        zip: null,
+        tags: [],
     }
 };
 

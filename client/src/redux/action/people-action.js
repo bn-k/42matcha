@@ -1,4 +1,4 @@
-import {LOAD_PEOPLE} from './types-action';
+import {LOAD_PEOPLE, NO_PEOPLE} from './types-action';
 
 export const getPeopleAction = (filters) => dispatch => {
     let init = {
@@ -15,7 +15,11 @@ export const getPeopleAction = (filters) => dispatch => {
                 switch (res.status) {
                     case 201:
                         res.json().then(json =>{
-                            console.log(json.err);
+                            dispatch({
+                                type: NO_PEOPLE,
+                                filters: filters,
+                                err: json.err,
+                            });
                         });
                         break;
                     case 202:

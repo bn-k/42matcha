@@ -7,6 +7,7 @@ export const REGISTER = 'REGISTER';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 
 export const LOAD_PEOPLE = 'LOAD_PEOPLE';
+export const NO_PEOPLE = 'NO_PEOPLE';
 
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const LOAD_USER = 'LOAD_USER';

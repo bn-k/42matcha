@@ -49,8 +49,8 @@ class Gallery extends Component {
             ))}</>
     );
     render () {
+        if (this.props.people.done) {
         return (
-
             <Container className={"gallery"}>
                 <Dimmer active={this.props.people.isLoading}>
                     <Loader>Loading</Loader>
@@ -67,6 +67,9 @@ class Gallery extends Component {
                 </Responsive>
             </Container>
         )
+        } else {
+           return (<p>{this.props.people.err}</p>)
+        }
     }
 }
 
