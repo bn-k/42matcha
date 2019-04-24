@@ -15,7 +15,7 @@
 ### Middleware auth: 
 * Jason Web Token [JWT](https://jwt.io/) 
 
-### API-REST:
+### API:
 * Written in ~~NodeJs~~ Go: [API](https://github.com/Newcratie/matcha-api)
 * Micro-framework[Gin-Gonic](https://github.com/gin-gonic/gin/)
 * WebSocket [Melody](https://github.com/olahol/melody)
