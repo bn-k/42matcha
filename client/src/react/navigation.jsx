@@ -22,22 +22,39 @@ import {logoutAction} from "../redux/action/login-action";
 import Nav from "./components/navbar";
 import {computerButtons, mobileButtons} from "./components/nav-buttons";
 import withSizes from 'react-sizes'
+import publicIp from 'public-ip';
 
-@withSizes(({ height}) => ({ height: height }))
+const sendPosition = (type, pos) => {
+    fetch('/api/user/position/', {
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+            'Authorization': localStorage.getItem('jwt'),
+        },
+        method: 'PUT',
+        body: {type: type, position: pos},
+        credentials: 'same-origin',
+    })
+};
+
 class Navigation extends Component {
     componentDidMount() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.updatePosition);
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
+            navigator.geolocation.getCurrentPosition(this.updatePosition, this.geoDeniedPosition);
         }
     }
     updatePosition(position) {
-        console.log(position.coords.latitude, position.coords.longitude)
+        sendPosition("gps", {lat: position.coords.latitude, long: position.coords.longitude})
+    }
+    geoDeniedPosition(err) {
+        if (err.code == err.PERMISSION_DENIED) {
+            (async () => {
+                sendPosition("gps", await publicIp.v4())
+            })();
+        }
     }
     logout = () => {
         this.props.dispatch(logoutAction(this.props.history));
-
     };
     render() {
         if (this.props.login.loggedIn) {

@@ -19,6 +19,7 @@ services:
     volumes:
       - ${GOPATH}/src:/go/src
       - ./api:/matcha/api
+      - ./client/src/public/img:/public/img
     ports:
     - "81:81"
     depends_on:

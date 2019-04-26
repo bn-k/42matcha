@@ -11,6 +11,7 @@ export const NO_PEOPLE = 'NO_PEOPLE';
 export const UPDATE_FILTERS = 'UPDATE_FILTERS';
 
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+export const ADD_TAG = 'ADD_TAG';
 export const LOAD_USER = 'LOAD_USER';
 export const CHANGE_USER = 'CHANGE_USER';
 export const ENABLE_FIELD = 'ENABLE_FIELD';

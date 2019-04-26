@@ -1,4 +1,4 @@
-import {DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE} from "./types-action";
+import {ADD_TAG, DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE} from "./types-action";
 
 export const updateProfileAction = (prev, id, i) => dispatch => {
     dispatch({
@@ -9,10 +9,15 @@ export const updateProfileAction = (prev, id, i) => dispatch => {
     });
 };
 
-export const userModifyAction = (prev, formData, name) => dispatch => {
+export const userModifyAction = (prev, body, name) => dispatch => {
     fetch('/api/user/' + name, {
         method: 'PUT',
-        body: formData,
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+            'Authorization': localStorage.getItem('jwt'),
+        },
+        body: body,
         credentials: 'same-origin',
     })
         .then(res => {
@@ -24,12 +29,25 @@ export const userModifyAction = (prev, formData, name) => dispatch => {
                         break;
                     case 200:
                         res.json().then(data =>{
-                            dispatch(userAction(prev))
+                            dispatch({
+                                ...prev,
+                                type: LOAD_USER,
+                                user: data.user.Properties,
+                                tagList: data.tagList,
+                            });
                         });
                 }
             }
         )
         .catch(error => console.log(error))
+};
+
+export const addTagAction = (prev, newTag) => dispatch => {
+    dispatch({
+        ...prev,
+        type: ADD_TAG,
+        tagList: [...prev.tagList, newTag],
+    });
 };
 
 export const userAction = (prev) => dispatch => {

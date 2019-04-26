@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 import {
@@ -21,7 +21,14 @@ import {
     Image,
     Label,
 } from 'semantic-ui-react';
-import {disableFieldAction, enableFieldAction, userAction} from "../redux/action/app-action";
+import {
+    addTagAction,
+    disableFieldAction,
+    enableFieldAction,
+    userAction,
+    userModifyAction
+} from "../redux/action/app-action";
+import Dropzone from 'react-dropzone'
 
 const fields = [
     {
@@ -43,9 +50,9 @@ const fields = [
         title: "Biography",
         entries: [
             {type: (hc, s) => (
-                <Form key={"form"}>
-                    <TextArea key={1} onChange={hc} name={"biography"} value={s} placeholder='Tell us who you are'  style={{ minHeight: 100 }} />
-                </Form>
+                    <Form key={"form"}>
+                        <TextArea key={1} onChange={hc} name={"biography"} value={s} placeholder='Tell us who you are'  style={{ minHeight: 100 }} />
+                    </Form>
                 )}
         ],
     },
@@ -87,7 +94,7 @@ const fields = [
         name: "tags",
         title: "Tags",
         entries: [
-            {type: (hc, s, props) => (
+            {type: (hc, s, props, htc) => (
                     <Grid.Column key={"tags"} mobile={16} tablet={16} computer={8}>
                         <Dropdown
                             placeholder='Tags'
@@ -96,9 +103,9 @@ const fields = [
                             multiple
                             selection
                             options={props.app.tagList}
-                            value={props.state.tags}
+                            value={props.state.body.tags}
                             name={"tags"}
-                            onChange={props.handleChange}
+                            onChange={htc}
                         />
                     </Grid.Column>
                 )},
@@ -118,13 +125,38 @@ const fields = [
                             placeholder='Enter tags'
                             value={s}
                             name={"newtag"}
-                            onChange={props.handleChange}
+                            onChange={hc}
                         />
                     </Grid.Column>
                 )},
         ],
     },
+    {
+        name: "img1",
+        title: "Profile Image",
+        entries: [
+            {type: DropImage()}
+        ],
+    },
 ];
+
+function DropImage() {
+    const onDrop = useCallback(acceptedFiles => {
+        // Do something with the files
+    }, []);
+    const {getRootProps, getInputProps, isDragActive} = Dropzone({onDrop});
+
+    return (
+        <div key={99} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {
+                isDragActive ?
+                    <p>Drop the files here ...</p> :
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+            }
+        </div>
+    )
+}
 
 const Field = (props) => (
     <>
@@ -141,7 +173,7 @@ const Field = (props) => (
             {props.app.field === props.field.name ?
                 <>
                     {props.field.entries.map((entry) => (
-                        entry.type(props.handleChange, props.field.state, props)
+                        entry.type(props.handleChange, props.field.state, props, props.htc)
                     ))}
                     <Divider/>
                     <Button fluid basic color={"green"} onClick={e => props.save(e, props.field.name)}>Save</Button>
@@ -155,13 +187,16 @@ const Field = (props) => (
     </>
 );
 
+
+
+const init = {
+    name: null,
+    body: {tags:[]},
+};
 class User extends React.Component {
     constructor (props) {
         super(props);
-        this.state = {
-            new: [],
-            tags: [],
-        };
+        this.state = init;
         this.handleChange = this.handleChange.bind(this);
         this.addNewTag = this.addNewTag.bind(this);
         this.save = this.save.bind(this);
@@ -169,21 +204,29 @@ class User extends React.Component {
         props.dispatch(userAction(props.app));
     }
     save = (e) => {
-
+        console.log(this.state);
+        this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
+        this.props.dispatch(disableFieldAction(this.props.app));
     };
     modify = (e, field) => {
+        this.setState({body:{tags:[]}, name: field});
         if (this.props.app.field === field) {
-            this.props.dispatch(disableFieldAction(this.props.app))
+            this.props.dispatch(disableFieldAction(this.props.app));
         } else {
-            this.props.dispatch(enableFieldAction(this.props.app, field))
+            this.props.dispatch(enableFieldAction(this.props.app, field));
         }
     };
     handleChange = (e, data) => {
-        this.setState({[data.name]: data.value});
+        console.log(this.state);
+        this.setState({body: {...this.state.body, [data.name]: data.value}});
+    };
+    handleTagChange = (e, data) => {
+        console.log(this.state);
+        this.setState({body: {tags: data.value}});
     };
     addNewTag = () => {
-        const val = this.state.newtag;
-        options.unshift({ key: val, text: "#" + _.startCase(_.toLower(val)), value: val});
+        const val = this.state.body.newtag;
+        this.props.dispatch(addTagAction(this.props.app, { key: val, text: "#" + _.startCase(_.toLower(val)), value: val}));
     };
     render () {
         return (
@@ -193,7 +236,7 @@ class User extends React.Component {
                         {...this.props}
                         key={field.name}
                         handleChange={this.handleChange}
-                        handleTagsChange={this.handleTagsChange}
+                        htc={this.handleTagChange}
                         addNewTag={this.addNewTag}
                         save={this.save}
                         modify={this.modify}
