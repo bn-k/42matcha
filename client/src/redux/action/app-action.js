@@ -8,18 +8,19 @@ export const updateProfileAction = (prev, id, i) => dispatch => {
         i: i,
     });
 };
-
 export const userModifyAction = (prev, body, name) => dispatch => {
-    fetch('/api/user/' + name, {
-        method: 'PUT',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-            'Authorization': localStorage.getItem('jwt'),
-        },
-        body: body,
-        credentials: 'same-origin',
-    })
+    console.log(body);
+    const jsonBody = JSON.stringify(body);
+    (async () => {
+        await fetch('/api/user/' + name, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('jwt'),
+            },
+            body: jsonBody,
+        })
         .then(res => {
                 switch (res.status) {
                     case 201:
@@ -39,7 +40,7 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                 }
             }
         )
-        .catch(error => console.log(error))
+    })();
 };
 
 export const addTagAction = (prev, newTag) => dispatch => {
@@ -95,7 +96,4 @@ export const disableFieldAction = (prev) => dispatch => {
         ...prev,
         type: DISABLE_FIELD,
     });
-};
-
-export const getTagListAction = () => dispatch => {
 };

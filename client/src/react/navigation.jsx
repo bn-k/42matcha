@@ -25,14 +25,14 @@ import withSizes from 'react-sizes'
 import publicIp from 'public-ip';
 
 const sendPosition = (type, pos) => {
-    fetch('/api/user/position/', {
+    fetch('/api/user/position', {
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
         },
         method: 'PUT',
-        body: {type: type, position: pos},
+        body: JSON.stringify({type: type, position: pos}),
         credentials: 'same-origin',
     })
 };

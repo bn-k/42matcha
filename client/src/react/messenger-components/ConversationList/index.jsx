@@ -43,11 +43,15 @@ class ConversationList extends Component {
         </>
     );
     render() {
-        return (
-            <div className="conversation-list">
-                {this.people()}
-            </div>
-        );
+        if (this.messenger.suitorId === -1) {
+            return null
+        } else {
+            return (
+                <div className="conversation-list">
+                    {this.people()}
+                </div>
+            );
+        }
     }
 }
 

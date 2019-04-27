@@ -28,12 +28,12 @@ import {
     userAction,
     userModifyAction
 } from "../redux/action/app-action";
-import Dropzone from 'react-dropzone'
 
 const fields = [
     {
         name: "firstname",
         title: "Firstname",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
         entries: [
             {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"firstname"} value={s}/>)}
         ],
@@ -41,6 +41,7 @@ const fields = [
     {
         name: "lastname",
         title: "Lastname",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
         entries: [
             {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"lastname"} value={s}/>)}
         ],
@@ -48,6 +49,7 @@ const fields = [
     {
         name: "biography",
         title: "Biography",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
         entries: [
             {type: (hc, s) => (
                     <Form key={"form"}>
@@ -59,6 +61,7 @@ const fields = [
     {
         name: "password",
         title: "Password",
+        view: (props) => null,
         entries: [
             {type: (hc, s) => (
                     <Grid key={"grid_password"}>
@@ -93,6 +96,7 @@ const fields = [
     {
         name: "tags",
         title: "Tags",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
         entries: [
             {type: (hc, s, props, htc) => (
                     <Grid.Column key={"tags"} mobile={16} tablet={16} computer={8}>
@@ -134,30 +138,92 @@ const fields = [
     {
         name: "img1",
         title: "Profile Image",
+        view: (props) => (<View {...props}/>),
         entries: [
-            {type: DropImage()}
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"add_tag"} mobile={16} tablet={16} computer={8}>
+                        <UploadImage hfc={props.hfc}/>
+                    </Grid.Column>
+                )},
+        ],
+    },
+    {
+        name: "img2",
+        title: "Image 2",
+        view: (props) => (<View {...props}/>),
+        entries: [
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"add_tag"} mobile={16} tablet={16} computer={8}>
+                        <UploadImage hfc={props.hfc}/>
+                    </Grid.Column>
+                )},
+        ],
+    },
+    {
+        name: "img3",
+        title: "Image 3",
+        view: (props) => (<View {...props}/>),
+        entries: [
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"add_tag"} mobile={16} tablet={16} computer={8}>
+                        <UploadImage hfc={props.hfc}/>
+                    </Grid.Column>
+                )},
+        ],
+    },
+    {
+        name: "img4",
+        title: "Image 4",
+        view: (props) => (<View {...props}/>),
+        entries: [
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"add_tag"} mobile={16} tablet={16} computer={8}>
+                        <UploadImage hfc={props.hfc}/>
+                    </Grid.Column>
+                )},
+        ],
+    },
+    {
+        name: "img5",
+        title: "Image 5",
+        view: (props) => (<View {...props}/>),
+        entries: [
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"add_tag"} mobile={16} tablet={16} computer={8}>
+                        <UploadImage hfc={props.hfc}/>
+                    </Grid.Column>
+                )},
         ],
     },
 ];
 
-function DropImage() {
-    const onDrop = useCallback(acceptedFiles => {
-        // Do something with the files
-    }, []);
-    const {getRootProps, getInputProps, isDragActive} = Dropzone({onDrop});
+const View = (props) => (<Image src={props.app.user[props.field.name]} size={"medium"}/>);
 
-    return (
-        <div key={99} {...getRootProps()}>
-            <input {...getInputProps()} />
-            {
-                isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-            }
-        </div>
-    )
-}
-
+const UploadImage = (props) => (
+    <>
+        <Label
+            as="label"
+            basic
+            htmlFor="upload"
+        >
+            <Button
+                icon="upload"
+                label={{
+                    basic: true,
+                    content: 'Select file(s)'
+                }}
+                labelPosition="right"
+            />
+            <input
+                hidden
+                id="upload"
+                multiple
+                type="file"
+                onChange={props.hfc}
+            />
+        </Label>
+        </>
+);
 const Field = (props) => (
     <>
         <Segment>
@@ -180,14 +246,12 @@ const Field = (props) => (
                 </>
                 :
                 <>
-                    <p>{props.app.user[props.field.name]}</p>
+                    {props.field.view(props)}
                 </>
             }
         </Segment>
     </>
 );
-
-
 
 const init = {
     name: null,
@@ -206,7 +270,8 @@ class User extends React.Component {
     save = (e) => {
         console.log(this.state);
         this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
-        this.props.dispatch(disableFieldAction(this.props.app));
+        setTimeout(this.props.dispatch(disableFieldAction(this.props.app)), 1000)
+
     };
     modify = (e, field) => {
         this.setState({body:{tags:[]}, name: field});
@@ -219,6 +284,9 @@ class User extends React.Component {
     handleChange = (e, data) => {
         console.log(this.state);
         this.setState({body: {...this.state.body, [data.name]: data.value}});
+    };
+    handleFileChange = (e) => {
+        this.setState({body: {file: e.target.files[0]}});
     };
     handleTagChange = (e, data) => {
         console.log(this.state);
@@ -236,6 +304,7 @@ class User extends React.Component {
                         {...this.props}
                         key={field.name}
                         handleChange={this.handleChange}
+                        hfc={this.handleFileChange}
                         htc={this.handleTagChange}
                         addNewTag={this.addNewTag}
                         save={this.save}
