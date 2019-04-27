@@ -6,9 +6,8 @@ const api = {
             protocol: 'http:',
             port: 81
     },
-    ignorePath: false,
-        changeOrigin: true,
-        secure: false
+    secure: false,
+    changeOrigin: true,
 };
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({

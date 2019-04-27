@@ -222,7 +222,7 @@ const UploadImage = (props) => (
                 onChange={props.hfc}
             />
         </Label>
-        </>
+    </>
 );
 const Field = (props) => (
     <>
@@ -268,10 +268,23 @@ class User extends React.Component {
         props.dispatch(userAction(props.app));
     }
     save = (e) => {
-        console.log(this.state);
-        this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
-        setTimeout(this.props.dispatch(disableFieldAction(this.props.app)), 1000)
+        console.log("Statte ======> ", this.state);
 
+        let data = new FormData;
+        var reader = new FileReader();
+        reader.readAsDataURL(this.state.body.file);
+        reader.onload = function (file) {
+            console.log(reader.result);
+            data.append('file', file.target.result);
+
+            let init = {
+                method: "PUT",
+                body: data,
+            };
+            console.log("Init ================>", init);
+            fetch('/api/img/asdf', init);
+        };
+        // this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
     };
     modify = (e, field) => {
         this.setState({body:{tags:[]}, name: field});
