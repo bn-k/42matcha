@@ -1,8 +1,9 @@
 import {LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from './types-action';
+import env from "../../env";
 
 export const getPeopleAction = (filters) => dispatch => {
     let init = {
-        method: 'POST',
+        method: 'GET',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
@@ -10,7 +11,7 @@ export const getPeopleAction = (filters) => dispatch => {
             'Filters': JSON.stringify(filters),
         }
     };
-    fetch('/api/get_people', init)
+    fetch(env.api + '/people', init)
         .then(res => {
                 switch (res.status) {
                     case 201:

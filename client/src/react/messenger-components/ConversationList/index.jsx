@@ -43,7 +43,7 @@ class ConversationList extends Component {
         </>
     );
     render() {
-        if (this.messenger.suitorId === -1) {
+        if (this.props.messenger.suitorId === -1) {
             return null
         } else {
             return (

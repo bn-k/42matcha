@@ -1,16 +1,17 @@
 import {LOAD_MATCHS, LOAD_PEOPLE} from './types-action';
 import {updateSuitorAction} from "./messenger-action";
+import env from "../../env";
 
 export const getMatchsAction = (messenger, userId) => dispatch => {
     let init = {
-        method: 'POST',
+        method: 'GET',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
         }
     };
-    fetch('/api/get_matchs', init)
+    fetch(env.api + '/matchs', init)
         .then(res => {
                 switch (res.status) {
                     case 202:

@@ -21,7 +21,7 @@ services:
       - ./api:/matcha/api
       - ./client/src/public/img:/public/img
     ports:
-    - "81:81"
+    - "8181:81"
     depends_on:
       - neo4j
       - web

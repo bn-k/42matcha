@@ -1,4 +1,5 @@
 import {LOAD} from './types-action';
+import env from "../../env";
 
 export const homeAction = () => dispatch => {
     let init = {
@@ -9,7 +10,7 @@ export const homeAction = () => dispatch => {
             'Authorization': localStorage.getItem('jwt'),
         }
     };
-    fetch('/api/start', init)
+    fetch(env.api + '/start', init)
         .then(res => {
                 switch (res.status) {
                     case 202:

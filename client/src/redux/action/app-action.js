@@ -1,5 +1,6 @@
 import {ADD_TAG, DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE} from "./types-action";
 import axios from "axios";
+import env from "../../env";
 
 export const updateProfileAction = (prev, id, i) => dispatch => {
     dispatch({
@@ -14,14 +15,13 @@ const imgCase = (prev, body, name, dispatch) =>  {
     let data = new FormData;
     data.append('file', body.file);
     let init = {
-        method: "PUT",
+        method: "POST",
         body: data,
         headers : {
             'Authorization': localStorage.getItem('jwt'),
         },
     };
-    console.log("================>", init);
-    fetch('/api/img/' + name, init)
+    fetch(env.api + '/img/' + name, init)
         .then(res => {
                 switch (res.status) {
                     case 201:
@@ -43,18 +43,18 @@ const imgCase = (prev, body, name, dispatch) =>  {
         )
 };
 export const userModifyAction = (prev, body, name) => dispatch => {
-    const jsonBody = JSON.stringify(body);
-    let init = {
-        method: 'PUT',
-        headers: {
-            'Authorization': localStorage.getItem('jwt'),
-        },
-        body: jsonBody,
-    };
     if (Object.keys(body)[0] === 'file') {
         imgCase(prev, body, name, dispatch);
     } else {
-        fetch('/api/user/' + name, init)
+        const jsonBody = JSON.stringify(body);
+        let init = {
+            method: 'PUT',
+            headers: {
+                'Authorization': localStorage.getItem('jwt'),
+            },
+            body: jsonBody,
+        };
+        fetch(env.api + '/user/' + name, init)
             .then(res => {
                     switch (res.status) {
                         case 201:
@@ -95,7 +95,7 @@ export const userAction = (prev) => dispatch => {
             'Authorization': localStorage.getItem('jwt'),
         }
     };
-    fetch('/api/user', init)
+    fetch(env.api + '/user', init)
         .then(res => {
                 switch (res.status) {
                     case 201:

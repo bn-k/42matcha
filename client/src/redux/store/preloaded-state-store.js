@@ -121,7 +121,7 @@ export const appPreloaded = {
     }
 };
 
-export const wsApi = "ws://localhost:81/api/ws/";
+export const wsApi = "ws://localhost:8181/api/ws/";
 export const wsUrl = wsApi + loginPreloaded.id + "/" + loginPreloaded.id;
 export const messengerPreloaded = {
     suitorId: -1,

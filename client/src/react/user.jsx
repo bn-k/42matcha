@@ -269,22 +269,7 @@ class User extends React.Component {
     }
     save = (e) => {
         console.log("Statte ======> ", this.state);
-
-        let data = new FormData;
-        var reader = new FileReader();
-        reader.readAsDataURL(this.state.body.file);
-        reader.onload = function (file) {
-            console.log(reader.result);
-            data.append('file', file.target.result);
-
-            let init = {
-                method: "PUT",
-                body: data,
-            };
-            console.log("Init ================>", init);
-            fetch('/api/img/asdf', init);
-        };
-        // this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
+        this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
     };
     modify = (e, field) => {
         this.setState({body:{tags:[]}, name: field});
