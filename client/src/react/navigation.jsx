@@ -61,13 +61,13 @@ class Navigation extends Component {
             return (
                 <div>
                     <Responsive {...Responsive.onlyMobile}>
-                        <Nav buttons={mobileButtons} mobile/>
+                        <Nav buttons={mobileButtons} name={""} mobile/>
                     </Responsive>
                     <Responsive {...Responsive.onlyTablet}>
-                        <Nav buttons={computerButtons} icon={"labeled"}/>
+                        <Nav buttons={computerButtons} name={this.props.login.username} icon={"labeled"}/>
                     </Responsive>
                     <Responsive {...Responsive.onlyComputer}>
-                        <Nav buttons={computerButtons} icon={"labeled"}/>
+                        <Nav buttons={computerButtons}  name={this.props.login.username} icon={"labeled"}/>
                     </Responsive>
                 </div>
             )

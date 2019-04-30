@@ -21,8 +21,14 @@ import {
 import { Link } from 'react-router-dom'
 import {logoutAction} from "../../redux/action/login-action";
 
+
+const trigger = (img, name) => (
+    <span>
+    <Image size={"mini"} avatar src={img}/> {name}
+  </span>
+);
 const Nav = (props) => (
-    <Menu fluid widths={4} pointing secondary icon={props.icon} size={"huge"}>
+    <Menu fluid widths={5} pointing secondary icon={props.icon} size={"huge"}>
         <Menu.Item
             header
             active={props.location.pathname === '/home'}
@@ -47,17 +53,29 @@ const Nav = (props) => (
             {props.buttons.messenger.name}
         </Menu.Item>
 
+        <Dropdown trigger={trigger(props.login.img1, props.name)} item >
+            <Dropdown.Menu>
+                <Dropdown.Item
+                    active={props.location.pathname === '/user'}
+                    onClick={() => props.history.push('/user')}
+                >Settings</Dropdown.Item>
+                <Dropdown.Item
+                    active={props.location.pathname === '/matchs'}
+                    onClick={() => props.history.push('/user')}
+                >Matchs</Dropdown.Item>
+                <Dropdown.Item
+                    active={props.location.pathname === '/history'}
+                    onClick={() => props.history.push('/user')}
+                >History</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+
         <Menu.Item
             header
-            active={props.location.pathname === '/user'}
+            active={false}
             onClick={() => props.history.push('/user')}
         >
-            <Image
-                src={props.login.img1}
-                size={'mini'}
-                circular
-            />
-            {/*{props.buttons.user.name}*/}
+            <p>Not</p>
         </Menu.Item>
 
         <Menu.Item

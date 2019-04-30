@@ -31,6 +31,33 @@ import {
 
 const fields = [
     {
+        name: "username",
+        title: "Username",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
+        entries: [
+            {type: (hc, s) => (
+                    <Grid key={"grid_username"}>
+                        <Grid.Column mobile={16} tablet={6} computer={6}>
+                            <Grid.Row>
+                                <Header as={'h4'}>Password</Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Input fluid key={1} type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
+                            </Grid.Row>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={5} computer={5}>
+                            <Grid.Row>
+                                <Header as={'h4'}>New username</Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Input fluid key={2} type={'text'} key={1} onChange={hc} name={"new_username"} value={s}/>
+                            </Grid.Row>
+                        </Grid.Column>
+                    </Grid>
+                )}
+        ],
+    },
+    {
         name: "firstname",
         title: "Firstname",
         view: (props) => (<p>{props.app.user[props.field.name]}</p>),
@@ -55,6 +82,41 @@ const fields = [
                     <Form key={"form"}>
                         <TextArea key={1} onChange={hc} name={"biography"} value={s} placeholder='Tell us who you are'  style={{ minHeight: 100 }} />
                     </Form>
+                )}
+        ],
+    },
+    {
+        name: "email",
+        title: "Email",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
+        entries: [
+            {type: (hc, s) => (
+                    <Grid key={"grid_email"}>
+                        <Grid.Column mobile={16} tablet={6} computer={6}>
+                            <Grid.Row>
+                                <Header as={'h4'}>Password</Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Input fluid key={1} type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
+                            </Grid.Row>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={5} computer={5}>
+                            <Grid.Row>
+                                <Header as={'h4'}>New email</Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Input fluid key={2} type={'email'} key={1} onChange={hc} name={"new_email"} value={s}/>
+                            </Grid.Row>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={5} computer={5}>
+                            <Grid.Row>
+                                <Header as={'h4'}>Confirm email</Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Input fluid key={3} type={'email'} key={1} onChange={hc} name={"confirm"} value={s}/>
+                            </Grid.Row>
+                        </Grid.Column>
+                    </Grid>
                 )}
         ],
     },
