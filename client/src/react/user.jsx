@@ -28,6 +28,7 @@ import {
     userAction,
     userModifyAction
 } from "../redux/action/app-action";
+import {genders} from "./modules/options-dates";
 
 const fields = [
     {
@@ -56,6 +57,9 @@ const fields = [
                     </Grid>
                 )}
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
     },
     {
         name: "firstname",
@@ -64,6 +68,9 @@ const fields = [
         entries: [
             {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"firstname"} value={s}/>)}
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 8,
     },
     {
         name: "lastname",
@@ -72,6 +79,9 @@ const fields = [
         entries: [
             {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"lastname"} value={s}/>)}
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 8,
     },
     {
         name: "biography",
@@ -84,6 +94,9 @@ const fields = [
                     </Form>
                 )}
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
     },
     {
         name: "email",
@@ -119,6 +132,9 @@ const fields = [
                     </Grid>
                 )}
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
     },
     {
         name: "password",
@@ -154,6 +170,53 @@ const fields = [
                     </Grid>
                 )}
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
+    },
+    {
+        name: "genre",
+        title: "Gender",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
+        entries: [
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"gender"} mobile={16} tablet={16} computer={8}>
+                        <Form.Select
+                            fluid
+                            label={props.field.title}
+                            options={genders}
+                            placeholder='-'
+                            name={props.field.name}
+                            onChange={(e, data) => hc}
+                        />
+                    </Grid.Column>
+                )},
+        ],
+        mobile : 16,
+        tablet : 16,
+        computer: 8,
+    },
+    {
+        name: "interest",
+        title: "Interest",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
+        entries: [
+            {type: (hc, s, props) => (
+                    <Grid.Column key={"interest"} mobile={16} tablet={16} computer={8}>
+                        <Form.Select
+                            fluid
+                            label={props.field.title}
+                            options={genders}
+                            placeholder='-'
+                            name={props.field.name}
+                            onChange={(e, data) => hc}
+                        />
+                    </Grid.Column>
+                )},
+        ],
+        mobile : 16,
+        tablet : 16,
+        computer: 8,
     },
     {
         name: "tags",
@@ -170,7 +233,7 @@ const fields = [
                             selection
                             options={props.app.tagList}
                             value={props.state.body.tags}
-                            name={"tags"}
+                            name={props.field.name}
                             onChange={htc}
                         />
                     </Grid.Column>
@@ -196,6 +259,9 @@ const fields = [
                     </Grid.Column>
                 )},
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
     },
     {
         name: "img1",
@@ -208,6 +274,9 @@ const fields = [
                     </Grid.Column>
                 )},
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 4,
     },
     {
         name: "img2",
@@ -220,6 +289,9 @@ const fields = [
                     </Grid.Column>
                 )},
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 4,
     },
     {
         name: "img3",
@@ -232,6 +304,9 @@ const fields = [
                     </Grid.Column>
                 )},
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 4,
     },
     {
         name: "img4",
@@ -244,6 +319,9 @@ const fields = [
                     </Grid.Column>
                 )},
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 4,
     },
     {
         name: "img5",
@@ -256,6 +334,9 @@ const fields = [
                     </Grid.Column>
                 )},
         ],
+        mobile : 16,
+        tablet : 16,
+        computer: 4,
     },
 ];
 
@@ -290,10 +371,10 @@ const Field = (props) => (
     <>
         <Segment>
             <Grid>
-                <Grid.Column mobile={8} tablet={10} computer={13}>
+                <Grid.Column mobile={8} tablet={10} computer={9}>
                     <Header as={'h3'}>{props.field.title}</Header>
                 </Grid.Column>
-                <Grid.Column mobile={8} tablet={6} computer={3}>
+                <Grid.Column mobile={8} tablet={6} computer={7}>
                     <Button fluid onClick={e => props.modify(e, props.field.name)}>Modify</Button>
                 </Grid.Column>
             </Grid>
@@ -359,20 +440,28 @@ class User extends React.Component {
     render () {
         return (
             <Container className={"user"}>
-                {fields.map((field) => (
-                    <Field
-                        {...this.props}
-                        key={field.name}
-                        handleChange={this.handleChange}
-                        hfc={this.handleFileChange}
-                        htc={this.handleTagChange}
-                        addNewTag={this.addNewTag}
-                        save={this.save}
-                        modify={this.modify}
-                        state={this.state}
-                        field={field}
-                    />
-                ))}
+                <Grid>
+                    {fields.map((field) => (
+                        <Grid.Column
+                            key={field.name}
+                            mobile={field.mobile}
+                            tablet={field.tablet}
+                            computer={field.computer}
+                        >
+                            <Field
+                                {...this.props}
+                                handleChange={this.handleChange}
+                                hfc={this.handleFileChange}
+                                htc={this.handleTagChange}
+                                addNewTag={this.addNewTag}
+                                save={this.save}
+                                modify={this.modify}
+                                state={this.state}
+                                field={field}
+                            />
+                        </Grid.Column>
+                    ))}
+                </Grid>
             </Container>
         )
     }
