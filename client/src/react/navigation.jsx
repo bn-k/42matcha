@@ -22,25 +22,52 @@ import {logoutAction} from "../redux/action/login-action";
 import Nav from "./components/navbar";
 import {computerButtons, mobileButtons} from "./components/nav-buttons";
 import withSizes from 'react-sizes'
+import publicIp from 'public-ip';
 
-@withSizes(({ height}) => ({ height: height }))
+const sendPosition = (type, pos) => {
+    fetch('/api/user/position', {
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+            'Authorization': localStorage.getItem('jwt'),
+        },
+        method: 'PUT',
+        body: JSON.stringify({type: type, position: pos}),
+        credentials: 'same-origin',
+    })
+};
+
 class Navigation extends Component {
+    componentDidMount() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.updatePosition, this.geoDeniedPosition);
+        }
+    }
+    updatePosition(position) {
+        sendPosition("gps", {lat: position.coords.latitude, long: position.coords.longitude})
+    }
+    geoDeniedPosition(err) {
+        if (err.code == err.PERMISSION_DENIED) {
+            (async () => {
+                sendPosition("gps", await publicIp.v4())
+            })();
+        }
+    }
     logout = () => {
         this.props.dispatch(logoutAction(this.props.history));
-
     };
     render() {
         if (this.props.login.loggedIn) {
             return (
                 <div>
                     <Responsive {...Responsive.onlyMobile}>
-                        <Nav buttons={mobileButtons} mobile/>
+                        <Nav buttons={mobileButtons} name={""} mobile/>
                     </Responsive>
                     <Responsive {...Responsive.onlyTablet}>
-                        <Nav buttons={computerButtons} icon={"labeled"}/>
+                        <Nav buttons={computerButtons} name={this.props.login.username} icon={"labeled"}/>
                     </Responsive>
                     <Responsive {...Responsive.onlyComputer}>
-                        <Nav buttons={computerButtons} icon={"labeled"}/>
+                        <Nav buttons={computerButtons}  name={this.props.login.username} icon={"labeled"}/>
                     </Responsive>
                 </div>
             )

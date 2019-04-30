@@ -1,8 +1,9 @@
 import {REGISTER, REGISTER_FAIL} from './types-action';
 import {registerData} from "../store/preloaded-state-store";
+import env from "../../env";
 
 export const registerAction = (formData, history) => dispatch => {
-    fetch('/auth/register', {
+    fetch(env.auth + '/register', {
         method: 'POST',
         body: formData,
         credentials: 'same-origin',

@@ -72,7 +72,7 @@ export const peoplePreloaded = {
     },
     isLoading: true,
     done: false,
-    data: []
+    data: [],
 };
 
 const user = () => {
@@ -88,10 +88,40 @@ export const loginPreloaded = {
 };
 
 export const appPreloaded = {
-    profileId: -1,
+    profileId: 0,
+    field: null,
+    tagList: [
+        { key: 'angular', text: '#Angular', value: 'angular' },
+    ],
+    user: {
+        access_lvl: 1,
+        biography: null,
+        birthday: null,
+        city: null,
+        country: null,
+        email: null,
+        firstname: null,
+        genre: null,
+        geo_allowed: null,
+        img1: null,
+        img2:null,
+        img3:null,
+        img4:null,
+        img5:null,
+        interest:null,
+        lastname:null,
+        latitude:null,
+        longitude:null,
+        name:null,
+        online:null,
+        rating: null,
+        username: null,
+        zip: null,
+        tags: [],
+    }
 };
 
-export const wsApi = "ws://localhost:81/api/ws/";
+export const wsApi = "ws://localhost:8181/api/ws/";
 export const wsUrl = wsApi + loginPreloaded.id + "/" + loginPreloaded.id;
 export const messengerPreloaded = {
     suitorId: -1,

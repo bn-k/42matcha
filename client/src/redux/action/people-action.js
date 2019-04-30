@@ -1,8 +1,9 @@
-import {LOAD_PEOPLE} from './types-action';
+import {LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from './types-action';
+import env from "../../env";
 
 export const getPeopleAction = (filters) => dispatch => {
     let init = {
-        method: 'POST',
+        method: 'GET',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
@@ -10,12 +11,16 @@ export const getPeopleAction = (filters) => dispatch => {
             'Filters': JSON.stringify(filters),
         }
     };
-    fetch('/api/get_people', init)
+    fetch(env.api + '/people', init)
         .then(res => {
                 switch (res.status) {
                     case 201:
                         res.json().then(json =>{
-                            console.log(json.err);
+                            dispatch({
+                                type: NO_PEOPLE,
+                                filters: filters,
+                                err: json.err,
+                            });
                         });
                         break;
                     case 202:
@@ -36,4 +41,12 @@ export const getPeopleAction = (filters) => dispatch => {
             }
         )
         .catch(error => console.log(error))
+};
+
+export const updateFiltersAction = (prev, filters) => dispatch => {
+    dispatch({
+        ...prev,
+        type: UPDATE_FILTERS,
+        filters: filters,
+    });
 };

@@ -77,6 +77,7 @@ class MessageInput extends Component {
                 onKeyDown={e => this.keyDown(e)}
                 autoComplete={'off'}
                 label={{
+                    color: "blue",
                     icon: "send",
                     onClick: e => this.send(e),
                     position: "right"

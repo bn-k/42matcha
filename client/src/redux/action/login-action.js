@@ -1,8 +1,9 @@
 import {LOGIN, LOGIN_FAIL, LOGOUT, LOGIN_RESET} from './types-action';
 import jwtDecode from 'jwt-decode';
+import env from "../../env";
 
 export const loginAction = (formData, history) => dispatch => {
-    fetch('/auth/login', {
+    fetch(env.auth + '/login', {
         method: 'POST',
         body: formData,
         credentials: 'same-origin'

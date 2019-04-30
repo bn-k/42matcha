@@ -9,6 +9,7 @@ import {
     Segment,
     Container,
     Header,
+    Message,
     Input,
     Button,
     Dimmer,
@@ -40,25 +41,43 @@ class Messenger extends Component {
         document.body.style.overflow = "";
     }
     render() {
-        return (
-            <div>
-                <Responsive {...Responsive.onlyMobile}>
-                    <Switcher mobile/>
-                </Responsive>
-                <Responsive {...Responsive.onlyTablet}>
-                    <div className="messenger">
-                        <div className="scrollable sidebar"><ConversationList/></div>
-                        <div className="scrollable content"><MessageList/></div>
-                    </div>
-                </Responsive>
-                <Responsive {...Responsive.onlyComputer}>
-                    <div className="messenger">
-                        <div className="scrollable sidebar"><ConversationList/></div>
-                        <div className="scrollable content"><MessageList/></div>
-                    </div>
-                </Responsive>
-            </div>
-        );
+
+        if (this.props.messenger.suitorId === -1) {
+            return (
+                <Container>
+                    <Segment>
+                        <Message
+                            error
+                            header="You don't have any match yet"
+                            onClick={() => props.history.push('/messenger')}
+                        />
+                        <Button
+                            onClick={() => this.props.history.push('/')}
+                        >Go back home</Button>
+                    </Segment>
+                </Container>
+            )
+        } else {
+            return (
+                <div>
+                    <Responsive {...Responsive.onlyMobile}>
+                        <Switcher mobile/>
+                    </Responsive>
+                    <Responsive {...Responsive.onlyTablet}>
+                        <div className="messenger">
+                            <div className="scrollable sidebar"><ConversationList/></div>
+                            <div className="scrollable content"><MessageList/></div>
+                        </div>
+                    </Responsive>
+                    <Responsive {...Responsive.onlyComputer}>
+                        <div className="messenger">
+                            <div className="scrollable sidebar"><ConversationList/></div>
+                            <div className="scrollable content"><MessageList/></div>
+                        </div>
+                    </Responsive>
+                </div>
+            );
+        }
     }
 }
 

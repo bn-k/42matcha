@@ -1,5 +1,6 @@
 import {ADD_MESSAGE, INCR_I, UPDATE_SUITOR} from "./types-action";
 import {wsApi} from "../store/preloaded-state-store";
+import env from "../../env";
 
 const join = (a, b) => {
     const ret =  (a <= b ? a + '/' + b : b + '/' + a);
@@ -9,7 +10,7 @@ const join = (a, b) => {
 
 export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
     let init = {
-        method: 'POST',
+        method: 'GET',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
@@ -18,7 +19,7 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
             'Suitor-Id' : suitorId,
         }
     };
-    fetch('/api/get_messages', init)
+    fetch(env.api + '/messages', init)
         .then(res => {
                 switch (res.status) {
                     case 202:
