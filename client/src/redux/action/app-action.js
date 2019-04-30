@@ -69,6 +69,7 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                                     type: LOAD_USER,
                                     user: data.user.Properties,
                                     tagList: data.tagList,
+                                    userTags: data.userTags,
                                 });
                             });
                     }
@@ -110,6 +111,7 @@ export const userAction = (prev) => dispatch => {
                                 type: LOAD_USER,
                                 user: data.user.Properties,
                                 tagList: data.tagList,
+                                userTags: data.userTags,
                             });
                         });
                 }

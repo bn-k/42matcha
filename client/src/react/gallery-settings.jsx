@@ -23,7 +23,24 @@ import {getPeopleAction, updateFiltersAction} from "../redux/action/people-actio
 import {peoplePreloaded} from "../redux/store/preloaded-state-store";
 import _ from 'lodash';
 import {userAction} from "../redux/action/app-action";
+import Tooltip from 'rc-tooltip';
 
+const Handle = Slider.Handle;
+const handle = (props, unit) => {
+    console.log(unit);
+    const { value, dragging,  index, ...restProps} = props;
+    return (
+        <Tooltip
+            prefixCls="rc-slider-tooltip"
+            overlay={value}
+            visible={dragging}
+            placement="top"
+            key={index}
+        >
+            <Handle value={value} {...restProps} />
+        </Tooltip>
+    );
+};
 
 class GallerySettings extends React.Component {
     constructor(props) {
@@ -41,11 +58,12 @@ class GallerySettings extends React.Component {
         let filters = this.props.people.filters;
         filters[name] = r;
     }
-    intervalCol(name, step) {
+    intervalCol(name, step, unit) {
         return (
             <Grid.Column mobile={16} tablet={16} computer={5}>
                 <Header as={'h4'}>{_.startCase(name)}</Header>
                 <Range
+                    unit={unit}
                     allowCross={false}
                     defaultValue={[this.props.people.filters[name][0], this.props.people.filters[name][1]]}
                     onChange={r => this.zut(r, name)}
@@ -56,6 +74,7 @@ class GallerySettings extends React.Component {
                     trackStyle={[{ backgroundColor: 'black'}, { backgroundColor: 'black'}]}
                     handleStyle={[{ backgroundColor: 'white' , borderColor: 'red' }, { backgroundColor: 'white' , borderColor: 'red' }]}
                     railStyle={{ backgroundColor: 'gray'}}
+                    handle={handle}
                 />
             </Grid.Column>
         )
@@ -81,9 +100,9 @@ class GallerySettings extends React.Component {
             <Segment>
                 <Grid>
                     <Grid.Row columns={3}>
-                        {this.intervalCol("age", 1)}
-                        {this.intervalCol("score", 1)}
-                        {this.intervalCol("location", 50)}
+                        {this.intervalCol("age", 1, "years")}
+                        {this.intervalCol("score", 1, "")}
+                        {this.intervalCol("location", 50, "km")}
                     </Grid.Row>
                     <Header as={'h4'}>Tags</Header>
                     <Grid.Row columns={3}>

@@ -28,8 +28,16 @@ import {
     userAction,
     userModifyAction
 } from "../redux/action/app-action";
-import {genders} from "./modules/options-dates";
+import {genders, interest} from "./modules/options-dates";
+import SimpleMap from "./components/map";
 
+const Tags = (props) => console.log("Tags ==", props) || (
+    props.app.user.userTags.map(tag => (
+        <div key={tag.key}>
+            <p>{tag.text}</p>
+        </div>
+    ))
+);
 const fields = [
     {
         name: "username",
@@ -175,6 +183,19 @@ const fields = [
         computer: 16,
     },
     {
+        name: "location",
+        title: "Location",
+        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
+        entries: [
+            {type: (hc, s) => (
+                <p></p>
+                )},
+        ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
+    },
+    {
         name: "genre",
         title: "Gender",
         view: (props) => (<p>{props.app.user[props.field.name]}</p>),
@@ -206,7 +227,7 @@ const fields = [
                         <Form.Select
                             fluid
                             label={props.field.title}
-                            options={genders}
+                            options={interest}
                             placeholder='-'
                             name={props.field.name}
                             onChange={(e, data) => hc}
@@ -219,9 +240,9 @@ const fields = [
         computer: 8,
     },
     {
-        name: "tags",
+        name: "userTags",
         title: "Tags",
-        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
+        view: (props) => (<Tags {...props}/>),
         entries: [
             {type: (hc, s, props, htc) => (
                     <Grid.Column key={"tags"} mobile={16} tablet={16} computer={8}>

@@ -98,6 +98,9 @@ class Login extends Component {
                             <Message>
                                 Not registered? <a href='/register'>Sign Up</a>
                             </Message>
+                            <Message>
+                                Forgot Password? <a href='/forgot'>Click Here</a>
+                            </Message>
                         </Grid.Column>
                     </Grid>
                 </div>

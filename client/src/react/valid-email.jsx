@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-function getJsonFromUrl(url) {
+export function getJsonFromUrl(url) {
     if(!url) url = location.search;
     var query = url.substr(1);
     var result = {};

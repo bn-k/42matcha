@@ -18,6 +18,8 @@ import Error from "./react/error";
 import Navigation from "./react/navigation";
 import ValidEmail from './react/valid-email'
 import Messenger from './react/messenger'
+import Forgot from './react/forgot'
+import ResetPassword from './react/reset-password'
 
 
 const App = () => (
@@ -35,6 +37,8 @@ const App = () => (
                     <Route path="/valid_email" component={ValidEmail}/>
                     <PublicRoute path="/login" component={Login}/>
                     <PublicRoute path="/register" component={Register}/>
+                    <PublicRoute path="/forgot" component={Forgot}/>
+                    <PublicRoute path="/reset-password" component={ResetPassword}/>
                     <PublicRoute component={Error}/>
                 </Switch>
             </React.Fragment>

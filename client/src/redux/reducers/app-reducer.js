@@ -12,6 +12,10 @@ export function appReducer (state = initial, action) {
         case LOAD_USER:
             return {
                 ...action,
+                user : {
+                    ...action.user,
+                    userTags: action.userTags
+                },
                 field: null,
             };
         case DISABLE_FIELD:

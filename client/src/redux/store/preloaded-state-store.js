@@ -117,7 +117,7 @@ export const appPreloaded = {
         rating: null,
         username: null,
         zip: null,
-        tags: [],
+        userTags: [],
     }
 };
 
