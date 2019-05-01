@@ -42,6 +42,7 @@ const imgCase = (prev, body, name, dispatch) =>  {
             }
         )
 };
+
 export const userModifyAction = (prev, body, name) => dispatch => {
     if (Object.keys(body)[0] === 'file') {
         imgCase(prev, body, name, dispatch);
@@ -89,10 +90,8 @@ export const addTagAction = (prev, newTag) => dispatch => {
 
 export const userAction = (prev) => dispatch => {
     let init = {
-        method: 'POST',
+        method: 'GET',
         headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
         }
     };

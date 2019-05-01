@@ -29,9 +29,26 @@ import {
     userModifyAction
 } from "../redux/action/app-action";
 import {genders, interest} from "./modules/options-dates";
-import SimpleMap from "./components/map";
+import {fromAddr, gKey} from "./components/map";
+import {
+    withGoogleMap,
+    GoogleMap,
+    Marker,
+    withScriptjs,
+} from "react-google-maps";
 
-const Tags = (props) => console.log("Tags ==", props) || (
+const MapWithAMarker = withScriptjs(withGoogleMap(props =>
+    <GoogleMap
+        defaultZoom={8}
+        defaultCenter={{ lat: -34.397, lng: 150.644 }}
+    >
+        <Marker
+            position={{ lat: -34.397, lng: 150.644 }}
+        />
+    </GoogleMap>
+));
+
+const Tags = (props) => (
     props.app.user.userTags.map(tag => (
         <div key={tag.key}>
             <p>{tag.text}</p>
@@ -185,7 +202,15 @@ const fields = [
     {
         name: "location",
         title: "Location",
-        view: (props) => (<p>{props.app.user[props.field.name]}</p>),
+        view: (props) => (
+            <MapWithAMarker
+                pos={fromAddr("ecole 42")}
+                googleMapURL={"https://maps.googleapis.com/maps/api/js?key=" + gKey + "&v=3.exp&libraries=geometry,drawing,places"}
+                loadingElement={<div style={{ height: `100%` }} />}
+                containerElement={<div style={{ height: `400px` }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+            />
+        ),
         entries: [
             {type: (hc, s) => (
                 <p></p>

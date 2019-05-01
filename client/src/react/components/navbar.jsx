@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Notifications from './notifications'
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
 import {HashRouter} from "react-router-dom";
@@ -16,7 +17,7 @@ import {
     Menu,
     Segment,
     Responsive,
-    Visibility,
+    Visibility, Popup,
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import {logoutAction} from "../../redux/action/login-action";
@@ -27,6 +28,14 @@ const trigger = (img, name) => (
     <Image size={"mini"} avatar src={img}/> {name}
   </span>
 );
+
+const nots = (img, name) => (
+    <span>
+        <p>Not's</p>
+  </span>
+);
+
+
 const Nav = (props) => (
     <Menu fluid widths={5} pointing secondary icon={props.icon} size={"huge"}>
         <Menu.Item
@@ -53,7 +62,7 @@ const Nav = (props) => (
             {props.buttons.messenger.name}
         </Menu.Item>
 
-        <Dropdown trigger={trigger(props.login.img1, props.name)} item >
+        <Dropdown trigger={trigger(props.login.img1, props.app.user.username)} item >
             <Dropdown.Menu>
                 <Dropdown.Item
                     active={props.location.pathname === '/user'}
@@ -70,13 +79,7 @@ const Nav = (props) => (
             </Dropdown.Menu>
         </Dropdown>
 
-        <Menu.Item
-            header
-            active={false}
-            onClick={() => props.history.push('/user')}
-        >
-            <p>Not</p>
-        </Menu.Item>
+        <Notifications/>
 
         <Menu.Item
             header
@@ -90,7 +93,8 @@ const Nav = (props) => (
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        login: state.login,
+        app: state.app
     };
 };
 

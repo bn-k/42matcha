@@ -12,8 +12,6 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
     let init = {
         method: 'GET',
         headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
             'User-Id' : userId,
             'Suitor-Id' : suitorId,

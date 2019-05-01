@@ -9,6 +9,10 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const LOAD_PEOPLE = 'LOAD_PEOPLE';
 export const NO_PEOPLE = 'NO_PEOPLE';
 export const UPDATE_FILTERS = 'UPDATE_FILTERS';
+export const dislike = 'dislike';
+export const like = 'like';
+export const block = 'block';
+
 
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const ADD_TAG = 'ADD_TAG';

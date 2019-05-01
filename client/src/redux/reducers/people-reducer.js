@@ -1,4 +1,4 @@
-import {LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from "../action/types-action";
+import {block, dislike, like, LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from "../action/types-action";
 
 const initial = () => {
 
@@ -6,6 +6,18 @@ const initial = () => {
 
 export function peopleReducer (state = initial, action) {
     switch (action.type) {
+        case like:
+            return ({
+                ...action,
+            });
+        case dislike:
+            return ({
+                ...action,
+            });
+        case block:
+            return ({
+                ...action,
+            });
         case UPDATE_FILTERS:
             return ({
                 ...action,

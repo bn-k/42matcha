@@ -19,6 +19,8 @@ import {
     Label,
 } from 'semantic-ui-react';
 import {getAge} from "./modules/utils";
+import {peopleAction} from "../redux/action/people-action";
+import {block, dislike, like} from "../redux/action/types-action";
 
 class Profile extends React.Component {
     constructor (props) {
@@ -34,7 +36,19 @@ class Profile extends React.Component {
                 profile : props.people.data[props.app.i].Properties
             };
         }
+        this.dislike = this.dislike.bind(this);
+        this.like = this.like.bind(this);
+        this.block= this.block.bind(this);
     }
+    dislike = () => {
+        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, dislike))
+    };
+    like = () => {
+        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, like))
+    };
+    block = () => {
+        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, block))
+    };
     render () {
         const {profile} = this.state;
         console.log(profile);
@@ -79,14 +93,17 @@ class Profile extends React.Component {
                                         <Button.Group fluid>
                                             <Button
                                                 color={"red"}
+                                                onClick={this.block}
                                             ><Icon name={"x"}/></Button>
                                             <Button.Or />
                                             <Button
                                                 color={"yellow"}
+                                                onClick={this.dislike}
                                             ><Icon name={"thumbs down"}/></Button>
                                             <Button.Or />
                                             <Button
                                                 color={"green"}
+                                                onClick={this.like}
                                             ><Icon name={"heart"}/></Button>
                                         </Button.Group>
                                     </Grid.Row>

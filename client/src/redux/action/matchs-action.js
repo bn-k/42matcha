@@ -1,4 +1,4 @@
-import {LOAD_MATCHS, LOAD_PEOPLE} from './types-action';
+import {LOAD_MATCHS} from './types-action';
 import {updateSuitorAction} from "./messenger-action";
 import env from "../../env";
 
@@ -6,8 +6,6 @@ export const getMatchsAction = (messenger, userId) => dispatch => {
     let init = {
         method: 'GET',
         headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
         }
     };

@@ -49,7 +49,7 @@ class Messenger extends Component {
                         <Message
                             error
                             header="You don't have any match yet"
-                            onClick={() => props.history.push('/messenger')}
+                            onClick={() => this.props.history.push('/')}
                         />
                         <Button
                             onClick={() => this.props.history.push('/')}

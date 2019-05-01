@@ -12,9 +12,6 @@ class Home extends React.Component {
         super(props);
         this.state = {};
     }
-    componentDidMount() {
-        store.dispatch(getPeopleAction(this.props.people.filters));
-    }
     render () {
         return (
             <Container>
@@ -27,9 +24,6 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login,
-        people: state.people,
-        app: state.app,
     };
 };
 

@@ -1,12 +1,42 @@
 import {LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from './types-action';
 import env from "../../env";
 
+export const peopleAction = (prev, id, action) => dispatch => {
+    let init = {
+        method: 'PUT',
+        body: {},
+        headers:{
+            'Authorization': localStorage.getItem('jwt'),
+        }
+    };
+    fetch(env.api + '/people/' + id + "/" + action, init)
+        .then(res => {
+                switch (res.status) {
+                    case 200:
+                        res.json().then(json => {
+                            dispatch({
+                                ...prev,
+                                type: action,
+                            })
+                        });
+                        break;
+                    case 201:
+                        res.json().then(json =>{
+                        });
+                        break;
+                    case 202:
+                        res.json().then(json =>{
+                        });
+                        break;
+                }
+            }
+        )
+};
+
 export const getPeopleAction = (filters) => dispatch => {
     let init = {
         method: 'GET',
         headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
             'Filters': JSON.stringify(filters),
         }

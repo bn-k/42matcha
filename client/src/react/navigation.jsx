@@ -23,12 +23,12 @@ import Nav from "./components/navbar";
 import {computerButtons, mobileButtons} from "./components/nav-buttons";
 import withSizes from 'react-sizes'
 import publicIp from 'public-ip';
+import {getPeopleAction} from "../redux/action/people-action";
+import {getMatchsAction} from "../redux/action/matchs-action";
 
 const sendPosition = (type, pos) => {
     fetch('/api/user/position', {
         headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
             'Authorization': localStorage.getItem('jwt'),
         },
         method: 'PUT',
@@ -38,6 +38,12 @@ const sendPosition = (type, pos) => {
 };
 
 class Navigation extends Component {
+    constructor(props) {
+        super(props);
+        props.dispatch(getPeopleAction(this.props.people.filters));
+        props.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
+    }
+
     componentDidMount() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.updatePosition, this.geoDeniedPosition);
@@ -53,9 +59,6 @@ class Navigation extends Component {
             })();
         }
     }
-    logout = () => {
-        this.props.dispatch(logoutAction(this.props.history));
-    };
     render() {
         if (this.props.login.loggedIn) {
             return (
@@ -81,6 +84,9 @@ const mapStateToProps = (state) => {
     return {
         login: state.login,
         app: state.app,
+        people: state.people,
+        messenger: state.messenger,
+        matchs: state.matchs,
     };
 };
 
