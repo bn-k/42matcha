@@ -20,16 +20,24 @@ import env from "../../env";
 
 const Notification = (props) => (
     <Grid.Row>
-        <Grid columns={2}>
-            <Grid.Column width={13}>
-                <Header as='h4'>
-                    {props.notif.message}
-                </Header>
-            </Grid.Column>
-            <Grid.Column width={3} textAlign='center'>
-                <Button onClick={e => props.deleteMe(props.notif.id, e)}><Icon color={"teal"} name={"delete"}/></Button>
-            </Grid.Column>
-        </Grid>
+            <Grid columns={2}>
+                <Grid.Column width={13}>
+                    <Header as='h4'>
+                        {props.notif.message}
+                    </Header>
+                </Grid.Column>
+                <Grid.Column width={3} textAlign='center'>
+                    <Button
+                        circular
+                        icon
+                        negative
+                        onClick={e => props.deleteMe(props.notif.id, e)}
+                    >
+                        <Icon name={"delete"}/>
+                    </Button>
+                </Grid.Column>
+            </Grid>
+        <Divider/>
     </Grid.Row>
 );
 

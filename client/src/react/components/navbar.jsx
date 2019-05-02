@@ -25,7 +25,7 @@ import {logoutAction} from "../../redux/action/login-action";
 
 const trigger = (img, name) => (
     <span>
-    <Image size={"mini"} avatar src={img}/> {name}
+    <Image size={"mini"} avatar src={img}/>
   </span>
 );
 
