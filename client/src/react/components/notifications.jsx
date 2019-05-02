@@ -54,8 +54,6 @@ const notificationsHistory = (id) => {
         .then(res => {
             if (res.status === 200) {
                 res.json().then(json => {
-                    console.log("N History ====>", json)
-
                 })
             }
         })
@@ -63,12 +61,10 @@ const notificationsHistory = (id) => {
 
 class Notifications extends React.Component {
     constructor (props) {
-        console.log(notificationsHistory(props.login.id));
         const socket = new WebSocket("ws://localhost:8181/api/notifications/websocket/" + props.login.id);
         socket.onopen = (event) => {
             socket.onmessage = ({data}) => {
                 data = JSON.parse(data);
-                console.log("New Notification:", data);
                 this.setState({tab: [
                         {
                             id: data.id,
@@ -97,7 +93,6 @@ class Notifications extends React.Component {
     }
     deleteMe = (id, e) => {
         e.preventDefault();
-        console.log(id);
         this.setState({tab: this.state.tab.filter((obj) => {
                 return obj.id !== id
             })})

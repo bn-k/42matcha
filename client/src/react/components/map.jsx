@@ -1,20 +1,30 @@
-import gm from '@google/maps'
-export const gKey = 'AIzaSyDTc93ie9KhEOJ_iPM_gqb5qfjwDyY8PPk';
+import React from 'react'
+import {Map, TileLayer, Marker, Popup } from 'react-leaflet'
 
-const geo = gm.createClient({
-    key: gKey,
-});
-
-
-export const fromAddr = (addr) => {
-    geo.geocode({
-        address: addr
-    }, function(err, response) {
-        if (!err) {
-            console.log("Geocode  =======> ", response.json.results);
-            return response.json.results
-        } else {
-            console.log("Geocode err  =======> ", err);
+export default class Mapp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            lat: props.lat,
+            lng: props.lng,
+            zoom: 13
         }
-    });
-};
+    }
+
+    render() {
+        const position = [this.props.lat, this.props.lng];
+        return (
+            <Map center={position} zoom={this.state.zoom}>
+                <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+                />
+                <Marker position={position}>
+                    <Popup>
+                        A pretty CSS3 popup. <br/> Easily customizable.
+                    </Popup>
+                </Marker>
+            </Map>
+        );
+    }
+}

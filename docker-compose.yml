@@ -44,6 +44,9 @@ services:
     depends_on:
       - neo4j
     tty: true
+    environment:
+      SHA1: "EezmdtOLkZ5krcljUzoQ"
+      SHA2: "GC4SmycFgOh8QsjPO_ytYQ"
     working_dir: /app
     command: sh run.sh
     networks:

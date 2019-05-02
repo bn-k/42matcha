@@ -6,7 +6,6 @@ const parseToken = (file) => {
         localStorage.removeItem(file);
         return null
     } else {
-        console.log("Token parse: ", file, JwtDecode(localStorage.getItem(file)));
         return JwtDecode(localStorage.getItem(file))
     }
 };
@@ -107,8 +106,8 @@ export const appPreloaded = {
         img5:null,
         interest:null,
         lastname:null,
-        latitude:null,
-        longitude:null,
+        latitude: 0,
+        longitude: 0,
         name:null,
         online:null,
         rating: null,

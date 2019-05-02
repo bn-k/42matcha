@@ -51,7 +51,6 @@ class Profile extends React.Component {
     };
     render () {
         const {profile} = this.state;
-        console.log(profile);
         return (
             this.state.loaded ? (
                 <Container className={"profile"}>

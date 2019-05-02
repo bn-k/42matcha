@@ -27,7 +27,6 @@ import Tooltip from 'rc-tooltip';
 
 const Handle = Slider.Handle;
 const handle = (props, unit) => {
-    console.log(unit);
     const { value, dragging,  index, ...restProps} = props;
     return (
         <Tooltip

@@ -1,4 +1,4 @@
-import rootReducer from '../reducers/root-reducer';
+import {rootReducer} from '../reducers/root-reducer';
 import { createStore} from 'redux';
 import preloadedState from './preloaded-state-store';
 import middlewares from "./middleware-store";

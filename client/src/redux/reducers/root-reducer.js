@@ -5,8 +5,10 @@ import {peopleReducer} from "./people-reducer";
 import {appReducer} from "./app-reducer";
 import {messengerReducer} from "./messenger-reducer";
 import {matchsReducer} from "./matchs-reducer";
+import {LOGOUT} from "../action/types-action";
+import preloadedState from "../store/preloaded-state-store";
 
-export default combineReducers({
+const allReducer = combineReducers({
     login: loginReducer,
     register: registerReducer,
     people: peopleReducer,
@@ -14,3 +16,11 @@ export default combineReducers({
     messenger: messengerReducer,
     matchs: matchsReducer,
 });
+
+export const rootReducer = (state, action) => {
+    if (action.type === LOGOUT) {
+        console.log(LOGOUT);
+        state = preloadedState
+    }
+    return allReducer(state, action)
+};

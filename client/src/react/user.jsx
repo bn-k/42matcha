@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {Component} from "react";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 import {
@@ -29,32 +29,23 @@ import {
     userModifyAction
 } from "../redux/action/app-action";
 import {genders, interest} from "./modules/options-dates";
-import {fromAddr, gKey} from "./components/map";
-import {
-    withGoogleMap,
-    GoogleMap,
-    Marker,
-    withScriptjs,
-} from "react-google-maps";
+import Mapp from './components/map';
+import AddressForm from './components/address-form';
 
-const MapWithAMarker = withScriptjs(withGoogleMap(props =>
-    <GoogleMap
-        defaultZoom={8}
-        defaultCenter={{ lat: -34.397, lng: 150.644 }}
-    >
-        <Marker
-            position={{ lat: -34.397, lng: 150.644 }}
-        />
-    </GoogleMap>
-));
+const Tags = (props) => {
+    if (props.app.user.userTags) {
+        return (
+            props.app.user.userTags.map(tag => (
+                <div key={tag.key}>
+                    <p>{tag.text}</p>
+                </div>
+            ))
+        )
+    } else {
+        return (null)
+    }
+};
 
-const Tags = (props) => (
-    props.app.user.userTags.map(tag => (
-        <div key={tag.key}>
-            <p>{tag.text}</p>
-        </div>
-    ))
-);
 const fields = [
     {
         name: "username",
@@ -128,34 +119,7 @@ const fields = [
         title: "Email",
         view: (props) => (<p>{props.app.user[props.field.name]}</p>),
         entries: [
-            {type: (hc, s) => (
-                    <Grid key={"grid_email"}>
-                        <Grid.Column mobile={16} tablet={6} computer={6}>
-                            <Grid.Row>
-                                <Header as={'h4'}>Password</Header>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Input fluid key={1} type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
-                            </Grid.Row>
-                        </Grid.Column>
-                        <Grid.Column mobile={16} tablet={5} computer={5}>
-                            <Grid.Row>
-                                <Header as={'h4'}>New email</Header>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Input fluid key={2} type={'email'} key={1} onChange={hc} name={"new_email"} value={s}/>
-                            </Grid.Row>
-                        </Grid.Column>
-                        <Grid.Column mobile={16} tablet={5} computer={5}>
-                            <Grid.Row>
-                                <Header as={'h4'}>Confirm email</Header>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Input fluid key={3} type={'email'} key={1} onChange={hc} name={"confirm"} value={s}/>
-                            </Grid.Row>
-                        </Grid.Column>
-                    </Grid>
-                )}
+            {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"email"} value={s}/>)}
         ],
         mobile : 16,
         tablet : 16,
@@ -202,19 +166,9 @@ const fields = [
     {
         name: "location",
         title: "Location",
-        view: (props) => (
-            <MapWithAMarker
-                pos={fromAddr("ecole 42")}
-                googleMapURL={"https://maps.googleapis.com/maps/api/js?key=" + gKey + "&v=3.exp&libraries=geometry,drawing,places"}
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `400px` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-            />
-        ),
+        view: (props) => (<Mapp lng={props.app.user.longitude} lat={props.app.user.latitude}/>),
         entries: [
-            {type: (hc, s) => (
-                <p></p>
-                )},
+            {type: (hc, s, props) => (<AddressForm {...props} key={"address-form"}/>)},
         ],
         mobile : 16,
         tablet : 16,
@@ -457,7 +411,6 @@ class User extends React.Component {
         props.dispatch(userAction(props.app));
     }
     save = (e) => {
-        console.log("Statte ======> ", this.state);
         this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
     };
     modify = (e, field) => {
@@ -469,14 +422,12 @@ class User extends React.Component {
         }
     };
     handleChange = (e, data) => {
-        console.log(this.state);
         this.setState({body: {...this.state.body, [data.name]: data.value}});
     };
     handleFileChange = (e) => {
         this.setState({body: {file: e.target.files[0]}});
     };
     handleTagChange = (e, data) => {
-        console.log(this.state);
         this.setState({body: {tags: data.value}});
     };
     addNewTag = () => {
@@ -485,30 +436,32 @@ class User extends React.Component {
     };
     render () {
         return (
-            <Container className={"user"}>
-                <Grid>
-                    {fields.map((field) => (
-                        <Grid.Column
-                            key={field.name}
-                            mobile={field.mobile}
-                            tablet={field.tablet}
-                            computer={field.computer}
-                        >
-                            <Field
-                                {...this.props}
-                                handleChange={this.handleChange}
-                                hfc={this.handleFileChange}
-                                htc={this.handleTagChange}
-                                addNewTag={this.addNewTag}
-                                save={this.save}
-                                modify={this.modify}
-                                state={this.state}
-                                field={field}
-                            />
-                        </Grid.Column>
-                    ))}
-                </Grid>
-            </Container>
+            <>
+                <Container className={"user"}>
+                    <Grid>
+                        {fields.map((field) => (
+                            <Grid.Column
+                                key={field.name}
+                                mobile={field.mobile}
+                                tablet={field.tablet}
+                                computer={field.computer}
+                            >
+                                <Field
+                                    {...this.props}
+                                    handleChange={this.handleChange}
+                                    hfc={this.handleFileChange}
+                                    htc={this.handleTagChange}
+                                    addNewTag={this.addNewTag}
+                                    save={this.save}
+                                    modify={this.modify}
+                                    state={this.state}
+                                    field={field}
+                                />
+                            </Grid.Column>
+                        ))}
+                    </Grid>
+                </Container>
+            </>
         )
     }
 }

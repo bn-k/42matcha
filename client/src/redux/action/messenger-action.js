@@ -4,7 +4,6 @@ import env from "../../env";
 
 const join = (a, b) => {
     const ret =  (a <= b ? a + '/' + b : b + '/' + a);
-    console.log(wsApi + ret);
     return (ret)
 };
 
@@ -33,7 +32,6 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
                         break;
                     case 200:
                         res.json().then(data => {
-                            console.log("data: ", data);
                             const newUrl = wsApi + join(userId, suitorId);
                             prevState.ws.close();
                             dispatch({
@@ -49,7 +47,6 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
                 }
             }
         )
-        .catch(error => console.log(error))
 };
 
 export const incrementMessageAction = (prevState) => dispatch => {

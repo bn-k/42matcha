@@ -51,7 +51,6 @@ class ResetPassword extends React.Component {
             });
     };
     handleChange = (e, data) => {
-        console.log(this.state);
         this.setState({[data.name]: data.value});
     };
     error () {
