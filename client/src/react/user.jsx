@@ -206,7 +206,7 @@ const fields = [
                             options={genders}
                             placeholder='-'
                             name={props.field.name}
-                            onChange={(e, data) => hc}
+                            onChange={hc}
                         />
                     </Grid.Column>
                 )},
@@ -228,7 +228,7 @@ const fields = [
                             options={interest}
                             placeholder='-'
                             name={props.field.name}
-                            onChange={(e, data) => hc}
+                            onChange={hc}
                         />
                     </Grid.Column>
                 )},
