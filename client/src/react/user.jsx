@@ -119,7 +119,26 @@ const fields = [
         title: "Email",
         view: (props) => (<p>{props.app.user[props.field.name]}</p>),
         entries: [
-            {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"email"} value={s}/>)}
+            {type: (hc, s) => (
+                    <Grid key={"grid_email"}>
+                        <Grid.Column mobile={16} tablet={6} computer={6}>
+                            <Grid.Row>
+                                <Header as={'h4'}>Password</Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Input fluid key={1} type={'email'} onChange={hc} name={"old_password"} value={s}/>
+                            </Grid.Row>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={5} computer={5}>
+                            <Grid.Row>
+                                <Header as={'h4'}>New Email</Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Input fluid key={2} type={'email'} onChange={hc} name={"new_email"} value={s}/>
+                            </Grid.Row>
+                        </Grid.Column>
+                    </Grid>
+                )}
         ],
         mobile : 16,
         tablet : 16,
@@ -137,7 +156,7 @@ const fields = [
                                 <Header as={'h4'}>Old Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input fluid key={1} type={'password'} key={1} onChange={hc} name={"old_password"} value={s}/>
+                                <Input fluid key={1} type={'password'}  onChange={hc} name={"old_password"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
@@ -145,7 +164,7 @@ const fields = [
                                 <Header as={'h4'}>New Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input fluid key={2} type={'password'} key={1} onChange={hc} name={"new_password"} value={s}/>
+                                <Input fluid key={2} type={'password'} onChange={hc} name={"new_password"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
@@ -153,7 +172,7 @@ const fields = [
                                 <Header as={'h4'}>Confirm Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input fluid key={3} type={'password'} key={1} onChange={hc} name={"confirm"} value={s}/>
+                                <Input fluid key={3} type={'password'} onChange={hc} name={"confirm"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                     </Grid>
@@ -166,7 +185,7 @@ const fields = [
     {
         name: "location",
         title: "Location",
-        view: (props) => (<Mapp lng={props.app.user.longitude} lat={props.app.user.latitude}/>),
+        view: (props) => (null),
         entries: [
             {type: (hc, s, props) => (<AddressForm {...props} key={"address-form"}/>)},
         ],

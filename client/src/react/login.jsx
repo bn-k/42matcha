@@ -54,11 +54,20 @@ class Login extends Component {
         const lgn = this.props.login;
         return (
             <React.Fragment>
+                <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.login-form {
+        height: 80%;
+      margin-top: 20px;
+      }
+    `}
+                </style>
                 <div className='login-form'>
                     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                         <Grid.Column style={{ maxWidth: 450 }}>
-                            <Header as='h2' color='teal' textAlign='center'>
-                                <Image src='/logo.png' /> Create your account
+                            <Header as='h2' color='pink' textAlign='center'>
+                                <Image src='/src/public/img/logo.png' /> Create your account
                             </Header>
                             <Form size='large'>
                                 <Segment stacked>
@@ -87,7 +96,7 @@ class Login extends Component {
                                         onChange={this.handleChange}
                                     />
                                     <Button
-                                        color='teal'
+                                        color='pink'
                                         fluid
                                         size='large'
                                         onClick={this.submit}

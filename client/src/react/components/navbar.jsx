@@ -29,13 +29,6 @@ const trigger = (img, name) => (
   </span>
 );
 
-const nots = (img, name) => (
-    <span>
-        <p>Not's</p>
-  </span>
-);
-
-
 const Nav = (props) => (
     <Menu fluid widths={5} pointing secondary icon={props.icon} size={"huge"}>
         <Menu.Item
@@ -43,11 +36,7 @@ const Nav = (props) => (
             active={props.location.pathname === '/home'}
             onClick={() => props.history.push('/home')}
         >
-            <Icon
-                disabled={props.location.pathname === '/home'}
-                name='recycle'
-            />
-            {props.buttons.home.name}
+            {props.buttons.home.name()}
         </Menu.Item>
 
         <Menu.Item

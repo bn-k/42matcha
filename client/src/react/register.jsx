@@ -61,11 +61,20 @@ class Register extends Component {
         const reg = this.props.register;
         return (
             <React.Fragment>
+                <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.register-form {
+      margin-top: 20px;
+        height: 80%;
+      }
+    `}
+                </style>
                 <div className='register-form'>
                     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                         <Grid.Column style={{ maxWidth: 450 }}>
-                            <Header as='h2' color='teal' textAlign='center'>
-                                <Image src='/logo.png' /> Create your account
+                            <Header as='h2' color='pink' textAlign='center'>
+                                <Image src='/src/public/img/logo.png' /> Create your account
                             </Header>
                             <Form size='large'>
                                 <Segment stacked>
@@ -173,14 +182,6 @@ class Register extends Component {
                                             onChange={(e, data) => this.handleChange(e, data)}
                                         />
                                     </Form.Group>
-                                    <Segment size={"mini"} width={6}>
-                                        <Form.Checkbox
-                                            toggle
-                                            label='I accept geolocation'
-                                            name="geo"
-                                            onChange={(e, data) => this.handleToggle(e, data)}
-                                        />
-                                    </Segment>
                                     <Form.Group label={"Birthday"}>
                                         <Form.Select
                                             width={5}
@@ -208,7 +209,7 @@ class Register extends Component {
                                         />
                                     </Form.Group>
                                     <Button
-                                        color='teal'
+                                        color='pink'
                                         fluid
                                         size='large'
                                         onClick={this.submit}

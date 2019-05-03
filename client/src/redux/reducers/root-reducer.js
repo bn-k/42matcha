@@ -19,7 +19,6 @@ const allReducer = combineReducers({
 
 export const rootReducer = (state, action) => {
     if (action.type === LOGOUT) {
-        console.log(LOGOUT);
         state = preloadedState
     }
     return allReducer(state, action)

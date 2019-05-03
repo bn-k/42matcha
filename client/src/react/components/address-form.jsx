@@ -1,6 +1,25 @@
 import React, {Component} from 'react'
-import {Button, Container, Divider, Grid, Input} from "semantic-ui-react";
+import {Button, Container, Divider, Grid, Input, Message} from "semantic-ui-react";
 import Mapp from "./map";
+import env from "../../env";
+
+const joinPlus = (s1, s2) => {
+    if (s1 === '') {
+       return s2
+    } else if (s2 === '') {
+        return s1
+    } else {
+        return  s1 + "+" + s2
+    }
+};
+
+const joinAll = (tab) => {
+    let s = "";
+    tab.map(str => {
+        s = joinPlus(s, str)
+    });
+    return s
+};
 
 export default class AddressForm extends Component {
     constructor(props) {
@@ -14,45 +33,79 @@ export default class AddressForm extends Component {
             show: false,
             lat: 0,
             lng: 0,
+            api_id: "",
+            api_code: "",
+            error: false,
+            errMessage: "",
         };
         this.handleChange = this.handleChange.bind(this);
         this.geocoder = this.geocoder.bind(this);
+        this.returnError = this.returnError.bind(this);
+    }
+    componentDidMount() {
+        fetch(env.api + '/kwal').then(res => {
+            res.json().then(json => {
+                json.map(a => {
+                    this.setState({[a.name]: [a.value][0]});
+                });
+            });
+        });
     }
     handleChange = (e, data) => {
         this.setState({[data.name]: data.value})
     };
+    handleError (error) {
+        this.setState({error: true, errMessage: error});
+        setTimeout(() => {
+            this.setState({error: false, errMessage: ""})
+        }, 2000)
+    }
+    returnError () {
+       if (this.state.error) {
+          return (
+              <Message color={'yellow'}>{this.state.errMessage}</Message>
+          )
+       } else {return (null)}
+    }
     geocoder() {
-        const url = 'https://geocoder.api.here.com/6.2/geocode.json' +
-            '?app_id=EezmdtOLkZ5krcljUzoQ' +
-            '&app_code=GC4SmycFgOh8QsjPO_ytYQ' +
-            '&searchtext=' +
-            this.state.street.split(' ').join('+') + '+' +
-            this.state.city.split(' ').join('+') + '+' +
-            this.state.state.split(' ').join('+') + '+' +
-            this.state.zip.split(' ').join('+') + '+' +
-            this.state.country.split(' ').join('+') + '+';
-        fetch(url).then(res => {
-            if (res.status == 200) {
-                console.log("URL ========> ",url);
-                res.json().then(json => {
-                    console.log("Json => ", json);
-                    if (json.Response.View.length > 0) {
-                        const pos = json.Response.View[0].Result[0].Location.DisplayPosition;
-                        this.setState({
-                            show: true,
-                            lat: pos.Latitude,
-                            lng: pos.Longitude
-                        });
-                    } else {
-                        console.log("URL ========> ",url);
-                        console.log("MAKE ALERTE BAD REQUEST")
-                    }
-                })
-            } else {
-                console.log("URL ========> ",url);
-                console.log("MAKE ALERTE BAD REQUEST")
-            }
-        })
+        const api = 'https://geocoder.api.here.com/6.2/geocode.json' +
+            '?app_id=' + this.state.app_id +
+            '&app_code=' + this.state.app_code +
+            '&searchtext=';
+        const arr = [
+            this.state.street.split(' ').join('+'),
+            this.state.city.split(' ').join('+'),
+            this.state.state.split(' ').join('+'),
+            this.state.zip.split(' ').join('+'),
+            this.state.country.split(' ').join('+')
+        ];
+        const data = joinAll(arr);
+        console.log("data ========>", data);
+        if (data.length == 0) {
+            this.handleError("Please fill the form")
+        } else {
+            const url = api + data;
+            fetch(url).then(res => {
+                if (res.status == 200) {
+                    console.log("URL ========> ",url);
+                    res.json().then(json => {
+                        console.log("Json => ", json);
+                        if (json.Response.View.length > 0) {
+                            const pos = json.Response.View[0].Result[0].Location.DisplayPosition;
+                            this.setState({
+                                show: true,
+                                lat: pos.Latitude,
+                                lng: pos.Longitude
+                            });
+                        } else {
+                            this.handleError("Sorry but we can't find your address")
+                        }
+                    })
+                } else {
+                    this.handleError("Sorry but we can't find your address")
+                }
+            })
+        }
     }
     render () {
         return (
@@ -71,6 +124,10 @@ export default class AddressForm extends Component {
                         <Grid.Row><Input label={"Country"} fluid key={1} type={'text'} onChange={this.handleChange} name={"country"} value={this.state.country}/></Grid.Row>
                         <Divider/>
                         <Grid.Row><Button fluid onClick={this.geocoder}>Fetch</Button></Grid.Row>
+                        <Divider/>
+                        <>
+                        {this.returnError()}
+                        </>
                     </Grid.Column>
                 </Grid>
 

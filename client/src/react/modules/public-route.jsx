@@ -30,6 +30,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-import {withRouter} from "react-router-dom"
-import {connect} from "react-redux";
 export default PublicRoute

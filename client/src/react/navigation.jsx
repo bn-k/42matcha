@@ -40,8 +40,10 @@ const sendPosition = (type, pos) => {
 class Navigation extends Component {
     constructor(props) {
         super(props);
-        props.dispatch(getPeopleAction(this.props.people.filters));
-        props.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
+        if (this.props.login.loggedIn) {
+            props.dispatch(getPeopleAction(this.props.people.filters));
+            props.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
+        }
     }
 
     componentDidMount() {
