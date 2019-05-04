@@ -238,7 +238,7 @@ const fields = [
         computer: 8,
     },
     {
-        name: "userTags",
+        name: "usertags",
         title: "Tags",
         view: (props) => (<Tags {...props}/>),
         entries: [
@@ -415,14 +415,13 @@ const Field = (props) => (
     </>
 );
 
-const init = {
-    name: null,
-    body: {tags:[]},
-};
 class User extends React.Component {
     constructor (props) {
         super(props);
-        this.state = init;
+        this.state = {
+            name: null,
+            body: {tags: props.app.user.userTags},
+        };
         this.handleChange = this.handleChange.bind(this);
         this.addNewTag = this.addNewTag.bind(this);
         this.save = this.save.bind(this);
@@ -433,13 +432,20 @@ class User extends React.Component {
         this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
     };
     modify = (e, field) => {
-        this.setState({body:{tags:[]}, name: field});
+        this.setState({body:{tags: this.state.tags}, name: field});
         if (this.props.app.field === field) {
             this.props.dispatch(disableFieldAction(this.props.app));
         } else {
             this.props.dispatch(enableFieldAction(this.props.app, field));
         }
     };
+    componentWillReceiveProps() {
+        const tags = [];
+        this.props.app.user.userTags.map(tag => {
+            tags.push(tag.key)
+        });
+        this.setState({body: {tags: tags}});
+    }
     handleChange = (e, data) => {
         this.setState({body: {...this.state.body, [data.name]: data.value}});
     };

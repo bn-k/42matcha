@@ -51,7 +51,7 @@ const Nav = (props) => (
             {props.buttons.messenger.name}
         </Menu.Item>
 
-        <Dropdown trigger={trigger(props.login.img1, props.app.user.username)} item >
+        <Dropdown trigger={trigger(props.app.user.img1, props.app.user.username)} item >
             <Dropdown.Menu>
                 <Dropdown.Item
                     active={props.location.pathname === '/user'}
