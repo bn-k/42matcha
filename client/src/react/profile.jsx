@@ -21,6 +21,7 @@ import {
 import {getAge} from "./modules/utils";
 import {peopleAction} from "../redux/action/people-action";
 import {block, dislike, like} from "../redux/action/types-action";
+import env from "../env";
 
 class Profile extends React.Component {
     constructor (props) {
@@ -35,6 +36,7 @@ class Profile extends React.Component {
                 loaded: true,
                 profile : props.people.data[props.app.i].Properties
             };
+            fetch(env.api + '/visit/' + props.app.profileId, {method: 'PUT'})
         }
         this.dislike = this.dislike.bind(this);
         this.like = this.like.bind(this);
@@ -93,7 +95,7 @@ class Profile extends React.Component {
                                             <Button
                                                 color={"red"}
                                                 onClick={this.block}
-                                            ><Icon name={"x"}/></Button>
+                                            ><Icon name={"ban"}/></Button>
                                             <Button.Or />
                                             <Button
                                                 color={"yellow"}

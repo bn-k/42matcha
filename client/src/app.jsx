@@ -19,6 +19,8 @@ import Navigation from "./react/navigation";
 import ValidEmail from './react/valid-email'
 import Messenger from './react/messenger'
 import Forgot from './react/forgot'
+import Matchs from './react/matchs'
+import History from './react/history'
 import ResetPassword from './react/reset-password'
 
 
@@ -30,6 +32,8 @@ const App = () => (
                 <Switch>
                     <Route exact path="/" component={Entry}/>
                     <PrivateRoute path="/home" component={Home}/>
+                    <PrivateRoute path="/matchs" component={Matchs}/>
+                    <PrivateRoute path="/history" component={History}/>
                     <PrivateRoute path="/user" component={User}/>
                     <PrivateRoute path="/profile" component={Profile}/>
                     <PrivateRoute path="/messenger" component={Messenger}/>

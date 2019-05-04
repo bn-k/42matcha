@@ -15,12 +15,10 @@ export const getMatchsAction = (messenger, userId) => dispatch => {
                     case 202:
                         localStorage.removeItem('jwt');
                         res.json().then(json =>{
-                            console.log(json.err);
                         });
                         break;
                     case 201:
                         res.json().then(json =>{
-                            console.log(json.err);
                         });
                         break;
                     case 200:

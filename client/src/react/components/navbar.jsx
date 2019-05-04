@@ -59,11 +59,11 @@ const Nav = (props) => (
                 >Settings</Dropdown.Item>
                 <Dropdown.Item
                     active={props.location.pathname === '/matchs'}
-                    onClick={() => props.history.push('/user')}
+                    onClick={() => props.history.push('/matchs')}
                 >Matchs</Dropdown.Item>
                 <Dropdown.Item
                     active={props.location.pathname === '/history'}
-                    onClick={() => props.history.push('/user')}
+                    onClick={() => props.history.push('/history')}
                 >History</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>

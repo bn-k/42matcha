@@ -20,28 +20,28 @@ import env from "../../env";
 
 const Notification = (props) => (
     <Grid.Row>
-            <Grid columns={2}>
-                <Grid.Column width={13}>
-                    <Header as='h4'>
-                        {props.notif.message}
-                    </Header>
-                </Grid.Column>
-                <Grid.Column width={3} textAlign='center'>
-                    <Button
-                        circular
-                        icon
-                        negative
-                        onClick={e => props.deleteMe(props.notif.id, e)}
-                    >
-                        <Icon name={"delete"}/>
-                    </Button>
-                </Grid.Column>
-            </Grid>
+        <Grid columns={2}>
+            <Grid.Column width={13}>
+                <Header as='h4'>
+                    {props.notif.message}
+                </Header>
+            </Grid.Column>
+            <Grid.Column width={3} textAlign='center'>
+                <Button
+                    circular
+                    icon
+                    negative
+                    onClick={e => props.deleteMe(props.notif.id, e)}
+                >
+                    <Icon name={"delete"}/>
+                </Button>
+            </Grid.Column>
+        </Grid>
         <Divider/>
     </Grid.Row>
 );
 
-const notificationsHistory = (id) => {
+const notificationsHistory = (id, set) => {
     let init = {
         method: 'GET',
         headers:{
@@ -54,6 +54,7 @@ const notificationsHistory = (id) => {
         .then(res => {
             if (res.status === 200) {
                 res.json().then(json => {
+
                 })
             }
         })
@@ -77,17 +78,36 @@ class Notifications extends React.Component {
                 });
             };
         };
+        let init = {
+            method: 'GET',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': localStorage.getItem('jwt'),
+            }
+        };
+        fetch(env.api + '/notifications/history/' + props.login.id, init)
+            .then(res => {
+                if (res.status === 200) {
+                    res.json().then(json => {
+                        let tab = [];
+                        json.map(notif => {
+                           tab.push(
+                               {
+                                   id: notif.id,
+                                   author: notif.author_id,
+                                   message: notif.message,
+                                   subject: notif.subject_id,
+                               },
+                           );
+                            this.setState({tab: tab})
+                        })
+                    })
+                }
+            });
         super(props);
         this.state = {
-            tab: [
-                {
-                    id: 8888888,
-                    author: 23,
-                    message: "You have a new match with Elza",
-                    link: "/user",
-                    subject: "fasdf",
-                }
-            ],
+            tab: [],
         };
         this.deleteMe = this.deleteMe.bind(this);
     }
@@ -95,8 +115,11 @@ class Notifications extends React.Component {
         e.preventDefault();
         this.setState({tab: this.state.tab.filter((obj) => {
                 return obj.id !== id
-            })})
+        })})
+        fetch(env.api + '/notifications/' + id, {method:"DELETE"})
     };
+    componentWillUpdate(nextProps, nextState, nextContext) {
+    }
     render () {
         return (
             <Popup
