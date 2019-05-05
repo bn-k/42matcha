@@ -41,24 +41,6 @@ const Notification = (props) => (
     </Grid.Row>
 );
 
-const notificationsHistory = (id, set) => {
-    let init = {
-        method: 'GET',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-            'Authorization': localStorage.getItem('jwt'),
-        }
-    };
-    fetch(env.api + '/notifications/history/' + id, init)
-        .then(res => {
-            if (res.status === 200) {
-                res.json().then(json => {
-
-                })
-            }
-        })
-};
 
 class Notifications extends React.Component {
     constructor (props) {

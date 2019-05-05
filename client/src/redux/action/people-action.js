@@ -45,13 +45,10 @@ export const getPeopleAction = (filters) => dispatch => {
         .then(res => {
                 switch (res.status) {
                     case 201:
-                        res.json().then(json =>{
                             dispatch({
                                 type: NO_PEOPLE,
                                 filters: filters,
-                                err: json.err,
                             });
-                        });
                         break;
                     case 202:
                         localStorage.removeItem('jwt');

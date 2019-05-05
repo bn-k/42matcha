@@ -20,11 +20,16 @@ import {
     Label,
 } from 'semantic-ui-react';
 import {updateProfileAction} from "../redux/action/app-action";
+import {getPeopleAction} from "../redux/action/people-action";
+import {getMatchsAction} from "../redux/action/matchs-action";
 
 class Gallery extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        console.log("CONS GAL ", props.login);
+            props.dispatch(getPeopleAction(props.people.filters));
+                // props.dispatch(getMatchsAction(props.messenger, props.login.id));
     }
     state = {
         i : 0,
@@ -76,6 +81,7 @@ class Gallery extends Component {
 const mapStateToProps = (state) => {
     return {
         people: state.people,
+        login: state.login,
         app: state.app,
     };
 };
