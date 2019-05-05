@@ -36,7 +36,10 @@ class Profile extends React.Component {
                 loaded: true,
                 profile : props.people.data[props.app.i].Properties
             };
-            fetch(env.api + '/visit/' + props.app.profileId, {method: 'PUT'})
+            fetch(env.api + '/visit/' + props.app.profileId, {
+                method: 'PUT',
+                headers: {'Authorization': localStorage.getItem('jwt')}
+            })
         }
         this.dislike = this.dislike.bind(this);
         this.like = this.like.bind(this);
