@@ -25,6 +25,7 @@ import withSizes from 'react-sizes'
 import publicIp from 'public-ip';
 import {getPeopleAction} from "../redux/action/people-action";
 import {getMatchsAction} from "../redux/action/matchs-action";
+import {userAction} from "../redux/action/app-action";
 
 const sendPosition = (type, pos) => {
     fetch('/api/user/position', {
@@ -40,9 +41,13 @@ const sendPosition = (type, pos) => {
 class Navigation extends Component {
     constructor(props) {
         super(props);
-                props.dispatch(getMatchsAction(props.messenger, props.login.id));
+        props.dispatch(getMatchsAction(props.messenger, props.login.id));
     }
     componentWillUpdate(nextProps, nextState, nextContext) {
+    }
+
+    componentWillMount() {
+        this.props.dispatch(userAction(this.props.app));
     }
 
     componentDidMount() {
