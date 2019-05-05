@@ -66,7 +66,8 @@ class Notifications extends React.Component {
         socket.onopen = (event) => {
             socket.onmessage = ({data}) => {
                 data = JSON.parse(data);
-                this.setState({tab: [
+                this.setState({
+                    tab: [
                         {
                             id: data.id,
                             author: data.author_id,
@@ -92,14 +93,14 @@ class Notifications extends React.Component {
                     res.json().then(json => {
                         let tab = [];
                         json.map(notif => {
-                           tab.push(
-                               {
-                                   id: notif.id,
-                                   author: notif.author_id,
-                                   message: notif.message,
-                                   subject: notif.subject_id,
-                               },
-                           );
+                            tab.push(
+                                {
+                                    id: notif.id,
+                                    author: notif.author_id,
+                                    message: notif.message,
+                                    subject: notif.subject_id,
+                                },
+                            );
                             this.setState({tab: tab})
                         })
                     })
@@ -115,7 +116,7 @@ class Notifications extends React.Component {
         e.preventDefault();
         this.setState({tab: this.state.tab.filter((obj) => {
                 return obj.id !== id
-        })})
+            })})
         fetch(env.api + '/notifications/' + id, {method:"DELETE"})
     };
     componentWillUpdate(nextProps, nextState, nextContext) {
