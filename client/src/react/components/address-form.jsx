@@ -45,9 +45,11 @@ export default class AddressForm extends Component {
     componentDidMount() {
         fetch(env.api + '/kwal').then(res => {
             res.json().then(json => {
+                if (json) {
                 json.map(a => {
                     this.setState({[a.name]: [a.value][0]});
                 });
+                }
             });
         });
     }
@@ -87,9 +89,7 @@ export default class AddressForm extends Component {
             const url = api + data;
             fetch(url).then(res => {
                 if (res.status == 200) {
-                    console.log("URL ========> ",url);
                     res.json().then(json => {
-                        console.log("Json => ", json);
                         if (json.Response.View.length > 0) {
                             const pos = json.Response.View[0].Result[0].Location.DisplayPosition;
                             this.setState({
