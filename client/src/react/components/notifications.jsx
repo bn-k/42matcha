@@ -42,6 +42,7 @@ const Notification = (props) => (
 );
 
 
+const timeoutLength = 5500;
 class Notifications extends React.Component {
     constructor (props) {
         const socket = new WebSocket("ws://localhost:8181/api/notifications/websocket/" + props.login.id);
@@ -49,6 +50,7 @@ class Notifications extends React.Component {
             socket.onmessage = ({data}) => {
                 data = JSON.parse(data);
                 this.setState({
+                    isOpen: false,
                     tab: [
                         {
                             id: data.id,
@@ -96,17 +98,30 @@ class Notifications extends React.Component {
     }
     deleteMe = (id, e) => {
         e.preventDefault();
+        if (this.state.tab.length < 2 ) {
+            this.setState({isOpen: false})
+        }
         this.setState({tab: this.state.tab.filter((obj) => {
                 return obj.id !== id
-            })})
+            })});
         fetch(env.api + '/notifications/' + id, {method:"DELETE"})
     };
-    componentWillUpdate(nextProps, nextState, nextContext) {
-    }
+    handleOpen = () => {
+        if (this.state.tab.length > 0 ) {
+            this.setState({ isOpen: true });
+        }
+    };
+    handleClose = () => {
+        this.setState({ isOpen: false })
+        clearTimeout(this.timeout)
+    };
     render () {
         return (
             <Popup
-                on={['click']}
+                on='click'
+                open={this.state.isOpen}
+                onClose={this.handleClose}
+                onOpen={this.handleOpen}
                 trigger={<Menu.Item header><Icon color={this.state.tab.length === 0 ? "black" : "red"} name='bell'/></Menu.Item>}
                 position='bottom right'
                 flowing
