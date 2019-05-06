@@ -11,6 +11,7 @@ class Comp extends React.Component {
         this.state = {events: []};
         let init = {
             method: 'GET',
+            mode: "no-cors",
             headers:{
                 'Authorization': localStorage.getItem('jwt'),
             }

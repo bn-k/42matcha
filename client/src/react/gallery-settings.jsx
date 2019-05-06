@@ -22,7 +22,6 @@ import 'rc-slider/assets/index.css';
 import {getPeopleAction, updateFiltersAction} from "../redux/action/people-action";
 import {peoplePreloaded} from "../redux/store/preloaded-state-store";
 import _ from 'lodash';
-import {userAction} from "../redux/action/app-action";
 import Tooltip from 'rc-tooltip';
 
 const Handle = Slider.Handle;
@@ -51,7 +50,6 @@ class GallerySettings extends React.Component {
             tags: []
         };
         this.applyFilters = this.applyFilters.bind(this);
-        props.dispatch(userAction(props.app));
     }
     zut(r, name) {
         let filters = this.props.people.filters;

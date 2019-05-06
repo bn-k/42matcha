@@ -99,9 +99,12 @@ export const userAction = (prev) => dispatch => {
         .then(res => {
                 switch (res.status) {
                     case 201:
-                        res.json().then(json =>{
-                            console.log(json.err);
-                        });
+                        break;
+                    case 202:
+                        break;
+                    case 203:
+                        break;
+                    case 204:
                         break;
                     case 200:
                         res.json().then(data => {

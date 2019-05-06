@@ -66,15 +66,22 @@ class Notifications extends React.Component {
         let init = {
             method: 'GET',
             headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json',
                 'Authorization': localStorage.getItem('jwt'),
             }
         };
         fetch(env.api + '/notifications/history/' + props.login.id, init)
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 201) {
+                    console.log("Notification: error 201")
+                } else if (res.status === 202) {
+                    console.log("Notification: error 202")
+                } else if (res.status === 203) {
+                    console.log("Notification: error 203")
+                } else if (res.status === 204) {
+                    console.log("Notification: error 204")
+                } else if (res.status === 200) {
                     res.json().then(json => {
+                        console.log("HISTORY NOTIFS =========> ", json);
                         let tab = [];
                         json.map(notif => {
                             tab.push(

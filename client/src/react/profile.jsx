@@ -18,10 +18,24 @@ import {
     Image,
     Label,
 } from 'semantic-ui-react';
-import {getAge} from "./modules/utils";
+import {getAge, timeSince} from "./modules/utils";
 import {peopleAction} from "../redux/action/people-action";
 import {block, dislike, like} from "../redux/action/types-action";
 import env from "../env";
+
+const Online = (props) => (
+    <>
+        {props.online ? (
+            <div style={{display: "inline"}}>
+            <p><Icon name={"circle"} color={'teal'}/> Online</p>
+                </div>
+        ) : (
+            <>
+            <p>Last seen: {timeSince(props.lastConn)} ago</p>
+                </>
+        )}
+    </>
+);
 
 class Profile extends React.Component {
     constructor (props) {
@@ -45,6 +59,19 @@ class Profile extends React.Component {
         this.like = this.like.bind(this);
         this.block= this.block.bind(this);
     }
+    componentDidMount() {
+        const url = "ws://localhost:8181/api/online/websocket/" + this.props.app.profileId;
+        const socket = new WebSocket(url);
+        socket.onopen = (event) => {
+            socket.onmessage = ({data}) => {
+                data = JSON.parse(data);
+                this.setState({
+                    profile: {...this.state.profile, online: data}
+                });
+            };
+        };
+    }
+
     dislike = () => {
         this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, dislike))
     };
@@ -62,17 +89,17 @@ class Profile extends React.Component {
                     <Grid>
                         <Grid.Column mobile={16} tablet={16} computer={16}>
                             <Segment>
-                            <Grid>
-                                <Grid.Column style={{padding: "1px"}} mobile={16} tablet={6} computer={6}>
-                                    <p>Vous à déjà liké <Icon name={"heart"}/></p>
-                                </Grid.Column>
-                                <Grid.Column  style={{padding: "1px"}} mobile={16} tablet={6} computer={6}>
-                                    <Header as={"h3"}>Score {profile.rating}/100</Header>
-                                </Grid.Column>
-                                <Grid.Column  style={{padding: "1px"}} mobile={16} tablet={4} computer={4}>
-                                    <p>Dernière connexion: il y a 3 jours</p>
-                                </Grid.Column>
-                            </Grid>
+                                <Grid>
+                                    <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
+                                        <p>Vous à déjà liké <Icon name={"heart"}/></p>
+                                    </Grid.Column>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
+                                        <Header as={"h3"}>Score {profile.rating}/100</Header>
+                                    </Grid.Column>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={4} computer={4}>
+                                        <Online online={profile.online} lastConn={profile.last_conn}/>
+                                    </Grid.Column>
+                                </Grid>
                             </Segment>
                         </Grid.Column>
                         <Divider vertical/>

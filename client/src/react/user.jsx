@@ -441,10 +441,12 @@ class User extends React.Component {
     };
     componentWillReceiveProps() {
         const tags = [];
+        if (this.props.user) {
         this.props.app.user.userTags.map(tag => {
             tags.push(tag.key)
         });
         this.setState({body: {tags: tags}});
+        }
     }
     handleChange = (e, data) => {
         this.setState({body: {...this.state.body, [data.name]: data.value}});

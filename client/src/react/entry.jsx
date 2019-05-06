@@ -6,6 +6,7 @@ function logged () {
     return store.getState().login.loggedIn
 }
 
+
 const Entry = ({ component: Component, ...rest }) => (
     <Route
         {...rest}

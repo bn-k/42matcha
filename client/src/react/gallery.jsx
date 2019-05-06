@@ -27,9 +27,7 @@ class Gallery extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
-        console.log("CONS GAL ", props.login);
-            props.dispatch(getPeopleAction(props.people.filters));
-                // props.dispatch(getMatchsAction(props.messenger, props.login.id));
+        props.dispatch(getPeopleAction(props.people.filters));
     }
     state = {
         i : 0,
