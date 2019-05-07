@@ -12,7 +12,6 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
         method: 'GET',
         headers:{
             'Authorization': localStorage.getItem('jwt'),
-
             'User-Id' : userId,
             'Suitor-Id' : suitorId,
         }

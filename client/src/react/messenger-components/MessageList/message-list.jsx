@@ -51,7 +51,7 @@ class MessageList extends Component {
             ))}
         </>
     );
-    componentDidUpdate () {
+    componentWillMount() {
         this.props.messenger.ws.onmessage = (res) => {
             const json = res.data;
             const msg = JSON.parse(json);
@@ -67,6 +67,9 @@ class MessageList extends Component {
             };
             this.props.dispatch(addMessageAction(this.props.messenger, newMessage))
         };
+    }
+
+    componentDidUpdate () {
         this.scrollToBottom();
     }
     scrollToBottom() {

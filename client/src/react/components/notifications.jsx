@@ -95,9 +95,16 @@ class Notifications extends React.Component {
         super(props);
         this.state = {
             tab: [],
+            socket : socket,
         };
         this.deleteMe = this.deleteMe.bind(this);
     }
+    componentWillUnmount() {
+        if(this.state.socket) {
+            this.state.socket.close()
+        }
+    }
+
     deleteMe = (id, e) => {
         e.preventDefault();
         if (this.state.tab.length < 2 ) {

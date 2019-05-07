@@ -62,16 +62,22 @@ class Profile extends React.Component {
     componentDidMount() {
         const url = "ws://localhost:8181/api/online/websocket/" + this.props.app.profileId;
         const socket = new WebSocket(url);
+        const self = this;
         socket.onopen = (event) => {
             socket.onmessage = ({data}) => {
                 data = JSON.parse(data);
-                this.setState({
-                    profile: {...this.state.profile, online: data}
+                self.setState({
+                    profile: {...self.state.profile, online: data}
                 });
             };
         };
+        this.setState({socket: socket})
     }
-
+    componentWillUnmount() {
+        if(this.state.socket) {
+            this.state.socket.close()
+        }
+    }
     dislike = () => {
         this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, dislike))
     };
