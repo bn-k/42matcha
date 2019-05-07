@@ -11,7 +11,6 @@ class Comp extends React.Component {
         this.state = {events: []};
         let init = {
             method: 'GET',
-            mode: "no-cors",
             headers:{
                 'Authorization': localStorage.getItem('jwt'),
             }
@@ -24,12 +23,10 @@ class Comp extends React.Component {
                         case 202:
                             localStorage.removeItem('jwt');
                             res.json().then(json =>{
-                                console.log(json.err);
                             });
                             break;
                         case 200:
                             res.json().then(data => {
-                                console.log("On Fetch ", data);
                                 this.setState({
                                     events: data
                                 })
@@ -40,7 +37,6 @@ class Comp extends React.Component {
             )
     }
     render () {
-        console.log(this.state);
         return (
             <Container>
                 <Segment>

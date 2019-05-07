@@ -10,9 +10,9 @@ const join = (a, b) => {
 export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
     let init = {
         method: 'GET',
-        mode: "no-cors",
         headers:{
             'Authorization': localStorage.getItem('jwt'),
+
             'User-Id' : userId,
             'Suitor-Id' : suitorId,
         }

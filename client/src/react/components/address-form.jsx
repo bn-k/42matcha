@@ -82,7 +82,6 @@ export default class AddressForm extends Component {
             this.state.country.split(' ').join('+')
         ];
         const data = joinAll(arr);
-        console.log("data ========>", data);
         if (data.length == 0) {
             this.handleError("Please fill the form")
         } else {
