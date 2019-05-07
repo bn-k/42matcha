@@ -4,7 +4,6 @@ services:
     image: neo4j:latest
     container_name: 'neo4j_database'
     volumes:
-    - ./neo4j/data:/data
     - ./neo4j/conf/:/conf
     ports:
     - 7474:7474

@@ -368,6 +368,7 @@ const UploadImage = (props) => (
                 labelPosition="right"
             />
             <input
+                accept="image/x-png,image/gif,image/jpeg"
                 hidden
                 id="upload"
                 multiple
