@@ -238,6 +238,17 @@ const fields = [
         computer: 8,
     },
     {
+        name: "tag",
+        title: "Add a new tag",
+        view: (props) => (null),
+        entries: [
+            {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"tag"} value={s}/>)}
+        ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
+    },
+    {
         name: "usertags",
         title: "Tags",
         view: (props) => (<Tags {...props}/>),
@@ -254,26 +265,6 @@ const fields = [
                             value={props.state.body.tags}
                             name={props.field.name}
                             onChange={htc}
-                        />
-                    </Grid.Column>
-                )},
-            {type: (hc, s, props) => (
-                    <Grid.Column key={"add_tag"} mobile={16} tablet={16} computer={8}>
-                        <Input
-                            fluid
-                            icon='tags'
-                            iconPosition='left'
-                            label={{
-                                tag: true,
-                                content: 'Add Tag',
-                                onClick: props.addNewTag,
-                                color: "teal",
-                            }}
-                            labelPosition='right'
-                            placeholder='Enter tags'
-                            value={s}
-                            name={"newtag"}
-                            onChange={hc}
                         />
                     </Grid.Column>
                 )},
@@ -420,10 +411,11 @@ class User extends React.Component {
         super(props);
         this.state = {
             name: null,
-            body: {tags: props.app.user.userTags},
+            body: {
+                tags: props.app.user.userTags,
+            },
         };
         this.handleChange = this.handleChange.bind(this);
-        this.addNewTag = this.addNewTag.bind(this);
         this.save = this.save.bind(this);
         this.modify = this.modify.bind(this);
         props.dispatch(userAction(props.app));
@@ -457,10 +449,6 @@ class User extends React.Component {
     handleTagChange = (e, data) => {
         this.setState({body: {tags: data.value}});
     };
-    addNewTag = () => {
-        const val = this.state.body.newtag;
-        this.props.dispatch(addTagAction(this.props.app, { key: val, text: "#" + _.startCase(_.toLower(val)), value: val}));
-    };
     render () {
         return (
             <>
@@ -478,7 +466,6 @@ class User extends React.Component {
                                     handleChange={this.handleChange}
                                     hfc={this.handleFileChange}
                                     htc={this.handleTagChange}
-                                    addNewTag={this.addNewTag}
                                     save={this.save}
                                     modify={this.modify}
                                     state={this.state}
