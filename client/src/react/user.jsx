@@ -187,7 +187,7 @@ const fields = [
         title: "Location",
         view: (props) => (null),
         entries: [
-            {type: (hc, s, props) => (<AddressForm {...props} key={"address-form"}/>)},
+            {type: (hc, s, props) => (<AddressForm hc={hc} {...props} key={"address-form"}/>)},
         ],
         mobile : 16,
         tablet : 16,
@@ -422,6 +422,7 @@ class User extends React.Component {
         props.dispatch(userAction(props.app));
     }
     save = (e) => {
+        console.log(this.state);
         this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
     };
     modify = (e, field) => {
