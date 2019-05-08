@@ -46,7 +46,7 @@ class Navigation extends Component {
     geoDeniedPosition(err) {
         if (err.code === err.PERMISSION_DENIED) {
             (async () => {
-                sendPosition("gps", await publicIp.v4())
+                sendPosition("ip", await publicIp.v4())
             })();
         }
     }

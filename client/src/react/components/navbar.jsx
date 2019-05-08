@@ -56,7 +56,7 @@ const Nav = (props) => (
                 <Dropdown.Item
                     active={props.location.pathname === '/user'}
                     onClick={() => props.history.push('/user')}
-                >Settings</Dropdown.Item>
+                >{props.app.user.username}</Dropdown.Item>
                 <Dropdown.Item
                     active={props.location.pathname === '/matchs'}
                     onClick={() => props.history.push('/matchs')}

@@ -51,24 +51,23 @@ class MessageList extends Component {
             ))}
         </>
     );
-    componentWillMount() {
-        this.props.messenger.ws.onmessage = (res) => {
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        nextProps.messenger.ws.onmessage = (res) => {
             const json = res.data;
             const msg = JSON.parse(json);
-            if (this.props.login.id !== msg.author) {
-                this.props.dispatch(incrementMessageAction(this.props.messenger));
+            if (nextProps.login.id !== msg.author) {
+                nextProps.dispatch(incrementMessageAction(nextProps.messenger));
             }
             const newMessage = {
                 id: msg.id,
                 author: msg.author,
                 message: msg.msg,
                 timestamp: msg.timestamp,
-                to: this.props.people.suitorId,
+                to: nextProps.people.suitorId,
             };
-            this.props.dispatch(addMessageAction(this.props.messenger, newMessage))
+            nextProps.dispatch(addMessageAction(nextProps.messenger, newMessage))
         };
     }
-
     componentDidUpdate () {
         this.scrollToBottom();
     }

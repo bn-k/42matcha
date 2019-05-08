@@ -163,10 +163,10 @@ class Profile extends React.Component {
                                         </Grid.Row>
                                         <Grid.Row mobile={16} tablet={16} computer={16}>
                                             <Grid.Column mobile={16} tablet={8} computer={8}>
-                                                <Header as={"h2"}>{profile.gender}</Header>
+                                                <Header as={"h3"}>{profile.genre}</Header>
                                             </Grid.Column>
                                             <Grid.Column mobile={16} tablet={4} computer={5}>
-                                                <Header as={"h3"}>{profile.interest} {profile.lastname}</Header>
+                                                <Header as={"h3"}>{profile.interest} </Header>
                                             </Grid.Column>
                                         </Grid.Row>
                                     </Grid>

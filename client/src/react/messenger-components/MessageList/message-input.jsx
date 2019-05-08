@@ -24,6 +24,10 @@ import {
 } from 'semantic-ui-react';
 import {incrementMessageAction} from "../../../redux/action/messenger-action";
 
+var rand = function() {
+    return Math.random().toString(36).substr(2); // remove `0.`
+};
+
 
 class MessageInput extends Component {
     constructor(props) {
@@ -44,7 +48,7 @@ class MessageInput extends Component {
         if (/\S/.test(this.state.new)) {
             const token = localStorage.getItem('jwt');
             const msg = {
-                id: this.props.messenger.i + 1,
+                id: rand(),
                 token: token,
                 msg: this.state.new,
                 author: this.props.login.id,
