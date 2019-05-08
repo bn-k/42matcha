@@ -11,7 +11,7 @@ export const getAge = (iso) =>  {
     if(mold > mnew) diff--;
     else
     {
-        if(mold == mnew)
+        if(mold === mnew)
         {
             if(dold > dnew) diff--;
         }

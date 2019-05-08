@@ -1,4 +1,4 @@
-import {LOGIN, LOGIN_FAIL, LOGOUT, LOGIN_RESET} from './types-action';
+import {LOGIN, LOGIN_FAIL, LOGOUT} from './types-action';
 import jwtDecode from 'jwt-decode';
 import env from "../../env";
 
@@ -28,6 +28,9 @@ export const loginAction = (formData, history) => dispatch => {
                             });
                             history.push('/');
                         });
+                        break;
+                    default:
+                        break;
                 }
             }
         )

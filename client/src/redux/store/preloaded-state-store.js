@@ -73,12 +73,6 @@ export const peoplePreloaded = {
     data: [],
 };
 
-const user = () => {
-    if (localStorage.getItem('jwt') !== undefined) {
-        const parsed =  JwtDecode(localStorage.getItem('jwt'));
-        return parsed;
-    }
-};
 export const loginPreloaded = {
     ...parseToken('jwt'),
     loggedIn: stillLogged('jwt'),

@@ -1,5 +1,4 @@
-import {REGISTER, REGISTER_FAIL} from './types-action';
-import {registerData} from "../store/preloaded-state-store";
+import {REGISTER} from './types-action';
 import env from "../../env";
 
 export const registerAction = (formData, history) => dispatch => {
@@ -25,6 +24,9 @@ export const registerAction = (formData, history) => dispatch => {
                             });
                             history.push('/');
                         });
+                        break;
+                    default:
+                        break;
                 }
             }
         )

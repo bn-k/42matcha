@@ -1,4 +1,4 @@
-import {LOAD_MATCHS, LOAD_PEOPLE} from "../action/types-action";
+import {LOAD_MATCHS} from "../action/types-action";
 
 const initial = () => {
 

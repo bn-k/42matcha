@@ -29,6 +29,9 @@ export const getMatchsAction = (messenger, userId) => dispatch => {
                             });
                             dispatch(updateSuitorAction(messenger, data[0].NodeIdentity, userId));
                         });
+                        break;
+                    default:
+                        break
                 }
             }
         )

@@ -1,5 +1,4 @@
-import {ADD_TAG, DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE} from "./types-action";
-import axios from "axios";
+import {DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE} from "./types-action";
 import env from "../../env";
 
 export const updateProfileAction = (prev, id, i) => dispatch => {
@@ -12,7 +11,7 @@ export const updateProfileAction = (prev, id, i) => dispatch => {
 };
 
 const imgCase = (prev, body, name, dispatch) =>  {
-    let data = new FormData;
+    let data = new FormData();
     data.append('file', body.file);
     let init = {
         method: "POST",
@@ -38,6 +37,9 @@ const imgCase = (prev, body, name, dispatch) =>  {
                                 tagList: data.tagList,
                             });
                         });
+                        break;
+                    default:
+                        break
                 }
             }
         )
@@ -75,19 +77,14 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                                     userTags: data.userTags,
                                 });
                             });
+                            break;
+                        default:
+                            break;
                     }
                 }
             )
     }
 
-};
-
-export const addTagAction = (prev, newTag) => dispatch => {
-    dispatch({
-        ...prev,
-        type: ADD_TAG,
-        tagList: [...prev.tagList, newTag],
-    });
 };
 
 export const userAction = (prev) => dispatch => {
@@ -118,6 +115,9 @@ export const userAction = (prev) => dispatch => {
                                 userTags: data.userTags,
                             });
                         });
+                        break;
+                    default:
+                        break;
                 }
             }
         )

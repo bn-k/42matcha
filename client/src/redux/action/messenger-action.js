@@ -44,6 +44,9 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
                                 i: data.length,
                             });
                         });
+                        break;
+                    default:
+                        break;
                 }
             }
         )

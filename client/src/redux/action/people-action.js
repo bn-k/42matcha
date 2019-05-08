@@ -28,6 +28,8 @@ export const peopleAction = (prev, id, action) => dispatch => {
                         res.json().then(json =>{
                         });
                         break;
+                    default:
+                        break;
                 }
             }
         )
@@ -64,6 +66,9 @@ export const getPeopleAction = (filters, param) => dispatch => {
                                 filters: filters,
                             });
                         });
+                        break;
+                    default:
+                        break;
                 }
             }
         )

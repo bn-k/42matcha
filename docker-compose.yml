@@ -2,7 +2,7 @@ version: '3.5'
 services:
   neo4j:
     image: neo4j:latest
-    container_name: 'neo4j_database'
+    container_name: 'db'
     volumes:
     - ./neo4j/conf/:/conf
     ports:
@@ -14,11 +14,11 @@ services:
 
   api:
     build: api
-    container_name: 'go_api'
+    container_name: 'api'
     volumes:
       - ${GOPATH}/src:/go/src
       - ./api:/matcha/api
-      - ./client/src/public/img:/public/img
+      - ./client/public:/public
     ports:
     - "8181:81"
     depends_on:
@@ -35,19 +35,15 @@ services:
 
   web:
     build: ./client
-    container_name: 'react_web'
+    container_name: 'web'
     volumes:
     - ./client:/app
     ports:
-      - "8080:8080"
+      - "3000:3000"
     depends_on:
       - neo4j
-    tty: true
-    environment:
-      SHA1: "EezmdtOLkZ5krcljUzoQ"
-      SHA2: "GC4SmycFgOh8QsjPO_ytYQ"
     working_dir: /app
-    command: sh run.sh
+    command: npm start
     networks:
       - default
 
