@@ -55,14 +55,14 @@ class GallerySettings extends React.Component {
         let filters = this.props.people.filters;
         filters[name] = r;
     }
-    intervalCol(name, step, unit) {
+    intervalCol(name, step, unit, max) {
         return (
             <Grid.Column mobile={16} tablet={16} computer={5}>
                 <Header as={'h4'}>{_.startCase(name)}</Header>
                 <Range
                     unit={unit}
                     allowCross={false}
-                    defaultValue={[this.props.people.filters[name][0], this.props.people.filters[name][1]]}
+                    defaultValue={[this.props.people.filters[name][0], max]}
                     onChange={r => this.zut(r, name)}
                     min={peoplePreloaded.filters[name][0]}
                     max={peoplePreloaded.filters[name][1]}
@@ -83,23 +83,19 @@ class GallerySettings extends React.Component {
     };
     applyFilters (e) {
         let filters = this.props.people.filters;
-        this.props.dispatch(getPeopleAction(filters));
+        this.props.dispatch(getPeopleAction(filters, "true"));
     }
     handleChange = (e, data) => {
         this.setState({[data.name]: data.value});
-    };
-    addNewTag = () => {
-        const val = this.state.newtag;
-        // options.unshift({ key: val, text: "#" + _.startCase(_.toLower(val)), value: val});
     };
     render () {
         return (
             <Segment>
                 <Grid>
                     <Grid.Row columns={3}>
-                        {this.intervalCol("age", 1, "years")}
-                        {this.intervalCol("score", 1, "")}
-                        {this.intervalCol("location", 50, "km")}
+                        {this.intervalCol("age", 1, "years", this.props.people.filters["age"][1])}
+                        {this.intervalCol("score", 1, "", this.props.people.filters["score"][1])}
+                        {this.intervalCol("location", 50, "km", 50)}
                     </Grid.Row>
                     <Header as={'h4'}>Tags</Header>
                     <Grid.Row columns={3}>

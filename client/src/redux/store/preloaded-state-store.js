@@ -61,9 +61,11 @@ export const registerPreloaded = {
 
 export const peoplePreloaded = {
     filters: {
+
         age: [16, 120],
         score : [0, 100],
-        location: [0 , 20000],
+        location: [0 , 16000],
+        param : false,
         tags: [],
     },
     isLoading: true,

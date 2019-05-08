@@ -80,12 +80,16 @@ class Profile extends React.Component {
     }
     dislike = () => {
         this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, dislike))
+        this.setState({profile: {...this.state.profile, relation: "DISLIKE"}})
     };
     like = () => {
         this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, like))
+        this.setState({profile: {...this.state.profile, relation: "LIKE"}})
     };
     block = () => {
+        console.log(this.state);
         this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, block))
+        this.setState({profile: {...this.state.profile, relation: "BLOCK"}});
     };
     render () {
         const {profile} = this.state;
@@ -97,7 +101,7 @@ class Profile extends React.Component {
                             <Segment>
                                 <Grid>
                                     <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
-                                        <p>Vous à déjà liké <Icon name={"heart"}/></p>
+                                        <p>{profile.ilike ? "Vous a déjà liké" : ""}</p>
                                     </Grid.Column>
                                     <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
                                         <Header as={"h3"}>Score {profile.rating}/100</Header>
@@ -129,16 +133,19 @@ class Profile extends React.Component {
                                     <Grid.Row mobile={16} tablet={16} computer={16}>
                                         <Button.Group fluid>
                                             <Button
+                                                disabled={profile.relation === "BLOCK"}
                                                 color={"red"}
                                                 onClick={this.block}
                                             ><Icon name={"ban"}/></Button>
                                             <Button.Or />
                                             <Button
+                                                disabled={profile.relation === "DISLIKE"}
                                                 color={"yellow"}
                                                 onClick={this.dislike}
                                             ><Icon name={"thumbs down"}/></Button>
                                             <Button.Or />
                                             <Button
+                                                disabled={profile.relation === "LIKE"}
                                                 color={"green"}
                                                 onClick={this.like}
                                             ><Icon name={"heart"}/></Button>

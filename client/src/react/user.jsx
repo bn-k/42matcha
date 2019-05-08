@@ -28,7 +28,7 @@ import {
     userAction,
     userModifyAction
 } from "../redux/action/app-action";
-import {genders, interest} from "./modules/options-dates";
+import {days, genders, interest, months, years} from "./modules/options-dates";
 import Mapp from './components/map';
 import AddressForm from './components/address-form';
 
@@ -46,6 +46,21 @@ const Tags = (props) => {
     }
 };
 
+const formatDate = (dateStr) => {
+    var date = new Date(dateStr);
+    var monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
 const fields = [
     {
         name: "username",
@@ -236,6 +251,42 @@ const fields = [
         mobile : 16,
         tablet : 16,
         computer: 8,
+    },
+    {
+        name: "birthday",
+        title: "Birthday",
+        view: (props) => (<p>{formatDate(props.app.user.birthday)}</p>),
+        entries: [
+            {type: (hc, s) => (
+                    <Form.Group label={"Birthday"} key={"birthday"}>
+                        <Form.Select
+                            fluid label='Day'
+                            options={days}
+                            placeholder='01'
+                            name="day"
+                            onChange={hc}
+                        />
+                        <Form.Select
+                            width={16}
+                            fluid label='Month'
+                            options={months}
+                            placeholder='01'
+                            name="month"
+                            onChange={hc}
+                        />
+                        <Form.Select
+                            fluid label='Year'
+                            options={years}
+                            placeholder='1900'
+                            name="year"
+                            onChange={hc}
+                        />
+                    </Form.Group>
+                )}
+        ],
+        mobile : 16,
+        tablet : 16,
+        computer: 16,
     },
     {
         name: "tag",
@@ -436,10 +487,10 @@ class User extends React.Component {
     componentWillReceiveProps() {
         const tags = [];
         if (this.props.user) {
-        this.props.app.user.userTags.map(tag => {
-            tags.push(tag.key)
-        });
-        this.setState({body: {tags: tags}});
+            this.props.app.user.userTags.map(tag => {
+                tags.push(tag.key)
+            });
+            this.setState({body: {tags: tags}});
         }
     }
     handleChange = (e, data) => {

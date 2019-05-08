@@ -33,7 +33,7 @@ export const peopleAction = (prev, id, action) => dispatch => {
         )
 };
 
-export const getPeopleAction = (filters) => dispatch => {
+export const getPeopleAction = (filters, param) => dispatch => {
     let init = {
         method: 'GET',
         headers:{
@@ -41,7 +41,7 @@ export const getPeopleAction = (filters) => dispatch => {
             'Filters': JSON.stringify(filters),
         }
     };
-    fetch(env.api + '/people', init)
+    fetch(env.api + '/people/' + param, init)
         .then(res => {
                 switch (res.status) {
                     case 201:

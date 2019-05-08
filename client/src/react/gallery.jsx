@@ -27,7 +27,7 @@ class Gallery extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
-        props.dispatch(getPeopleAction(props.people.filters));
+        props.dispatch(getPeopleAction(props.people.filters, "false"));
     }
     state = {
         i : 0,
