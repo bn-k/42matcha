@@ -25,6 +25,7 @@ services:
       - neo4j
       - web
     environment:
+      GIN_MODE: release
       NEO_HOST: neo4j
     tty: true
     links:
@@ -39,11 +40,11 @@ services:
     volumes:
     - ./client:/app
     ports:
-      - "3000:3000"
+      - "5000:5000"
     depends_on:
       - neo4j
     working_dir: /app
-    command: npm start
+    command: sh deploy.sh
     networks:
       - default
 

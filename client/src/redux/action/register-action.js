@@ -11,13 +11,11 @@ export const registerAction = (formData, history) => dispatch => {
                 switch (res.status) {
                     case 201:
                         res.json().then(json =>{
-                            console.log(json);
                             dispatch(json);
                         });
                         break;
                     case 200:
                         res.json().then(json =>{
-                            console.log(json);
                             dispatch({
                                 type: REGISTER,
                                 data : json,
@@ -30,5 +28,4 @@ export const registerAction = (formData, history) => dispatch => {
                 }
             }
         )
-        .catch(error => console.log(error))
 };

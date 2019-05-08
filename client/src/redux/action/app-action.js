@@ -25,7 +25,6 @@ const imgCase = (prev, body, name, dispatch) =>  {
                 switch (res.status) {
                     case 201:
                         res.json().then(json =>{
-                            console.log(json);
                         });
                         break;
                     case 200:
@@ -46,7 +45,6 @@ const imgCase = (prev, body, name, dispatch) =>  {
 };
 
 export const userModifyAction = (prev, body, name) => dispatch => {
-    console.log("USER MODIFY ACTION");
     if (Object.keys(body)[0] === 'file') {
         imgCase(prev, body, name, dispatch);
     } else {
@@ -60,11 +58,9 @@ export const userModifyAction = (prev, body, name) => dispatch => {
         };
         fetch(env.api + '/user/' + name, init)
             .then(res => {
-                console.log(res.statusText);
                     switch (res.status) {
                         case 201:
                             res.json().then(json =>{
-                                console.log(json);
                             });
                             break;
                         case 200:
@@ -121,7 +117,6 @@ export const userAction = (prev) => dispatch => {
                 }
             }
         )
-        .catch(error => console.log(error))
 };
 
 export const enableFieldAction = (prev, field) => dispatch => {

@@ -55,7 +55,6 @@ export const getPeopleAction = (filters, param) => dispatch => {
                     case 202:
                         localStorage.removeItem('jwt');
                         res.json().then(json =>{
-                            console.log(json.err);
                         });
                         break;
                     case 200:
@@ -72,7 +71,6 @@ export const getPeopleAction = (filters, param) => dispatch => {
                 }
             }
         )
-        .catch(error => console.log(error))
 };
 
 export const updateFiltersAction = (prev, filters) => dispatch => {

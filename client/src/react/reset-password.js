@@ -48,7 +48,6 @@ class ResetPassword extends React.Component {
                     this.setState({done: true});
                 } else {
                     res.json().then(json =>{
-                        console.log(json);
                         this.setState({msg: json.err, error: true})
                     });
                 }
@@ -58,7 +57,7 @@ class ResetPassword extends React.Component {
         this.setState({[data.name]: data.value});
     };
     error () {
-        if (this.state.error) {
+        if (this.props.app.error) {
             return (
                 <>
                     <Mess color={"red"} text={this.state.msg}/>
@@ -67,7 +66,7 @@ class ResetPassword extends React.Component {
         }
     }
     done() {
-        if (this.state.done) {
+            if (this.props.app.done) {
             return (
                 <>
                     <Mess color={"green"} text={"Password has been changed"}/>

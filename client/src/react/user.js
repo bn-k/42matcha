@@ -13,7 +13,7 @@ import {
     Form,
     Grid,
     Image,
-    Label,
+    Label, Message,
 } from 'semantic-ui-react';
 import {
     disableFieldAction,
@@ -133,7 +133,7 @@ const fields = [
                                 <Header as={'h4'}>Password</Header>
                             </Grid.Row>
                             <Grid.Row>
-                                <Input fluid key={1} type={'email'} onChange={hc} name={"old_password"} value={s}/>
+                                <Input fluid key={1} type={'password'} onChange={hc} name={"old_password"} value={s}/>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={5} computer={5}>
@@ -449,6 +449,15 @@ const Field = (props) => (
         </Segment>
     </>
 );
+const Mess = (props) => (
+    <>
+        <Message color={props.color}>
+            <p>
+                {props.text}
+            </p>
+        </Message>
+    </>
+);
 
 class User extends React.Component {
     constructor (props) {
@@ -458,6 +467,8 @@ class User extends React.Component {
             body: {
                 tags: props.app.user.userTags,
             },
+            done: false,
+            error: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.save = this.save.bind(this);
@@ -465,8 +476,7 @@ class User extends React.Component {
         props.dispatch(userAction(props.app));
     }
     save = (e) => {
-        console.log(this.state);
-        this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name));
+        this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name, this.handleChange));
     };
     modify = (e, field) => {
         this.setState({body:{tags: this.state.tags}, name: field});
@@ -495,10 +505,30 @@ class User extends React.Component {
     handleTagChange = (e, data) => {
         this.setState({body: {tags: data.value}});
     };
+    error () {
+        if (this.state.error) {
+            return (
+                <>
+                    <Mess color={"red"} text={this.state.msg}/>
+                </>
+            )
+        }
+    }
+    done() {
+        if (this.state.done) {
+            return (
+                <>
+                    <Mess color={"green"} text={this.state.msg}/>
+                </>
+            )
+        }
+    }
     render () {
         return (
             <>
                 <Container className={"user"}>
+                    {this.error()}
+                    {this.done()}
                     <Grid>
                         {fields.map((field) => (
                             <Grid.Column

@@ -8,4 +8,5 @@ RUN go get
 EXPOSE 81
 
 WORKDIR /go/src/github.com/Newcratie/matcha-api
-CMD ["realize", "start"]
+RUN go build run.go
+CMD ["./run"]

@@ -35,5 +35,4 @@ export const getMatchsAction = (messenger, userId) => dispatch => {
                 }
             }
         )
-        .catch(error => console.log(error))
 };

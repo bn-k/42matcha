@@ -80,119 +80,108 @@ class Profile extends React.Component {
         this.setState({profile: {...this.state.profile, relation: "LIKE"}})
     };
     block = () => {
-        console.log(this.state);
         this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, block))
         this.setState({profile: {...this.state.profile, relation: "BLOCK"}});
     };
     render () {
         const {profile} = this.state;
-        if (profile.relation === "BLOCK") {
-            return (
-                <Container>
+        return (
+            this.state.loaded ? (
+                <Container className={"profile"}>
+                    <Grid>
+                        <Grid.Column mobile={16} tablet={16} computer={16}>
+                            <Segment>
+                                <Grid>
+                                    <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
+                                        <p>{profile.ilike ? "Vous a déjà liké" : ""}</p>
+                                    </Grid.Column>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
+                                        <Header as={"h3"}>Score {profile.rating}/100</Header>
+                                    </Grid.Column>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={4} computer={4}>
+                                        <Online online={profile.online} lastConn={profile.last_conn}/>
+                                    </Grid.Column>
+                                </Grid>
+                            </Segment>
+                        </Grid.Column>
+                        <Divider vertical/>
+                        <Grid.Column mobile={16} tablet={8} computer={4}>
+                            <Image circular size={"medium"} src={profile.img1} />
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={8} computer={8}>
+                            <Segment>
+                                <Grid>
+                                    <Grid.Row mobile={16} tablet={16} computer={16}>
+                                        <Grid.Column mobile={16} tablet={8} computer={8}>
+                                            <Header as={"h2"}>{profile.name}</Header>
+                                        </Grid.Column>
+                                        <Grid.Column mobile={16} tablet={4} computer={5}>
+                                            <Header as={"h3"}>{profile.firstname} {profile.lastname}</Header>
+                                        </Grid.Column>
+                                        <Grid.Column mobile={16} tablet={4} computer={3}>
+                                            <Header as={"h4"}>{getAge(profile.birthday)} years</Header>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row mobile={16} tablet={16} computer={16}>
+                                        <Button.Group fluid>
+                                            <Button
+                                                disabled={profile.relation === "BLOCK"}
+                                                color={"red"}
+                                                onClick={this.block}
+                                            ><Icon name={"ban"}/></Button>
+                                            <Button.Or />
+                                            <Button
+                                                disabled={profile.relation === "DISLIKE"}
+                                                color={"yellow"}
+                                                onClick={this.dislike}
+                                            ><Icon name={"thumbs down"}/></Button>
+                                            <Button.Or />
+                                            <Button
+                                                disabled={profile.relation === "LIKE"}
+                                                color={"green"}
+                                                onClick={this.like}
+                                            ><Icon name={"heart"}/></Button>
+                                        </Button.Group>
+                                    </Grid.Row>
+                                    <Grid.Row mobile={16} tablet={16} computer={16}>
+                                        <Grid.Column mobile={16} tablet={8} computer={8}>
+                                            <Header as={"h3"}>{profile.genre}</Header>
+                                        </Grid.Column>
+                                        <Grid.Column mobile={16} tablet={4} computer={5}>
+                                            <Header as={"h3"}>{profile.interest} </Header>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                </Grid>
+                            </Segment>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={8} computer={4}>
+                            <p>{profile.biography}</p>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={16} computer={16}>
+                            <Segment>
+                                <Grid>
+                                    <Grid.Column mobile={16} tablet={8} computer={4}>
+                                        <Image size={"big"} src={profile.img2} />
+                                    </Grid.Column>
+                                    <Grid.Column mobile={16} tablet={8} computer={4}>
+                                        <Image size={"big"} src={profile.img3} />
+                                    </Grid.Column>
+                                    <Grid.Column mobile={16} tablet={8} computer={4}>
+                                        <Image size={"big"} src={profile.img4} />
+                                    </Grid.Column>
+                                    <Grid.Column mobile={16} tablet={8} computer={4}>
+                                        <Image size={"big"} src={profile.img5} />
+                                    </Grid.Column>
+                                </Grid>
+                            </Segment>
+                        </Grid.Column>
+                    </Grid>
                     <Segment>
-                        <Header as={"h3"} color={"orange"}>Blocked</Header>
+                        <Button fluid color={"red"} >Signaler le profil</Button>
                     </Segment>
                 </Container>
-            )
-        } else {
-            return (
-                this.state.loaded ? (
-                    <Container className={"profile"}>
-                        <Grid>
-                            <Grid.Column mobile={16} tablet={16} computer={16}>
-                                <Segment>
-                                    <Grid>
-                                        <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
-                                            <p>{profile.ilike ? "Vous a déjà liké" : ""}</p>
-                                        </Grid.Column>
-                                        <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
-                                            <Header as={"h3"}>Score {profile.rating}/100</Header>
-                                        </Grid.Column>
-                                        <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={4} computer={4}>
-                                            <Online online={profile.online} lastConn={profile.last_conn}/>
-                                        </Grid.Column>
-                                    </Grid>
-                                </Segment>
-                            </Grid.Column>
-                            <Divider vertical/>
-                            <Grid.Column mobile={16} tablet={8} computer={4}>
-                                <Image circular size={"medium"} src={profile.img1} />
-                            </Grid.Column>
-                            <Grid.Column mobile={16} tablet={8} computer={8}>
-                                <Segment>
-                                    <Grid>
-                                        <Grid.Row mobile={16} tablet={16} computer={16}>
-                                            <Grid.Column mobile={16} tablet={8} computer={8}>
-                                                <Header as={"h2"}>{profile.name}</Header>
-                                            </Grid.Column>
-                                            <Grid.Column mobile={16} tablet={4} computer={5}>
-                                                <Header as={"h3"}>{profile.firstname} {profile.lastname}</Header>
-                                            </Grid.Column>
-                                            <Grid.Column mobile={16} tablet={4} computer={3}>
-                                                <Header as={"h4"}>{getAge(profile.birthday)} years</Header>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row mobile={16} tablet={16} computer={16}>
-                                            <Button.Group fluid>
-                                                <Button
-                                                    disabled={profile.relation === "BLOCK"}
-                                                    color={"red"}
-                                                    onClick={this.block}
-                                                ><Icon name={"ban"}/></Button>
-                                                <Button.Or />
-                                                <Button
-                                                    disabled={profile.relation === "DISLIKE"}
-                                                    color={"yellow"}
-                                                    onClick={this.dislike}
-                                                ><Icon name={"thumbs down"}/></Button>
-                                                <Button.Or />
-                                                <Button
-                                                    disabled={profile.relation === "LIKE"}
-                                                    color={"green"}
-                                                    onClick={this.like}
-                                                ><Icon name={"heart"}/></Button>
-                                            </Button.Group>
-                                        </Grid.Row>
-                                        <Grid.Row mobile={16} tablet={16} computer={16}>
-                                            <Grid.Column mobile={16} tablet={8} computer={8}>
-                                                <Header as={"h3"}>{profile.genre}</Header>
-                                            </Grid.Column>
-                                            <Grid.Column mobile={16} tablet={4} computer={5}>
-                                                <Header as={"h3"}>{profile.interest} </Header>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                    </Grid>
-                                </Segment>
-                            </Grid.Column>
-                            <Grid.Column mobile={16} tablet={8} computer={4}>
-                                <p>{profile.biography}</p>
-                            </Grid.Column>
-                            <Grid.Column mobile={16} tablet={16} computer={16}>
-                                <Segment>
-                                    <Grid>
-                                        <Grid.Column mobile={16} tablet={8} computer={4}>
-                                            <Image size={"big"} src={profile.img2} />
-                                        </Grid.Column>
-                                        <Grid.Column mobile={16} tablet={8} computer={4}>
-                                            <Image size={"big"} src={profile.img3} />
-                                        </Grid.Column>
-                                        <Grid.Column mobile={16} tablet={8} computer={4}>
-                                            <Image size={"big"} src={profile.img4} />
-                                        </Grid.Column>
-                                        <Grid.Column mobile={16} tablet={8} computer={4}>
-                                            <Image size={"big"} src={profile.img5} />
-                                        </Grid.Column>
-                                    </Grid>
-                                </Segment>
-                            </Grid.Column>
-                        </Grid>
-                        <Segment>
-                            <Button fluid color={"red"} >Signaler le profil</Button>
-                        </Segment>
-                    </Container>
-                ):(null)
-            )
-        }
+            ):(null)
+        )
     }
 }
 

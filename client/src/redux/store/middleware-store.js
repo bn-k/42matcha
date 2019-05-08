@@ -4,8 +4,9 @@ import logger from 'redux-logger';
 
 const middleware = [thunk, logger];
 const middlewares = compose(
+
     applyMiddleware(...middleware),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
+    // window.devToolsExtension ? window.devToolsExtension() : f => f
 );
 
 export default middlewares;

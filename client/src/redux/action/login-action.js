@@ -34,7 +34,6 @@ export const loginAction = (formData, history) => dispatch => {
                 }
             }
         )
-        .catch(err => { console.log(err.status)})
 };
 
 export const logoutAction = (history) => dispatch => {

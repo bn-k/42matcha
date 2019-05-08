@@ -65,7 +65,7 @@ class Register extends Component {
                     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                         <Grid.Column style={{ maxWidth: 450 }}>
                             <Header as='h2' color='pink' textAlign='center'>
-                                <Image src='/src/public/img/logo.png' /> Create your account
+                                <Image src={process.env.PUBLIC_URL + '/logo.png'} /> Create your account
                             </Header>
                             <Form size='large'>
                                 <Segment stacked>
