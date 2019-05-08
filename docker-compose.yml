@@ -5,6 +5,7 @@ services:
     container_name: 'db'
     volumes:
     - ./neo4j/conf/:/conf
+    - ./neo4j/data:/data
     ports:
     - 7474:7474
     - 7687:7687
@@ -18,14 +19,13 @@ services:
     volumes:
       - ${GOPATH}/src:/go/src
       - ./api:/matcha/api
-      - ./client/public:/public
+      - ./client/src/public/img:/public/img
     ports:
-    - "8181:81"
+      - "8181:81"
     depends_on:
       - neo4j
       - web
     environment:
-      GIN_MODE: release
       NEO_HOST: neo4j
     tty: true
     links:

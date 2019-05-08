@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import {applyMiddleware, compose} from 'redux';
 import logger from 'redux-logger';
 
-const middleware = [thunk, logger];
+const middleware = [thunk];
 const middlewares = compose(
 
     applyMiddleware(...middleware),
