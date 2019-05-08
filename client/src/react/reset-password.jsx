@@ -48,7 +48,10 @@ class ResetPassword extends React.Component {
                 if (res.status == 200) {
                     this.setState({done: true});
                 } else {
-                    this.setState({error: true});
+                    res.json().then(json =>{
+                        console.log(json);
+                        this.setState({msg: json.err, error: true})
+                    });
                 }
             });
     };
@@ -59,7 +62,7 @@ class ResetPassword extends React.Component {
         if (this.state.error) {
             return (
                 <>
-                    <Mess color={"red"} text={"Invalid password or token"}/>
+                    <Mess color={"red"} text={this.state.msg}/>
                 </>
             )
         }
