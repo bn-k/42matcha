@@ -71,8 +71,8 @@ export default class AddressForm extends Component {
     }
     geocoder() {
         const api = 'https://geocoder.api.here.com/6.2/geocode.json' +
-            '?app_id=' + this.state.app_id +
-            '&app_code=' + this.state.app_code +
+            '?app_id=EezmdtOLkZ5krcljUzoQ'+
+            '&app_code=GC4SmycFgOh8QsjPO_ytYQ' +
             '&searchtext=';
         const arr = [
             this.state.street.split(' ').join('+'),
@@ -94,7 +94,7 @@ export default class AddressForm extends Component {
                             this.setState({
                                 show: true,
                                 lat: pos.Latitude,
-                                lng: pos.Longitude
+                                lng: pos.Longitude,
                             });
                         } else {
                             this.handleError("Sorry but we can't find your address")
