@@ -276,6 +276,7 @@ func extFromIncipit(incipit []byte) (string, error) {
 
 	return "", errors.New("Wrong file")
 }
+
 func userImageHandler(c *gin.Context) {
 	mFile, _ := c.FormFile("file")                // Get Multipart Header
 	file, _ := mFile.Open()                       // Create Reader
@@ -289,8 +290,9 @@ func userImageHandler(c *gin.Context) {
 		if err != nil {
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {
-			f, _ := os.Create(imageSrc + name + "." + ext) //create file
-			defer f.Close()                                //close after processing
+			path := "." + imageSrc + name + "." + ext
+			f, _ := os.Create(path) //create file
+			defer f.Close()         //close after processing
 
 			f.Write(buf.Bytes()) // Write buffer on the file
 
