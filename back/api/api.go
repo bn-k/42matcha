@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	"os"
@@ -34,6 +35,7 @@ func NewConn(host string) (bolt.Conn, error) {
 func Run() {
 	app.newApp()
 	host := os.Getenv("NEO_HOST")
+	fmt.Println("HOST ===============> ", host)
 	app.Neo, _ = NewConn(host)
 	defer app.Neo.Close()
 

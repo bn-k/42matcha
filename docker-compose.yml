@@ -2,7 +2,7 @@ version: '3.5'
 services:
   neo4j:
     image: neo4j:latest
-    container_name: 'db'
+    container_name: 'neo4j'
     volumes:
       - ./neo4j/conf/:/conf
       - ./neo4j/data:/data
@@ -10,7 +10,7 @@ services:
       - 7474:7474
       - 7687:7687
     environment:
-      - NEO4J_AUTH:neo4j/secret
+      NEO4J_AUTH: neo4j/secret
     restart: on-failure
     networks:
       - default
@@ -19,16 +19,15 @@ services:
     build: back
     container_name: 'api'
     volumes:
-      - ./back:/back
-      - ./front/src/public/img:/public/img
+      - .:/app
     ports:
       - "8181:8181"
+    environment:
+        IMAGE_SRC: /app/front/build
+        NEO_HOST: neo4j
     depends_on:
       - neo4j
       - web
-    environment:
-      - 'GIN_MODE: release'
-      - 'NEO_HOST: neo4j'
     tty: true
     links:
       - neo4j
@@ -37,16 +36,16 @@ services:
     restart: unless-stopped
 
   web:
-    build: ./front
+    image: node:9.6.1
     container_name: 'web'
     volumes:
-      - ./front:/app
+      - .:/app
     ports:
       - "3000:5000"
     depends_on:
       - neo4j
-    working_dir: /app
-    command: sh deploy.sh
+    working_dir: /app/front
+    command: sh /app/front/deploy.sh
     networks:
       - default
 

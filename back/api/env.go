@@ -1,7 +1,12 @@
 package api
 
+import "os"
+
+var (
+	imageSrc = os.Getenv("IMAGE_SRC") + "/"
+)
+
 const (
-	imageSrc     = "/public/"
 	imageHost    = "http://localhost:3000"
 	like         = "LIKE"
 	dislike      = "DISLIKE"

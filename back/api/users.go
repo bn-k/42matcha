@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"io"
@@ -287,10 +288,12 @@ func userImageHandler(c *gin.Context) {
 		name := newToken() // Generate random Name
 		ext, err := extFromIncipit(buf.Bytes())
 		link := imageHost + "/" + name + "." + ext
+		fmt.Println("LINK =======> ", link)
 		if err != nil {
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {
-			path := "." + imageSrc + name + "." + ext
+			path := imageSrc + name + "." + ext
+			fmt.Println("Path =======> ", path)
 			f, _ := os.Create(path) //create file
 			defer f.Close()         //close after processing
 
