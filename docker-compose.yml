@@ -4,29 +4,31 @@ services:
     image: neo4j:latest
     container_name: 'db'
     volumes:
-    - ./neo4j/conf/:/conf
-    - ./neo4j/data:/data
+      - ./neo4j/conf/:/conf
+      - ./neo4j/data:/data
     ports:
-    - 7474:7474
-    - 7687:7687
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_AUTH:neo4j/secret
     restart: on-failure
     networks:
-    - default
+      - default
 
   api:
-    build: api
+    build: back
     container_name: 'api'
     volumes:
-      - ${GOPATH}/src:/go/src
-      - ./api:/matcha/api
-      - ./client/src/public/img:/public/img
+      - ./back:/back
+      - ./front/src/public/img:/public/img
     ports:
-      - "8181:81"
+      - "8181:8181"
     depends_on:
       - neo4j
       - web
     environment:
-      NEO_HOST: neo4j
+      - 'GIN_MODE: release'
+      - 'NEO_HOST: neo4j'
     tty: true
     links:
       - neo4j
@@ -35,10 +37,10 @@ services:
     restart: unless-stopped
 
   web:
-    build: ./client
+    build: ./front
     container_name: 'web'
     volumes:
-    - ./client:/app
+      - ./front:/app
     ports:
       - "5000:5000"
     depends_on:
@@ -53,5 +55,5 @@ networks:
     driver: bridge
 
 volumes:
-    neo4j:
-    api:
+  neo4j:
+  api:
