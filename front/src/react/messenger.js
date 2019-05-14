@@ -16,9 +16,11 @@ import {getMatchsAction} from "../redux/action/matchs-action";
 import Switcher from "./messenger-mobile/switcher";
 
 class Messenger extends Component {
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         store.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
     }
+
     componentWillMount() {
         document.body.style.overflow = "hidden";
     }

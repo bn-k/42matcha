@@ -45,7 +45,9 @@ class Profile extends React.Component {
             };
             fetch(env.api + '/visit/' + props.app.profileId, {
                 method: 'PUT',
-                headers: {'Authorization': localStorage.getItem('jwt')}
+                headers: {
+                    'Authorization': localStorage.getItem('jwt')
+                }
             })
         }
         this.dislike = this.dislike.bind(this);
@@ -56,7 +58,7 @@ class Profile extends React.Component {
         const url = "ws://localhost:8181/api/online/websocket/" + this.props.app.profileId;
         const socket = new WebSocket(url);
         const self = this;
-        socket.onopen = (event) => {
+        socket.onopen = () => {
             socket.onmessage = ({data}) => {
                 data = JSON.parse(data);
                 self.setState({
@@ -72,15 +74,15 @@ class Profile extends React.Component {
         }
     }
     dislike = () => {
-        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, dislike))
+        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, dislike));
         this.setState({profile: {...this.state.profile, relation: "DISLIKE"}})
     };
     like = () => {
-        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, like))
+        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, like));
         this.setState({profile: {...this.state.profile, relation: "LIKE"}})
     };
     block = () => {
-        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, block))
+        this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, block));
         this.setState({profile: {...this.state.profile, relation: "BLOCK"}});
     };
     render () {

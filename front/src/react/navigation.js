@@ -29,18 +29,17 @@ class Navigation extends Component {
     }
     componentWillUpdate(nextProps, nextState, nextContext) {
         if ((!this.props.login.loggedIn && nextProps.login.loggedIn) || !this.props.app.user.name) {
-            this.props.dispatch(userAction(this.props.app));
+            // this.props.dispatch(userAction(this.props.app));
         }
     }
-
     componentDidMount() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.updatePosition, this.geoDeniedPosition);
         }
     }
-    updatePosition(position) {
+    updatePosition = position => {
         sendPosition("gps", {lat: position.coords.latitude, long: position.coords.longitude})
-    }
+    };
     geoDeniedPosition(err) {
         if (err.code === err.PERMISSION_DENIED) {
             (async () => {

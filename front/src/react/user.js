@@ -18,7 +18,6 @@ import {
 import {
     disableFieldAction,
     enableFieldAction,
-    userAction,
     userModifyAction
 } from "../redux/action/app-action";
 import {days, genders, interest, months, years} from "./modules/options-dates";
@@ -154,7 +153,7 @@ const fields = [
     {
         name: "password",
         title: "Password",
-        view: (props) => null,
+        view: () => null,
         entries: [
             {type: (hc, s) => (
                     <Grid key={"grid_password"}>
@@ -192,7 +191,7 @@ const fields = [
     {
         name: "location",
         title: "Location",
-        view: (props) => (null),
+        view: () => (null),
         entries: [
             {type: (hc, s, props) => (<AddressForm hc={hc} {...props} key={"address-form"}/>)},
         ],
@@ -249,7 +248,7 @@ const fields = [
         title: "Birthday",
         view: (props) => (<p>{formatDate(props.app.user.birthday)}</p>),
         entries: [
-            {type: (hc, s) => (
+            {type: (hc) => (
                     <Form.Group label={"Birthday"} key={"birthday"}>
                         <Form.Select
                             fluid label='Day'
@@ -283,7 +282,7 @@ const fields = [
     {
         name: "tag",
         title: "Add a new tag",
-        view: (props) => (null),
+        view: () => (null),
         entries: [
             {type: (hc, s) => (<Input fluid key={1} onChange={hc} name={"tag"} value={s}/>)}
         ],
@@ -473,9 +472,9 @@ class User extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.save = this.save.bind(this);
         this.modify = this.modify.bind(this);
-        props.dispatch(userAction(props.app));
+        // props.dispatch(userAction(props.app));
     }
-    save = (e) => {
+    save = () => {
         this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name, this.handleChange));
     };
     modify = (e, field) => {
