@@ -13,7 +13,7 @@ import {
     Form,
     Grid,
     Image,
-    Label, Message,
+    Label,
 } from 'semantic-ui-react';
 import {
     disableFieldAction,
@@ -448,15 +448,6 @@ const Field = (props) => (
         </Segment>
     </>
 );
-const Mess = (props) => (
-    <>
-        <Message color={props.color}>
-            <p>
-                {props.text}
-            </p>
-        </Message>
-    </>
-);
 
 class User extends React.Component {
     constructor (props) {
@@ -504,30 +495,10 @@ class User extends React.Component {
     handleTagChange = (e, data) => {
         this.setState({body: {tags: data.value}});
     };
-    error () {
-        if (this.state.error) {
-            return (
-                <>
-                    <Mess color={"red"} text={this.state.msg}/>
-                </>
-            )
-        }
-    }
-    done() {
-        if (this.state.done) {
-            return (
-                <>
-                    <Mess color={"green"} text={this.state.msg}/>
-                </>
-            )
-        }
-    }
     render () {
         return (
             <>
                 <Container className={"user"}>
-                    {this.error()}
-                    {this.done()}
                     <Grid>
                         {fields.map((field) => (
                             <Grid.Column

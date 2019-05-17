@@ -61,6 +61,16 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                     switch (res.status) {
                         case 201:
                             res.json().then(json =>{
+                                dispatch({
+                                    ...prev,
+                                    error: true,
+                                    errMessage: json.err,
+                                });
+                                setTimeout(() => {dispatch({
+                                    ...prev,
+                                    error: false,
+                                    done: false,
+                                })}, 2000)
                             });
                             break;
                         case 200:
@@ -71,7 +81,13 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                                     user: data.user.Properties,
                                     tagList: data.tagList,
                                     userTags: data.userTags,
+                                    done: true,
                                 });
+                                setTimeout(() => {dispatch({
+                                    ...prev,
+                                    error: false,
+                                    done: false,
+                                })}, 2000)
                             });
                             break;
                         default:

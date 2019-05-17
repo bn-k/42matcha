@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
 import {
+    Message,
     Responsive,
 } from 'semantic-ui-react'
 import Nav from "./components/navbar";
@@ -19,6 +20,16 @@ const sendPosition = (type, pos) => {
         credentials: 'same-origin',
     })
 };
+
+const Mess = (props) => (
+    <>
+        <Message color={props.color}>
+            <p>
+                {props.text}
+            </p>
+        </Message>
+    </>
+);
 
 class Navigation extends Component {
     constructor(props) {
@@ -47,6 +58,19 @@ class Navigation extends Component {
             })();
         }
     }
+    error () {
+        if (this.props.app.error) {
+        }
+    }
+    done() {
+        if (this.props.app.done) {
+            return (
+                <>
+                    <Mess color={"green"} text="Success"/>
+                </>
+            )
+        }
+    }
     render() {
         if (this.props.login.loggedIn) {
             return (
@@ -60,6 +84,8 @@ class Navigation extends Component {
                     <Responsive {...Responsive.onlyComputer}>
                         <Nav buttons={computerButtons}  name={this.props.login.username} icon={"labeled"}/>
                     </Responsive>
+                    {this.done()}
+                    {this.error()}
                 </div>
             )
         } else {

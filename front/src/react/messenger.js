@@ -9,7 +9,7 @@ import {
     Container,
     Message,
     Button,
-    Responsive,
+    Responsive, Dimmer, Loader,
 } from 'semantic-ui-react';
 import store from "../redux/store/matcha-store";
 import {getMatchsAction} from "../redux/action/matchs-action";
@@ -28,42 +28,51 @@ class Messenger extends Component {
         document.body.style.overflow = "";
     }
     render() {
-
-        if (this.props.messenger.suitorId === -1) {
+        if (this.props.messenger.isLoading) {
             return (
-                <Container>
-                    <Segment>
-                        <Message
-                            error
-                            header="You don't have any match yet"
-                            onClick={() => this.props.history.push('/')}
-                        />
-                        <Button
-                            onClick={() => this.props.history.push('/')}
-                        >Go back home</Button>
-                    </Segment>
-                </Container>
+                <Segment style={{height: "30vh"}}>
+                    <Dimmer active>
+                        <Loader size='large'>Loading</Loader>
+                    </Dimmer>
+                </Segment>
             )
         } else {
-            return (
-                <div>
-                    <Responsive {...Responsive.onlyMobile}>
-                        <Switcher mobile/>
-                    </Responsive>
-                    <Responsive {...Responsive.onlyTablet}>
-                        <div className="messenger">
-                            <div className="scrollable sidebar"><ConversationList/></div>
-                            <div className="scrollable content"><MessageList/></div>
-                        </div>
-                    </Responsive>
-                    <Responsive {...Responsive.onlyComputer}>
-                        <div className="messenger">
-                            <div className="scrollable sidebar"><ConversationList/></div>
-                            <div className="scrollable content"><MessageList/></div>
-                        </div>
-                    </Responsive>
-                </div>
-            );
+            if (this.props.messenger.suitorId === -1) {
+                return (
+                    <Container>
+                        <Segment>
+                            <Message
+                                error
+                                header="You don't have any match yet"
+                                onClick={() => this.props.history.push('/')}
+                            />
+                            <Button
+                                onClick={() => this.props.history.push('/')}
+                            >Go back home</Button>
+                        </Segment>
+                    </Container>
+                )
+            } else {
+                return (
+                    <div>
+                        <Responsive {...Responsive.onlyMobile}>
+                            <Switcher mobile/>
+                        </Responsive>
+                        <Responsive {...Responsive.onlyTablet}>
+                            <div className="messenger">
+                                <div className="scrollable sidebar"><ConversationList/></div>
+                                <div className="scrollable content"><MessageList/></div>
+                            </div>
+                        </Responsive>
+                        <Responsive {...Responsive.onlyComputer}>
+                            <div className="messenger">
+                                <div className="scrollable sidebar"><ConversationList/></div>
+                                <div className="scrollable content"><MessageList/></div>
+                            </div>
+                        </Responsive>
+                    </div>
+                );
+            }
         }
     }
 }

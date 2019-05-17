@@ -38,7 +38,7 @@ func (app *App) dbGetMessages(userId, suitorId int) ([]Messages, error) {
 MATCH (a:User)-[]-(n:Message)-[]-(b:User) 
 WHERE ID(a)={user_id} AND ID(b)={suitor_id} 
 RETURN n 
-ORDER BY ID(n)
+ORDER BY n.timestamp
 `
 	msgs := make([]Messages, 0)
 

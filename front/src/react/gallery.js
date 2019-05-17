@@ -3,7 +3,6 @@ import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 import {getAge} from "./modules/utils";
 import {
-    Divider,
     Segment,
     Container,
     Dimmer,
@@ -44,13 +43,18 @@ class Gallery extends Component {
             ))}</>
     );
     render () {
+        if (this.props.people.isLoading) {
+            return (
+                <Segment style={{height: "30vh"}}>
+                    <Dimmer active>
+                        <Loader size='large'>Loading</Loader>
+                    </Dimmer>
+                </Segment>
+            )
+        } else {
         if (this.props.people.done) {
         return (
             <Container className={"gallery"}>
-                <Dimmer active={this.props.people.isLoading}>
-                    <Loader>Loading</Loader>
-                </Dimmer>
-                <Divider/>
                 <Responsive as={Segment} {...Responsive.onlyMobile}>
                     <Card.Group itemsPerRow={1}>{this.people()}</Card.Group>
                 </Responsive>
@@ -64,6 +68,7 @@ class Gallery extends Component {
         )
         } else {
            return (<p>{this.props.people.err}</p>)
+        }
         }
     }
 }

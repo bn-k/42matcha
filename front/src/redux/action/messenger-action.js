@@ -40,6 +40,7 @@ export const updateSuitorAction = (prevState, suitorId, userId) => dispatch => {
                                 suitorId: suitorId,
                                 messages: data,
                                 i: data.length,
+                                isLoading: false,
                             });
                         });
                         break;

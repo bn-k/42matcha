@@ -64,7 +64,7 @@ export const peoplePreloaded = {
 
         age: [16, 120],
         score : [0, 100],
-        location: [0 , 16000],
+        location: [0 , 1000],
         param : false,
         tags: [],
     },
@@ -80,6 +80,9 @@ export const loginPreloaded = {
 };
 
 export const appPreloaded = {
+    done: false,
+    error: false,
+    errMessage: "",
     profileId: -1,
     field: null,
     tagList: [
@@ -116,6 +119,7 @@ export const appPreloaded = {
 export const wsApi = "ws://localhost:8181/api/ws/";
 export const wsUrl = wsApi + loginPreloaded.id + "/" + loginPreloaded.id;
 export const messengerPreloaded = {
+    isLoading: true,
     suitorId: -1,
     url : wsUrl,
     ws : new WebSocket(wsUrl),

@@ -21,7 +21,6 @@ import Matchs from './react/matchs'
 import History from './react/history'
 import ResetPassword from './react/reset-password'
 
-
 const App = () => (
     <Provider store={store}>
         <Router>
