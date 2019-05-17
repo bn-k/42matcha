@@ -39,21 +39,29 @@ class Matchs extends Component {
         this.props.dispatch(updateProfileAction(this.props.app, id, i));
         this.props.history.push('/profile');
     }
-    matchs = () => (
-        <>
-            {this.props.matchs.map((person, i) =>  (
-                  <Card key={person.NodeIdentity} onClick={e => this.handleClick(e, person.NodeIdentity, i)}>
-                      <Image src={person.Properties.img1} size='big'/>
-                      <Card.Content>
-                          <Card.Header>{person.Properties.username}</Card.Header>
-                          <Card.Meta>
-                              <span className='date'>{getAge(person.Properties.birthday).toString()}</span>
-                              <p>{person.Properties.firstname} {person.Properties.lastname}</p>
-                          </Card.Meta>
-                      </Card.Content>
-                  </Card>
-            ))}</>
-    );
+    matchs = () => {
+        if (this.props.matchs[0] !== -1) {
+            return (
+                <>
+                    {this.props.matchs.map((person, i) =>  (
+                        <Card key={person.NodeIdentity} onClick={e => this.handleClick(e, person.NodeIdentity, i)}>
+                            <p>test</p>
+                        <Image src={person.Properties.img1} size='big'/>
+                        <Card.Content>
+                        <Card.Header>{person.Properties.username}</Card.Header>
+                        <Card.Meta>
+                        <span className='date'>{getAge(person.Properties.birthday).toString()}</span>
+                        <p>{person.Properties.firstname} {person.Properties.lastname}</p>
+                        </Card.Meta>
+                        </Card.Content>
+                        </Card>
+                        ))}
+                </>
+            )
+        } else {
+            return (null);
+        }
+    };
     render () {
         return (
             <Container className={"gallery"}>
