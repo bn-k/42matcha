@@ -56,20 +56,32 @@ type User struct {
 	OverallRating int       `json:"overall_rating" db:"overall_rating"`
 }
 
+func arrayContain(Tab []string, str string) bool {
+
+	if len(Tab) == 0 { return false }
+	for _, s := range Tab {
+		if s == str {
+			return true
+		}
+	}
+	return false
+}
+
 
 func newRandomMale() User {
 	var f *gofakeit.PersonInfo
-	max := 1
+	max := 2
 	f = gofakeit.Person()
 	interest := make([]string, 3)
 	interest[0] = "bi"
 	interest[1] = "hetero"
 	interest[2] = "homo"
-	tagtab := make([]string, 1)
-	//tagg := []Tag
+	tagtab := make([]string, 2)
 	for i := 0; i < max; i++ {
-		tagtab[i] = gofakeit.Color()
-		//tagg.
+		str := gofakeit.Color()
+		if arrayContain(tagtab, str) == false {
+			tagtab[i] = str
+		}
 	}
 
 	Latitude, _ := gofakeit.LatitudeInRange(42.490627, 50.264989)
@@ -112,15 +124,18 @@ func newRandomFemale() User {
 	Latitude, _ := gofakeit.LatitudeInRange(42.490627, 50.264989)
 	Longitude, _ := gofakeit.LongitudeInRange(-3.396493, 9.517944)
 	var f *gofakeit.PersonInfo
-	max := 1
+	max := 2
 	f = gofakeit.Person()
 	interest := make([]string, 3)
 	interest[0] = "bi"
 	interest[1] = "hetero"
 	interest[2] = "homo"
-	tagtab := make([]string, 1)
+	tagtab := make([]string, 2)
 	for i := 0; i < max; i++ {
-		tagtab[i] = gofakeit.Color()
+		str := gofakeit.Color()
+		if arrayContain(tagtab, str) {
+			tagtab[i] = str
+		}
 	}
 	return User{Username: gofakeit.Username(),
 		Password:  api.Encrypt(api.HashKey, "'"),
@@ -179,7 +194,7 @@ func main() {
 }
 
 func AddTagRelation(u User) {
-	for i := 0; i < 1; i++ {
+	for i := 0; i < 2; i++ {
 		tag := strings.ToLower(u.Tags[i])
 		q := `MATCH (u:User) WHERE u.username = {username} MATCH (n:TAG) WHERE n.value = "` + tag + `" CREATE (u)-[g:TAGGED]->(n) return n`
 		st := app.prepareFakeStatement(q)
@@ -202,7 +217,6 @@ longitude:{longitude}, geo_allowed: {geo_allowed},
 online:{online}, rating: {rating},
 email: {email}, access_lvl: 1, last_conn: {last_conn},
 ilike: {ilike}, relation: {relation}, tags: {tags}})`
-	//fmt.Println("Query == ", q)
 	st := app.prepareFakeStatement(q)
 	api.ExecuteStatement(st, api.MapOf(u))
 	return
