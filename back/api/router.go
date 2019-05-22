@@ -1,7 +1,7 @@
 package api
 
 import (
-	"./kwal"
+	"back/api/kwal"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/olahol/melody.v1"
@@ -26,7 +26,7 @@ func (app *App) routerAPI() {
 	}
 	api := app.R.Group("/api")
 	{
-		api.GET("/people/:param", GetPeople)
+		api.GET("/people/:param", getRecommended)
 		api.PUT("/visit/:id", newVisit)
 		api.POST("/send_token", Forgot)
 		api.PUT("/reset_password", ResetPassword)

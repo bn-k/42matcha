@@ -1,5 +1,5 @@
 package main
- import "./api"
+ import "back/api"
 
 func main() {
 	api.Run()
