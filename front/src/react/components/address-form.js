@@ -43,18 +43,6 @@ export default class AddressForm extends Component {
         this.geocoder = this.geocoder.bind(this);
         this.returnError = this.returnError.bind(this);
     }
-    componentDidMount() {
-        fetch(env.api + '/kwal').then(res => {
-            res.json().then(json => {
-                if (json) {
-                json.map(a => {
-                    this.setState({[a.name]: [a.value][0]});
-                    return a
-                });
-                }
-            });
-        });
-    }
     handleChange = (e, data) => {
         this.setState({[data.name]: data.value})
     };
@@ -99,6 +87,7 @@ export default class AddressForm extends Component {
                                 lng: pos.Longitude
                             });
                             const ret = {name: "position", value: pos};
+                            console.log(ret);
                             this.props.hc("", ret);
                         } else {
                             this.handleError("Sorry but we can't find your address")
@@ -115,7 +104,7 @@ export default class AddressForm extends Component {
             <Container>
                 <Grid key={"form"}>
                     {this.state.show ?
-                        <Grid.Column mobile={16} tablet={5} computer={5}>
+                        <Grid.Column mobile={16} tablet={10} computer={10}>
                             <Mapp lng={this.state.lng} lat={this.state.lat}/>
                         </Grid.Column>
                         : <></> }

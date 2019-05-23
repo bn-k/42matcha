@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
@@ -97,6 +98,7 @@ func GetMatchs(c *gin.Context) {
 		app.onlineRefresh(strconv.Itoa(id))
 		g, err := app.dbGetMatchs(id)
 		if err != nil {
+			fmt.Println(err.Error())
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {
 			c.JSON(200, g)

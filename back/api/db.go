@@ -45,7 +45,7 @@ ORDER BY n.timestamp
 	data, _, _, _ := app.Neo.QueryNeoAll(q, map[string]interface{}{"user_id": userId, "suitor_id": suitorId})
 	for _, tab := range data {
 		msgs = append(msgs, Messages{
-			tab[0].(graph.Node).Properties["id"].(string),
+			"0",
 			tab[0].(graph.Node).Properties["author"].(int64),
 			tab[0].(graph.Node).Properties["msg"].(string),
 			tab[0].(graph.Node).Properties["timestamp"].(int64),

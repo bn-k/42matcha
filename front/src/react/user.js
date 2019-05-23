@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 import {
@@ -52,6 +52,7 @@ const formatDate = (dateStr) => {
 
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
 };
+
 const fields = [
     {
         name: "username",

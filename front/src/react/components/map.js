@@ -14,7 +14,7 @@ export default class Mapp extends React.Component {
     render() {
         const position = [this.props.lat, this.props.lng];
         return (
-            <Map center={position} zoom={this.state.zoom}>
+            <Map  style={{witdth: "auto", height: "50vh"}}center={position} zoom={this.state.zoom}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
