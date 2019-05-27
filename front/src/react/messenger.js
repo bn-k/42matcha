@@ -9,7 +9,7 @@ import {
     Container,
     Message,
     Button,
-    Responsive, Dimmer, Loader,
+    Responsive, Dimmer, Loader, Header,
 } from 'semantic-ui-react';
 import store from "../redux/store/matcha-store";
 import {getMatchsAction} from "../redux/action/matchs-action";
@@ -20,7 +20,6 @@ class Messenger extends Component {
         super(props);
         store.dispatch(getMatchsAction(this.props.messenger, this.props.login.id));
     }
-
     componentWillMount() {
         document.body.style.overflow = "hidden";
     }
@@ -28,12 +27,10 @@ class Messenger extends Component {
         document.body.style.overflow = "";
     }
     render() {
-        if (this.props.messenger.isLoading) {
+        if (this.props.matchs[0].NodeIdentity === -1) {
             return (
-                <Segment style={{height: "30vh"}}>
-                    <Dimmer active>
-                        <Loader size='large'>Loading</Loader>
-                    </Dimmer>
+                <Segment >
+                    <Header as={"h3"}>Sorry loser, you have no match</Header>
                 </Segment>
             )
         } else {

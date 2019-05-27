@@ -13,7 +13,7 @@ import Profile from "./react/profile";
 import Login from "./react/login";
 import Register from "./react/register";
 import Error from "./react/error";
-import Navigation from "./react/navigation";
+import Navigation from "./react/navigation-protected";
 import ValidEmail from './react/valid-email'
 import Messenger from './react/messenger'
 import Forgot from './react/forgot'

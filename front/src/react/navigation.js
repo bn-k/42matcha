@@ -24,15 +24,7 @@ const sendPosition = (type, pos) => {
 class Navigation extends Component {
     constructor(props) {
         super(props);
-        if (props.login.loggedIn && props.app.user.username === null) {
-            props.dispatch(userAction(props.app));
-        }
-    }
-
-    componentWillUpdate(nextProps, nextState, nextContext) {
-        if (this.props.login.loggedIn && this.props.app.user.username === null) {
-            this.props.dispatch(userAction(this.props.app));
-        }
+        props.dispatch(userAction(this.props.app));
     }
     componentDidMount() {
         if (navigator.geolocation && this.props.login.loggedIn) {

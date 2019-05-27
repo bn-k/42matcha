@@ -23,7 +23,7 @@ class MessageList extends Component {
         <>
             {this.props.messenger.messages.map((msg) => (
                 <Message
-                    key={msg.id}
+                    key={msg.timestamp}
                     isMine={msg.author === this.props.login.id}
                     startsSequence={true}
                     endsSequence={false}
@@ -41,7 +41,7 @@ class MessageList extends Component {
                 this.props.dispatch(incrementMessageAction(this.props.messenger));
             }
             const newMessage = {
-                id: msg.id,
+                id: msg.timestamp,
                 author: msg.author,
                 message: msg.msg,
                 timestamp: msg.timestamp,

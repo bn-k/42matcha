@@ -22,6 +22,9 @@ export const peopleAction = (prev, id, action) => dispatch => {
                         break;
                     case 201:
                         res.json().then(json =>{
+                            if (env.debug) {
+                                console.log(json);
+                            }
                         });
                         break;
                     case 202:
@@ -47,6 +50,11 @@ export const getPeopleAction = (filters, param) => dispatch => {
         .then(res => {
                 switch (res.status) {
                     case 201:
+                        res.json().then(json => {
+                            if (env.debug) {
+                                console.log(json);
+                            }
+                        });
                             dispatch({
                                 type: NO_PEOPLE,
                                 filters: filters,

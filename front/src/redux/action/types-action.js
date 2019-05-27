@@ -27,3 +27,4 @@ export const INCR_I = 'INCR_I';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 
 export const LOAD_MATCHS = 'LOAD_MATCHS';
+export const NO_MATCH = 'NO_MATCH';

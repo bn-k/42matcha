@@ -61,6 +61,9 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                     switch (res.status) {
                         case 201:
                             res.json().then(json =>{
+                                    if (env.debug) {
+                                        console.log(json);
+                                    }
                                 dispatch({
                                     ...prev,
                                     type: USER_ERROR,

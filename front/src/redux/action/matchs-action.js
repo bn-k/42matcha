@@ -1,4 +1,4 @@
-import {LOAD_MATCHS} from './types-action';
+import {LOAD_MATCHS, NO_MATCH} from './types-action';
 import {updateSuitorAction} from "./messenger-action";
 import env from "../../env";
 
@@ -18,7 +18,10 @@ export const getMatchsAction = (messenger, userId) => dispatch => {
                         });
                         break;
                     case 201:
-                        res.json().then(json =>{
+                        res.json().then(json => {
+                            if (env.debug) {
+                                console.log(json);
+                            }
                         });
                         break;
                     case 200:

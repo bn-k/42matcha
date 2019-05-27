@@ -6,7 +6,7 @@ import {
     Header,
     Button,
     Dropdown,
-    Grid,
+    Grid, Icon,
 } from 'semantic-ui-react';
 import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -88,10 +88,11 @@ class GallerySettings extends React.Component {
         return (
             <Segment>
                 <Grid>
-                    <Grid.Row columns={3}>
+                    <Grid.Row columns={4}>
                         {this.intervalCol("age", 1, "years", this.props.people.filters["age"][1])}
                         {this.intervalCol("score", 1, "", this.props.people.filters["score"][1])}
                         {this.intervalCol("location", 50, "km", 50)}
+                        <Button onClick={this.props.toggle}><Icon link name='close' /></Button>
                     </Grid.Row>
                     <Header as={'h4'}>Tags</Header>
                     <Grid.Row columns={3}>

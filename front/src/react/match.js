@@ -69,7 +69,6 @@ class Suitor extends React.Component {
             }
         };
         fetch(env.api + '/people/' + id + "/" + action, init);
-        this.props.next();
     };
     dislike = () => {
         this.action(this.props.suitor.NodeIdentity, dislike)
@@ -89,17 +88,14 @@ class Suitor extends React.Component {
                         <Grid.Column mobile={16} tablet={16} computer={16}>
                             <Segment>
                                 <Grid>
-                                    <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={5}>
+                                    <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
                                         {/*<p>{profile.ilike ? "Vous a déjà liké" : ""}</p>*/}
                                     </Grid.Column>
-                                    <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={5}>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={6}>
                                         <Header as={"h3"}>Score {profile.rating}/100</Header>
                                     </Grid.Column>
-                                    <Grid.Column  style={{padding: "3px"}} mobile={15} tablet={3} computer={4}>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={4} computer={4}>
                                         <Online online={profile.online} lastConn={profile.last_conn}/>
-                                    </Grid.Column>
-                                    <Grid.Column  style={{padding: "3px"}} mobile={1} tablet={1} computer={2}>
-                                        <Button onClick={this.props.toggle}>Search</Button>
                                     </Grid.Column>
                                 </Grid>
                             </Segment>

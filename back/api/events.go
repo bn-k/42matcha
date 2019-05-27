@@ -105,7 +105,7 @@ func (app *App) onlineRefresh(id string) {
 
 func (app *App) offlineWatcher() {
 	for true {
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Minute * 10)
 		q := `MATCH (u:User{online: true}) return u`
 		data, _, _, _ := app.Neo.QueryNeoAll(q, nil)
 		for _, node := range data {

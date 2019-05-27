@@ -42,7 +42,8 @@ function useFetch(url, init) {
     useEffect(() => {
         fetchUrl();
     }, []);
-    return [data, setData, loading];
+    const end = data.length < 25 ;
+    return [data, setData, loading, end];
 }
 
 const Swipe = (props) => {
@@ -52,36 +53,22 @@ const Swipe = (props) => {
             'Authorization': localStorage.getItem('jwt'),
         }
     };
-    const [array, setArray, loading] = useFetch(env.api + '/swipe', init);
+    const [array, setArray, loading, end] = useFetch(env.api + '/swipe', init);
     const [index, setIndex] = useState(0);
     const next = () => {
         setIndex(index + 1);
-        console.log(index);
     };
     const suitor = array[index];
-    if (array.length < index + 3 && array.length > 0) {
-        console.log("if 1");
+    if (end && array.length === index) {
+        return (<div>Nothing left</div>)
+    } else if (array.length < index + 5 && !end) {
         request(setArray);
         setIndex(0);
-        console.log(array);
-        return (
-            <Suitor suitor={suitor} next={next}/>
-        )
+        return (<Suitor suitor={suitor} next={next}/>)
     } else if (loading) {
-        console.log("if 2", suitor);
-        return (
-            <div>...loading</div>
-        )
-    } else if (!array) {
-        console.log("if 3");
-        return (
-            <div>Nothing left</div>
-        )
+        return (<div>...loading</div>)
     } else {
-        console.log("if 4", suitor);
-        return (
-            <Suitor suitor={suitor} next={next}/>
-        )
+        return (<Suitor suitor={suitor} next={next} toggle={props.toggle}/>)
     }
 };
 
