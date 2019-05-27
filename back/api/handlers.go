@@ -61,6 +61,7 @@ func createRelation(c *gin.Context) {
 
 func ValidateToken(c *gin.Context, claims jwt.Claims) (valid bool, err error) {
 	tokenString := c.Request.Header["Authorization"][0]
+	fmt.Println("token: ",tokenString)
 
 	_, err = jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(HashKey), nil
@@ -72,7 +73,7 @@ func ValidateToken(c *gin.Context, claims jwt.Claims) (valid bool, err error) {
 		return true, err
 	}
 	return false, err
-}
+	}
 
 func Next(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
@@ -186,12 +187,14 @@ func Recommended(c *gin.Context) {
 		app.alertOnline(true, str)
 		g, err := app.dbGetRecommended(id, Page)
 		if err != nil {
+			fmt.Println("1", err)
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {
 			UpdateLastConn(id)
 			c.JSON(200, g)
 		}
 	} else {
+		fmt.Println("2", err)
 		c.JSON(201, gin.H{"err": err.Error()})
 	}
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {Container, Responsive} from "semantic-ui-react";
 import env from "../env";
 import Suitor from "./suitor";
+import {Button, Header, Segment} from "semantic-ui-react";
 
 const request = (setArray) => {
     let init = {
@@ -14,6 +14,9 @@ const request = (setArray) => {
         .then(response => {
             switch (response.status) {
                 case 201:
+                    response.json().then(json => {
+                        console.log("json", json)
+                    });
                     setArray(false);
                     break;
                 case 200:
@@ -60,7 +63,12 @@ const Swipe = (props) => {
     };
     const suitor = array[index];
     if (end && array.length === index) {
-        return (<div>Nothing left</div>)
+        return (
+            <Segment>
+                <Header>Sorry, we have nobody to recommend to you...</Header>
+                <Button onClick={props.toggle}>Search</Button>
+            </Segment>
+        )
     } else if (array.length < index + 5 && !end) {
         request(setArray);
         setIndex(0);

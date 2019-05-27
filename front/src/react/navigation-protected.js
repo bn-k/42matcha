@@ -5,7 +5,6 @@ import Navigation from "./navigation";
 
 
 const Comp = (props) => {
-    console.log("===========", props);
     if (props.login.loggedIn) {
     return (
         <Navigation/>
@@ -18,10 +17,6 @@ const Comp = (props) => {
 const mapStateToProps = (state) => {
     return {
         login: state.login,
-        app: state.app,
-        people: state.people,
-        messenger: state.messenger,
-        matchs: state.matchs,
     };
 };
 

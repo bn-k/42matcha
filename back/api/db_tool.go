@@ -66,17 +66,7 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 			}
 		}
 	}
-	userBirth := time.Now().Sub(u.Birthday)
-	parsed, _ := time.Parse(time.RFC3339Nano, g.Properties["birthday"].(string))
-	fmt.Println("PARSED BIRTH G ==>> ", parsed, "|")
-	gbirth := time.Now().Sub(parsed)
-	parsed, _ = time.Parse(time.RFC3339Nano, h.Properties["birthday"].(string))
-	fmt.Println("PARSED BIRTH H ==>> ", parsed, "|")
-	hbirth := time.Now().Sub(parsed)
 
-	fmt.Println("BIRTH user ==>> ", userBirth, "|")
-	fmt.Println("BIRTH G ==>> ", gbirth, "|")
-	fmt.Println("BIRTH H ==>> ", hbirth, "|")
 	return score1 < score2
 }
 

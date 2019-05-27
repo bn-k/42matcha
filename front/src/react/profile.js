@@ -106,7 +106,6 @@ class Profile extends React.Component {
                                 </Grid>
                             </Segment>
                         </Grid.Column>
-                        <Divider vertical/>
                         <Grid.Column mobile={16} tablet={8} computer={4}>
                             <Image circular size={"medium"} src={profile.img1} />
                         </Grid.Column>

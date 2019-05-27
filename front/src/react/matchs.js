@@ -39,7 +39,7 @@ class Matchs extends Component {
             if (this.state.view) {
                 return (
                     <>
-                        return (<Match suitor={this.props.matchs[this.state.i]} />)
+                        <Match suitor={this.props.matchs[this.state.i]} toggle={this.handleClick} />
                     </>
                 )
             } else {

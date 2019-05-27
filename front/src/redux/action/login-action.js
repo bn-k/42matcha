@@ -21,12 +21,14 @@ export const loginAction = (formData, history) => dispatch => {
                     case 200:
                         res.json().then(json =>{
                             localStorage.setItem("jwt", json);
-                            const data = jwtDecode(json);
-                            dispatch({
-                                ...data,
-                                type: LOGIN,
-                            });
-                            history.push('/');
+                            setTimeout(() => {
+                                const data = jwtDecode(json);
+                                dispatch({
+                                    ...data,
+                                    type: LOGIN,
+                                });
+                                history.push('/');
+                            }, 1000);
                         });
                         break;
                     default:

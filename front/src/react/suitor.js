@@ -90,7 +90,7 @@ class Suitor extends React.Component {
                             <Segment>
                                 <Grid>
                                     <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={5}>
-                                        {/*<p>{profile.ilike ? "Vous a déjà liké" : ""}</p>*/}
+                                        <p>{profile.ilike ? "Vous a déjà liké" : ""}</p>
                                     </Grid.Column>
                                     <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={5}>
                                         <Header as={"h3"}>Score {profile.rating}/100</Header>
