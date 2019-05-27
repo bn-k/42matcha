@@ -57,6 +57,7 @@ ORDER BY n.timestamp
 }
 
 func (app *App) insertUser(u User) {
+
 	q := `CREATE (u:User{name: {username},
 username:{username}, password:{password},
 firstname:{firstname}, lastname:{lastname},
@@ -93,7 +94,7 @@ func (app *App) updateUser(u User) {
 	u.longitude = {longitude}, u.geo_allowed = {geo_allowed},
 	u.online = {online}, u.rating = {rating},
 	u.email = {email}, u.access_lvl = {access_lvl},
-	u.tags = {tags},  u.last_conn = {last_conn}, u.tags = {tags} `
+	u.tags = {tags},  u.last_conn = {last_conn}`
 	st := app.PrepareStatement(q)
 	ExecuteStatement(st, MapOf(u))
 	return
@@ -223,80 +224,45 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 		err = errors.New("User doesn't exist.")
 	}
 	q := interestQuery(u.Interest, u.Genre)
-	Skip := "SKIP " + strconv.Itoa(Page * 25)
+	//Skip := "SKIP " + strconv.Itoa(Page * 25)
 
-	superQuery := `MATCH (u:User), (n:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)-[]-(n) AND `+ q +` RETURN DISTINCT n ORDER BY n.rating DESC `+ Skip +` LIMIT 25`
+	superQuery := `MATCH (u:User), (n:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)-[]-(n) AND `+ q +` RETURN DISTINCT n ORDER BY n.rating DESC LIMIT 25`
 	fmt.Println("Interest query == > ", superQuery, "|")
 
 	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
+
+	//fmt.Println("DATA ====>>", data[0], "||")
 
 	if len(data) == 0 {
 		err = errors.New("No more recommendation.")
 		return g, err
 	} else {
+		//fmt.Println("DAAAATAAAA ==>> ",data, "||")
+		//sort.Slice(data[0], func(i, j int) bool {
+		//	return data[0][i].(graph.Node).Properties["distance"].(int) < data[0][j].(graph.Node).Properties["distance"].(int)
+		//})
 		for _, d := range data {
+			//jso, _ := json.Marshal(d[0].(graph.Node).Properties)
+			//_ = json.Unmarshal(jso, &uTemp)
+			//uTemp.Id = d[0].(graph.Node).NodeIdentity
+			//dis.Properties["distance"] = Haversine(u.Longitude, u.Latitude, uTemp.Longitude, uTemp.Latitude)
+			////userTab = append(userTab, uTemp)
+			//fmt.Println("DDDDD AVANT ==> ", d, "||")
+			//d = append(d, dis)
+			//fmt.Println("DDDDD APRES ==> ", d, "||")
+			//fmt.Println("USER TAB ==> ", userTab, "||")
 			g = append(g, d[0].(graph.Node))
 		}
+
+		//fmt.Println("USER TAB ==> ", userTab[0], "||", userTab[1], "||", userTab[2], "||")
+		//for _ , r  := range userTab {
+		//	res, err := json.Marshal(r)
+		//	g = append(g, res.(graph.Node).Properties)
+		//}
+		//g, err := json.Marshal(userTab)
 		return g, err
 	}
 }
-
-//func (app *App) dbGetPeople(Id int, Filter *Filters, Param bool) ([]graph.Node, error) {
-//	var g = make([]graph.Node, 0)
-//	var err error
-//
-//	var m Match
-//	var Overall int
-//	var boorev bool
-//	var rating int
-//	m.action = like
-//	// A custom query with applied Filters
-//	time.Sleep(500 * time.Millisecond)
-//	superQuery := customQuery(Id, Filter)
-//
-//	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
-//	u, _ := app.getUser(Id, "")
-//	if len(data) == 0 {
-//		err = errors.New("err : filters doesn't match anyone")
-//		return g, err
-//	} else {
-//		for _, d := range data {
-//			m.idFrom = int(d[0].(graph.Node).NodeIdentity)
-//			m.idTo = Id
-//			boo := app.dbExistRel(m, m.action)
-//			d[0].(graph.Node).Properties["ilike"] = boo
-//			d[0].(graph.Node).Properties["relation"] = app.dbGetRelationType(m)
-//			lonTo, _ := getFloat(d[0].(graph.Node).Properties["longitude"])
-//			latTo, _ := getFloat(d[0].(graph.Node).Properties["latitude"])
-//			Genre, _ := d[0].(graph.Node).Properties["genre"].(string)
-//			Interest, _ := d[0].(graph.Node).Properties["interest"].(string)
-//			delete(d[0].(graph.Node).Properties, "password")
-//			if Param == false {
-//				boorev = app.dbExistRevLike(m)
-//				rating = d[0].(graph.Node).Properties["rating"].(int)
-//				if boo == true {
-//					Overall += 25
-//				} else if boorev == true {
-//					Overall -= 25
-//				}
-//				Overall += rating/2
-//			}
-//			distance := Haversine(u.Longitude, u.Latitude, lonTo, latTo);
-//			if distance < 100 {
-//				Overall += distance/4
-//			}
-//			//d[0].(graph.Node).Properties["distance"] = distance
-//			// Haversine will return the distance between 2 Lat/Lon in Kilometers
-//			if ()
-//			if valid := setInterest(Genre, Interest, Id); valid == true {
-//				g = append(g, d[0].(graph.Node))
-//			}
-//		}
-//		return g, err
-//	}
-//}
-
-//<= Filter.Location[1]
 
 func (app *App) usernameExist(Username string) bool {
 	data, _, _, _ := app.Neo.QueryNeoAll(`MATCH (n:User {username: {username}}) RETURN n`, map[string]interface{}{"username": Username})
