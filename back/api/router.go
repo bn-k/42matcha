@@ -1,7 +1,6 @@
 package api
 
 import (
-	"back/api/kwal"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/olahol/melody.v1"
@@ -32,10 +31,6 @@ func (app *App) routerAPI() {
 		api.PUT("/reset_password", ResetPassword)
 		api.PUT("/people/:id/:action", createRelation)
 		api.GET("/matchs", GetMatchs)
-		api.GET("/kwal", func(c *gin.Context) {
-			k := kwal.GetKeys()
-			c.JSON(200, k)
-		})
 		api.GET("/messages", GetMessages)
 		api.GET("/user", UserHandler)
 		api.PUT("/user/:name", UserModify)

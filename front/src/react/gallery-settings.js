@@ -31,6 +31,11 @@ const handle = (props, unit) => {
     );
 };
 
+const options = [
+    { key: 1, text: 'Choice 1', value: 1 },
+    { key: 2, text: 'Choice 2', value: 2 },
+    { key: 3, text: 'Choice 3', value: 3 },
+]
 class GallerySettings extends React.Component {
     constructor(props) {
         super(props);
@@ -90,7 +95,7 @@ class GallerySettings extends React.Component {
                     </Grid.Row>
                     <Header as={'h4'}>Tags</Header>
                     <Grid.Row columns={3}>
-                        <Grid.Column mobile={16} tablet={16} computer={12}>
+                        <Grid.Column mobile={16} tablet={16} computer={9}>
                             <Dropdown
                                 placeholder='Tags'
                                 fluid
@@ -103,8 +108,19 @@ class GallerySettings extends React.Component {
                                 onChange={this.handleTagsChange}
                             />
                         </Grid.Column>
-                        <Grid.Column mobile={16} tablet={16} computer={4}>
+                        <Grid.Column mobile={16} tablet={16} computer={3}>
                             <Button fluid color={"green"} onClick={e => this.applyFilters(e)}>Apply Filters</Button>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={16} computer={4}>
+                            <Grid.Row>
+                                    <p>Sort by</p>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Dropdown
+                                    clearable
+                                    options={options}
+                                />
+                            </Grid.Row>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
