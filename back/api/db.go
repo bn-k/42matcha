@@ -6,6 +6,7 @@ import (
 	"fmt"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -71,7 +72,8 @@ country:{country}, latitude: {latitude},
 longitude:{longitude}, geo_allowed: {geo_allowed},
 online:{online}, rating: {rating},
 email: {email}, access_lvl: 1, last_conn: {last_conn},
-ilike: {ilike}, relation: {relation}, tags: {tags}})`
+ilike: {ilike}, relation: {relation}, tags: {tags}, 
+distance: {distance}, overall_rating: {overall_rating}})`
 	//fmt.Println("Query == ", q)
 	st := app.PrepareStatement(q)
 	ExecuteStatement(st, MapOf(u))
@@ -94,7 +96,7 @@ func (app *App) updateUser(u User) {
 	u.longitude = {longitude}, u.geo_allowed = {geo_allowed},
 	u.online = {online}, u.rating = {rating},
 	u.email = {email}, u.access_lvl = {access_lvl},
-	u.tags = {tags},  u.last_conn = {last_conn}, u.tags = {tags} `
+	u.tags = {tags},  u.last_conn = {last_conn}`
 	st := app.PrepareStatement(q)
 	ExecuteStatement(st, MapOf(u))
 	return
@@ -228,6 +230,7 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 
 	superQuery := `MATCH (u:User), (n:User) WHERE Id(u)= ` + strconv.Itoa(Id) + `AND ` + q + ` AND NOT ( (u)-[]->(n) OR (u)<-[:BLOCK]-(n) ) RETURN DISTINCT n ORDER BY n.rating DESC LIMIT 25`
 	fmt.Println("Interest query == > ", superQuery, "|")
+
 	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
 
 	//fmt.Println("DATA ====>>", data[0], "||")
@@ -237,28 +240,18 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 		return g, err
 	} else {
 		//fmt.Println("DAAAATAAAA ==>> ",data, "||")
-		//sort.Slice(data[0], func(i, j int) bool {
-		//	return data[0][i].(graph.Node).Properties["distance"].(int) < data[0][j].(graph.Node).Properties["distance"].(int)
-		//})
 		for _, d := range data {
-			//jso, _ := json.Marshal(d[0].(graph.Node).Properties)
-			//_ = json.Unmarshal(jso, &uTemp)
-			//uTemp.Id = d[0].(graph.Node).NodeIdentity
-			//dis.Properties["distance"] = Haversine(u.Longitude, u.Latitude, uTemp.Longitude, uTemp.Latitude)
-			////userTab = append(userTab, uTemp)
-			//fmt.Println("DDDDD AVANT ==> ", d, "||")
-			//d = append(d, dis)
-			//fmt.Println("DDDDD APRES ==> ", d, "||")
-			//fmt.Println("USER TAB ==> ", userTab, "||")
+			//fmt.Println("Distance before ==>", d[0].(graph.Node).Properties["distance"], "|")
+			lon := d[0].(graph.Node).Properties["longitude"].(float64)
+			lat := d[0].(graph.Node).Properties["latitude"].(float64)
+			d[0].(graph.Node).Properties["distance"] = Haversine(u.Longitude, u.Latitude, lon, lat)
+			//fmt.Println("Distance after ==>", d[0].(graph.Node).Properties["distance"], "|")
 			g = append(g, d[0].(graph.Node))
 		}
 
-		//fmt.Println("USER TAB ==> ", userTab[0], "||", userTab[1], "||", userTab[2], "||")
-		//for _ , r  := range userTab {
-		//	res, err := json.Marshal(r)
-		//	g = append(g, res.(graph.Node).Properties)
-		//}
-		//g, err := json.Marshal(userTab)
+		sort.Slice(g, func(i, j int) bool {
+			return bestScore(g[i], g[j], u)
+		})
 		return g, err
 	}
 }

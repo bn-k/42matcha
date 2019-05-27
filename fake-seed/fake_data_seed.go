@@ -118,6 +118,8 @@ func newRandomMale() User {
 			time.Date(2017, 01, 01, 00, 00, 00, 00, time.Local)),
 		Ilike:    false,
 		Relation: "none",
+		Distance: 0,
+		OverallRating: 0,
 	}
 }
 
@@ -170,6 +172,7 @@ func newRandomFemale() User {
 		Ilike:    false,
 		Relation: "none",
 		Distance: 0,
+		OverallRating: 0,
 	}
 }
 
@@ -218,7 +221,8 @@ country:{country}, latitude: {latitude},
 longitude:{longitude}, geo_allowed: {geo_allowed},
 online:{online}, rating: {rating},
 email: {email}, access_lvl: 1, last_conn: {last_conn},
-ilike: {ilike}, relation: {relation}, tags: {tags}, distance: {distance}})`
+ilike: {ilike}, relation: {relation}, tags: {tags}, 
+distance: {distance}, overall_rating: {overall_rating}})`
 	st := app.prepareFakeStatement(q)
 	api.ExecuteStatement(st, api.MapOf(u))
 	return

@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
 	"math"
 	"reflect"
 	"strconv"
@@ -31,6 +32,54 @@ func UpdateRating(Id int, Relation string) {
 	return
 }
 
+func interfaceToStringTab(inter []interface{}) []string {
+
+	tagA := make([]string, len(inter))
+	for i, v := range inter {
+		tagA[i] = v.(string)
+	}
+	return tagA
+}
+
+func bestScore(g graph.Node, h graph.Node, u User) bool {
+
+	var score1 = 0
+	var score2 = 0
+
+	tagG := interfaceToStringTab(g.Properties["tags"].([]interface{}))
+	tagH := interfaceToStringTab(h.Properties["tags"].([]interface{}))
+
+	if g.Properties["distance"].(int) < h.Properties["distance"].(int) {
+		score1++
+	} else {
+		score2++
+	}
+	for _, res := range u.Tags {
+		for _, resG := range tagG {
+			if resG == res {
+				score1++
+			}
+		}
+		for _, resH := range tagH {
+			if resH == res {
+				score2++
+			}
+		}
+	}
+	userBirth := time.Now().Sub(u.Birthday)
+	parsed, _ := time.Parse(time.RFC3339Nano, g.Properties["birthday"].(string))
+	fmt.Println("PARSED BIRTH G ==>> ", parsed, "|")
+	gbirth := time.Now().Sub(parsed)
+	parsed, _ = time.Parse(time.RFC3339Nano, h.Properties["birthday"].(string))
+	fmt.Println("PARSED BIRTH H ==>> ", parsed, "|")
+	hbirth := time.Now().Sub(parsed)
+
+	fmt.Println("BIRTH user ==>> ", userBirth, "|")
+	fmt.Println("BIRTH G ==>> ", gbirth, "|")
+	fmt.Println("BIRTH H ==>> ", hbirth, "|")
+	return score1 < score2
+}
+
 func interestQuery(Interest string, Genre string) (Query string) {
 
 	var InvGenre string
@@ -43,11 +92,11 @@ func interestQuery(Interest string, Genre string) (Query string) {
 
 	switch Interest {
 	case "bi":
-		return `((n.interest = "hetero" AND n.genre = "`+ InvGenre +`") OR (n.interest = "homo" AND n.genre = "`+ Genre +`") OR (n.interest = "bi"))`
+		return `((n.interest = "hetero" AND n.genre = "` + InvGenre + `") OR (n.interest = "homo" AND n.genre = "` + Genre + `") OR (n.interest = "bi"))`
 	case "hetero":
-		return `(n.interest = "hetero" OR n.interest = "bi") AND n.genre = "` + InvGenre +`"`
+		return `(n.interest = "hetero" OR n.interest = "bi") AND n.genre = "` + InvGenre + `"`
 	case "homo":
-		return `(n.interest = "homo" OR n.interest = "bi") AND n.genre = "`+ Genre +`"`
+		return `(n.interest = "homo" OR n.interest = "bi") AND n.genre = "` + Genre + `"`
 	}
 	return ""
 }
@@ -117,8 +166,8 @@ func customQuery(Id int, Filter *Filters) (superQuery string) {
 		cQuery = setTagQuery(Filter)
 	}
 
-	superQuery += `MATCH (u:User) WHERE NOT Id(u)= `+ strconv.Itoa(Id) +` AND NOT (u)<-[:BLOCK]-() AND (u.rating >= `+ strconv.Itoa(Filter.Score[0]) +` AND u.rating <= `+ strconv.Itoa(Filter.Score[1]) +`)
-	AND (u.birthday >= "`+ maxAge +`" AND u.birthday <= "`+ minAge +`") `+ cQuery +` RETURN DISTINCT u`
+	superQuery += `MATCH (u:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)<-[:BLOCK]-() AND (u.rating >= ` + strconv.Itoa(Filter.Score[0]) + ` AND u.rating <= ` + strconv.Itoa(Filter.Score[1]) + `)
+	AND (u.birthday >= "` + maxAge + `" AND u.birthday <= "` + minAge + `") ` + cQuery + ` RETURN DISTINCT u`
 	//prin("SUPERQUERY ==> ", superQuery, "|")
 	return
 }
