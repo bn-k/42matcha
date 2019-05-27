@@ -94,7 +94,7 @@ func (app *App) updateUser(u User) {
 	u.longitude = {longitude}, u.geo_allowed = {geo_allowed},
 	u.online = {online}, u.rating = {rating},
 	u.email = {email}, u.access_lvl = {access_lvl},
-	u.tags = {tags},  u.last_conn = {last_conn}`
+	u.tags = {tags},  u.last_conn = {last_conn}, u.tags = {tags} `
 	st := app.PrepareStatement(q)
 	ExecuteStatement(st, MapOf(u))
 	return
@@ -226,9 +226,8 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 	q := interestQuery(u.Interest, u.Genre)
 	//Skip := "SKIP " + strconv.Itoa(Page * 25)
 
-	superQuery := `MATCH (u:User), (n:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)-[]-(n) AND `+ q +` RETURN DISTINCT n ORDER BY n.rating DESC LIMIT 25`
+	superQuery := `MATCH (u:User), (n:User) WHERE Id(u)= ` + strconv.Itoa(Id) + `AND ` + q + ` AND NOT ( (u)-[]->(n) OR (u)<-[:BLOCK]-(n) ) RETURN DISTINCT n ORDER BY n.rating DESC LIMIT 25`
 	fmt.Println("Interest query == > ", superQuery, "|")
-
 	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
 
 	//fmt.Println("DATA ====>>", data[0], "||")

@@ -25,7 +25,7 @@ func (app *App) routerAPI() {
 	}
 	api := app.R.Group("/api")
 	{
-		api.GET("/people/:param", getRecommended)
+		api.GET("/swipe", Recommended)
 		api.PUT("/visit/:id", newVisit)
 		api.POST("/send_token", Forgot)
 		api.PUT("/reset_password", ResetPassword)

@@ -165,7 +165,7 @@ func GetPeople(c *gin.Context) {
 	}
 }
 
-func getRecommended(c *gin.Context) {
+func Recommended(c *gin.Context) {
 	var err error
 	var Page int
 	claims := jwt.MapClaims{}
@@ -179,7 +179,7 @@ func getRecommended(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(202, gin.H{"err": err.Error()})
-	} else if valid == true{
+	} else if valid == true {
 		id := int(claims["id"].(float64))
 		str := strconv.Itoa(id)
 		app.onlineRefresh(str)

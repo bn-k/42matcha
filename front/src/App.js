@@ -20,6 +20,7 @@ import Forgot from './react/forgot'
 import Matchs from './react/matchs'
 import History from './react/history'
 import ResetPassword from './react/reset-password'
+import Swipe from './react/swipe'
 
 const App = () => (
     <Provider store={store}>
@@ -29,6 +30,7 @@ const App = () => (
                 <Switch>
                     <Route exact path="/" component={Entry}/>
                     <PrivateRoute path="/home" component={Home}/>
+                    <PrivateRoute path="/swipe" component={Swipe}/>
                     <PrivateRoute path="/matchs" component={Matchs}/>
                     <PrivateRoute path="/history" component={History}/>
                     <PrivateRoute path="/user" component={User}/>
