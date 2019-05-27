@@ -2,6 +2,7 @@ package main
 
 import (
 	"../back/api"
+	"fmt"
 	"github.com/brianvoe/gofakeit"
 	"github.com/gin-gonic/gin"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
@@ -78,7 +79,7 @@ func newRandomMale() User {
 	interest[2] = "homo"
 	tagtab := make([]string, 2)
 	for i := 0; i < max; i++ {
-		str := gofakeit.Color()
+		str := strings.ToLower(gofakeit.Color())
 		if arrayContain(tagtab, str) == false {
 			tagtab[i] = str
 		}
@@ -132,8 +133,8 @@ func newRandomFemale() User {
 	interest[2] = "homo"
 	tagtab := make([]string, 2)
 	for i := 0; i < max; i++ {
-		str := gofakeit.Color()
-		if arrayContain(tagtab, str) {
+		str := strings.ToLower(gofakeit.Color())
+		if arrayContain(tagtab, str) == false{
 			tagtab[i] = str
 		}
 	}
@@ -168,16 +169,17 @@ func newRandomFemale() User {
 			time.Date(2017, 01, 01, 00, 00, 00, 00, time.Local)),
 		Ilike:    false,
 		Relation: "none",
+		Distance: 0,
 	}
 }
 
 func main() {
 	const max = 260
-
+	fmt.Println("-- STARTING FAKE DATA CREATION --")
 	app.Db, _ = bolt.NewDriverPool("bolt://neo4j:secret@localhost:7687", 1000)
 	app.Neo, _ = app.Db.OpenPool()
 	defer app.Neo.Close()
-	for i := 0; i < max; i++ {
+	for i := 0; i < 1000; i++ {
 		s := gofakeit.Color()
 		s = strings.ToLower(s)
 		app.Neo.QueryNeoAll(`MERGE (t:TAG {key: "`+s+`", text: "#`+strings.Title(s)+`", value: "`+s+`"}) `, nil)
@@ -190,13 +192,13 @@ func main() {
 		app.insertFakeUser(u)
 		AddTagRelation(u)
 	}
-
+	fmt.Println("-- ENDED FAKE DATA CREATION --")
 }
 
 func AddTagRelation(u User) {
 	for i := 0; i < 2; i++ {
 		tag := strings.ToLower(u.Tags[i])
-		q := `MATCH (u:User) WHERE u.username = {username} MATCH (n:TAG) WHERE n.value = "` + tag + `" CREATE (u)-[g:TAGGED]->(n) return n`
+		q := `MATCH (u:User) WHERE u.username = {username} MATCH (n:TAG) WHERE n.value = "` + tag + `" CREATE (u)-[g:TAGGED]->(n)`
 		st := app.prepareFakeStatement(q)
 		api.ExecuteStatement(st, api.MapOf(u))
 	}
@@ -216,7 +218,7 @@ country:{country}, latitude: {latitude},
 longitude:{longitude}, geo_allowed: {geo_allowed},
 online:{online}, rating: {rating},
 email: {email}, access_lvl: 1, last_conn: {last_conn},
-ilike: {ilike}, relation: {relation}, tags: {tags}})`
+ilike: {ilike}, relation: {relation}, tags: {tags}, distance: {distance}})`
 	st := app.prepareFakeStatement(q)
 	api.ExecuteStatement(st, api.MapOf(u))
 	return
