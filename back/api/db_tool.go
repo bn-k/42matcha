@@ -31,6 +31,27 @@ func UpdateRating(Id int, Relation string) {
 	return
 }
 
+func interestQuery(Interest string, Genre string) (Query string) {
+
+	var InvGenre string
+
+	if Genre == "male" {
+		InvGenre = "female"
+	} else {
+		InvGenre = "male"
+	}
+
+	switch Interest {
+	case "bi":
+		return `((n.interest = "hetero" AND n.genre = "`+ InvGenre +`") OR (n.interest = "homo" AND n.genre = "`+ Genre +`") OR (n.interest = "bi"))`
+	case "hetero":
+		return `(n.interest = "hetero" OR n.interest = "bi") AND n.genre = "` + InvGenre +`"`
+	case "homo":
+		return `(n.interest = "homo" OR n.interest = "bi") AND n.genre = "`+ Genre +`"`
+	}
+	return ""
+}
+
 func setInterest(PeopleGenre string, PeopleInterest string, Id int) (valid bool) {
 
 	u, _ := app.getUser(Id, "")
@@ -96,8 +117,8 @@ func customQuery(Id int, Filter *Filters) (superQuery string) {
 		cQuery = setTagQuery(Filter)
 	}
 
-	superQuery += `MATCH (u:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)<-[:BLOCK]-() AND (u.rating >= ` + strconv.Itoa(Filter.Score[0]) + ` AND u.rating <= ` + strconv.Itoa(Filter.Score[1]) + `)
-	AND (u.birthday >= "` + maxAge + `" AND u.birthday <= "` + minAge + `") ` + cQuery + ` RETURN DISTINCT u`
+	superQuery += `MATCH (u:User) WHERE NOT Id(u)= `+ strconv.Itoa(Id) +` AND NOT (u)<-[:BLOCK]-() AND (u.rating >= `+ strconv.Itoa(Filter.Score[0]) +` AND u.rating <= `+ strconv.Itoa(Filter.Score[1]) +`)
+	AND (u.birthday >= "`+ maxAge +`" AND u.birthday <= "`+ minAge +`") `+ cQuery +` RETURN DISTINCT u`
 	//prin("SUPERQUERY ==> ", superQuery, "|")
 	return
 }

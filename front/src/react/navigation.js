@@ -21,30 +21,21 @@ const sendPosition = (type, pos) => {
     })
 };
 
-const Mess = (props) => (
-    <>
-        <Message color={props.color}>
-            <p>
-                {props.text}
-            </p>
-        </Message>
-    </>
-);
-
 class Navigation extends Component {
     constructor(props) {
         super(props);
-        if (props.login.loggedIn && (!props.app.user.name)) {
+        if (props.login.loggedIn && props.app.user.username === null) {
             props.dispatch(userAction(props.app));
         }
     }
+
     componentWillUpdate(nextProps, nextState, nextContext) {
-        if ((!this.props.login.loggedIn && nextProps.login.loggedIn) || !this.props.app.user.name) {
-            // this.props.dispatch(userAction(this.props.app));
+        if (this.props.login.loggedIn && this.props.app.user.username === null) {
+            this.props.dispatch(userAction(this.props.app));
         }
     }
     componentDidMount() {
-        if (navigator.geolocation) {
+        if (navigator.geolocation && this.props.login.loggedIn) {
             navigator.geolocation.getCurrentPosition(this.updatePosition, this.geoDeniedPosition);
         }
     }
@@ -56,19 +47,6 @@ class Navigation extends Component {
             (async () => {
                 sendPosition("ip", await publicIp.v4())
             })();
-        }
-    }
-    error () {
-        if (this.props.app.error) {
-        }
-    }
-    done() {
-        if (this.props.app.done) {
-            return (
-                <>
-                    <Mess color={"green"} text="Success"/>
-                </>
-            )
         }
     }
     render() {
@@ -84,8 +62,6 @@ class Navigation extends Component {
                     <Responsive {...Responsive.onlyComputer}>
                         <Nav buttons={computerButtons}  name={this.props.login.username} icon={"labeled"}/>
                     </Responsive>
-                    {this.done()}
-                    {this.error()}
                 </div>
             )
         } else {

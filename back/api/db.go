@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
 	"strconv"
@@ -208,6 +209,33 @@ func (app *App) dbGetPeople(Id int, Filter *Filters) ([]graph.Node, error) {
 					g = append(g, d[0].(graph.Node))
 				}
 			}
+		}
+		return g, err
+	}
+}
+
+func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
+	var g = make([]graph.Node, 0)
+	var err error
+
+	u, err := app.getUser(Id, "")
+	if err != nil {
+		err = errors.New("User doesn't exist.")
+	}
+	q := interestQuery(u.Interest, u.Genre)
+	Skip := "SKIP " + strconv.Itoa(Page * 25)
+
+	superQuery := `MATCH (u:User), (n:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)-[]-(n) AND `+ q +` RETURN DISTINCT n ORDER BY n.rating DESC `+ Skip +` LIMIT 25`
+	fmt.Println("Interest query == > ", superQuery, "|")
+
+	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
+
+	if len(data) == 0 {
+		err = errors.New("No more recommendation.")
+		return g, err
+	} else {
+		for _, d := range data {
+			g = append(g, d[0].(graph.Node))
 		}
 		return g, err
 	}

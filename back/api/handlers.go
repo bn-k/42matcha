@@ -145,16 +145,46 @@ func GetPeople(c *gin.Context) {
 	valid, err := ValidateToken(c, &claims)
 	json.Unmarshal([]byte(filtersJson), &filters)
 
-	id := int(claims["id"].(float64))
-
 	if err != nil {
 		c.JSON(202, gin.H{"err": err.Error()})
 	} else if valid == true {
+		id := int(claims["id"].(float64))
 		str := strconv.Itoa(id)
 		app.onlineRefresh(str)
 		app.alertOnline(true, str)
 		g, err := app.dbGetPeople(id, &filters)
 		//g = getMatchPeople(g)
+		if err != nil {
+			c.JSON(201, gin.H{"err": err.Error()})
+		} else {
+			UpdateLastConn(id)
+			c.JSON(200, g)
+		}
+	} else {
+		c.JSON(201, gin.H{"err": err.Error()})
+	}
+}
+
+func getRecommended(c *gin.Context) {
+	var err error
+	var Page int
+	claims := jwt.MapClaims{}
+	Page = 2
+	//fmt.Println("STARING PAGE")
+	//if Page, _ := strconv.Atoi(c.Param("page")); Page == 1 {
+	//	fmt.Println("IN PAGE PAGE")
+	//	Page = 0
+	//}
+	valid, err := ValidateToken(c, &claims)
+
+	if err != nil {
+		c.JSON(202, gin.H{"err": err.Error()})
+	} else if valid == true{
+		id := int(claims["id"].(float64))
+		str := strconv.Itoa(id)
+		app.onlineRefresh(str)
+		app.alertOnline(true, str)
+		g, err := app.dbGetRecommended(id, Page)
 		if err != nil {
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {

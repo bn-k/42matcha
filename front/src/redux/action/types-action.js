@@ -13,7 +13,7 @@ export const dislike = 'dislike';
 export const like = 'like';
 export const block = 'block';
 
-
+export const USER_ERROR = 'USER_ERROR';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const ADD_TAG = 'ADD_TAG';
 export const LOAD_USER = 'LOAD_USER';

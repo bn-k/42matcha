@@ -1,4 +1,4 @@
-import {DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE} from "./types-action";
+import {DISABLE_FIELD, ENABLE_FIELD, LOAD_USER, UPDATE_PROFILE, USER_ERROR} from "./types-action";
 import env from "../../env";
 
 export const updateProfileAction = (prev, id, i) => dispatch => {
@@ -63,14 +63,16 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                             res.json().then(json =>{
                                 dispatch({
                                     ...prev,
+                                    type: USER_ERROR,
                                     error: true,
                                     errMessage: json.err,
                                 });
-                                setTimeout(() => {dispatch({
+                                setTimeout(() => { dispatch({
                                     ...prev,
+                                    type: DISABLE_FIELD,
                                     error: false,
                                     done: false,
-                                })}, 2000)
+                                })}, 3000)
                             });
                             break;
                         case 200:
@@ -81,13 +83,7 @@ export const userModifyAction = (prev, body, name) => dispatch => {
                                     user: data.user.Properties,
                                     tagList: data.tagList,
                                     userTags: data.userTags,
-                                    done: true,
                                 });
-                                setTimeout(() => {dispatch({
-                                    ...prev,
-                                    error: false,
-                                    done: false,
-                                })}, 2000)
                             });
                             break;
                         default:

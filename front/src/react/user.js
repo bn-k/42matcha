@@ -13,7 +13,7 @@ import {
     Form,
     Grid,
     Image,
-    Label,
+    Label, Message,
 } from 'semantic-ui-react';
 import {
     disableFieldAction,
@@ -23,12 +23,20 @@ import {
 import {days, genders, interest, months, years} from "./modules/options-dates";
 import AddressForm from './components/address-form';
 
+const errorMessage = {
+    position: "sticky",
+    width: "100%",
+    height: "10vh",
+    zIndex: "10",
+    top: "40px",
+};
+
 const Tags = (props) => {
-    if (props.app.user.userTags) {
+    if (props.app.user.tags) {
         return (
-            props.app.user.userTags.map(tag => (
-                <div key={tag.key}>
-                    <p>{tag.text}</p>
+            props.app.user.tags.map(tag => (
+                <div key={tag}>
+                    <p>#{tag}</p>
                 </div>
             ))
         )
@@ -464,13 +472,12 @@ class User extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.save = this.save.bind(this);
         this.modify = this.modify.bind(this);
-        // props.dispatch(userAction(props.app));
     }
     save = () => {
         this.props.dispatch(userModifyAction(this.props.app, this.state.body, this.state.name, this.handleChange));
     };
     modify = (e, field) => {
-        this.setState({body:{tags: this.state.tags}, name: field});
+        this.setState({body: {tags: this.props.app.user.tags}, name: field});
         if (this.props.app.field === field) {
             this.props.dispatch(disableFieldAction(this.props.app));
         } else {
@@ -496,9 +503,21 @@ class User extends React.Component {
     handleTagChange = (e, data) => {
         this.setState({body: {tags: data.value}});
     };
+    error = (error, message) => {
+        return (error ? <>
+            <div style={errorMessage}>
+                <Message color={'red'}>
+                    <p>
+                        {message}
+                    </p>
+                </Message>
+            </div>
+        </> : null);
+    };
     render () {
         return (
             <>
+                {this.error(this.props.app.error, this.props.app.errMessage)}
                 <Container className={"user"}>
                     <Grid>
                         {fields.map((field) => (
