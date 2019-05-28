@@ -11,7 +11,7 @@ import {
     Icon,
     Image,
 } from 'semantic-ui-react';
-import {getAge, report, timeSince} from "./modules/utils";
+import {distance, getAge, report, timeSince} from "./modules/utils";
 import {peopleAction} from "../redux/action/people-action";
 import {block, dislike, like} from "../redux/action/types-action";
 import env from "../env";
@@ -124,6 +124,9 @@ class Suitor extends React.Component {
                                         <Grid.Column mobile={16} tablet={4} computer={3}>
                                             <Header as={"h4"}>{getAge(profile.birthday)} years</Header>
                                         </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row mobile={16} tablet={16} computer={16}>
+                                        <p>{Math.round(distance(this.props.app.user.latitude, this.props.app.user.longitude, profile.latitude, profile.longitude, "K"))} km</p>
                                     </Grid.Row>
                                     <Grid.Row mobile={16} tablet={16} computer={16}>
                                         <Button.Group fluid>

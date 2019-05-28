@@ -1,4 +1,4 @@
-import {LOAD_PEOPLE, NO_PEOPLE, UPDATE_FILTERS} from './types-action';
+import {LOAD_PEOPLE, NO_PEOPLE, SORT, UPDATE_FILTERS} from './types-action';
 import env from "../../env";
 
 export const peopleAction = (prev, id, action) => dispatch => {
@@ -36,6 +36,14 @@ export const peopleAction = (prev, id, action) => dispatch => {
                 }
             }
         )
+};
+
+export const sortPeople = (people, type, user) => dispatch => {
+    dispatch({
+        ...people,
+        type: type,
+        user: user,
+    })
 };
 
 export const getPeopleAction = (filters, param) => dispatch => {

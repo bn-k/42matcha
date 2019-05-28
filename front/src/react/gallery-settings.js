@@ -10,10 +10,11 @@ import {
 } from 'semantic-ui-react';
 import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import {getPeopleAction, updateFiltersAction} from "../redux/action/people-action";
+import {getPeopleAction, sortPeople, updateFiltersAction} from "../redux/action/people-action";
 import {peoplePreloaded} from "../redux/store/preloaded-state-store";
 import _ from 'lodash';
 import Tooltip from 'rc-tooltip';
+import {SORT_AGE, SORT_LOCALISATION} from "../redux/action/types-action";
 
 const Handle = Slider.Handle;
 const handle = (props, unit) => {
@@ -32,16 +33,19 @@ const handle = (props, unit) => {
 };
 
 const options = [
-    { key: 1, text: 'Choice 1', value: 1 },
-    { key: 2, text: 'Choice 2', value: 2 },
-    { key: 3, text: 'Choice 3', value: 3 },
-]
+    { key: 1, text: 'Age', value: 1 },
+    { key: 2, text: 'Localisation', value: 2 },
+    { key: 3, text: 'Score', value: 3 },
+    { key: 4, text: 'Tags', value: 4 },
+];
+
 class GallerySettings extends React.Component {
     constructor(props) {
         super(props);
         this.zut = this.zut.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
+            sort : null,
             newtag: "",
             tags: []
         };
@@ -61,7 +65,7 @@ class GallerySettings extends React.Component {
                     defaultValue={[this.props.people.filters[name][0], max]}
                     onChange={r => this.zut(r, name)}
                     min={peoplePreloaded.filters[name][0]}
-                    max={peoplePreloaded.filters[name][1]}
+                    max={max}
                     step={step}
                     style={{border: 'black'}}
                     trackStyle={[{ backgroundColor: 'black'}, { backgroundColor: 'black'}]}
@@ -72,6 +76,19 @@ class GallerySettings extends React.Component {
             </Grid.Column>
         )
     }
+    handleSortChange = (e, data) => {
+        this.setState({sort: data.value});
+        switch (data.value) {
+            case 1:
+                this.props.dispatch(sortPeople(this.props.people, SORT_AGE, this.props.app.user));
+                break;
+            case 2:
+                this.props.dispatch(sortPeople(this.props.people, SORT_LOCALISATION, this.props.app.user));
+                break;
+            default:
+                break;
+        }
+    };
     handleTagsChange = (e, data) => {
         let filters = this.props.people.filters;
         filters[data.name] = data.value;
@@ -94,7 +111,7 @@ class GallerySettings extends React.Component {
                         </Grid.Column>
                         {this.intervalCol("age", 1, "years", this.props.people.filters["age"][1])}
                         {this.intervalCol("score", 1, "", this.props.people.filters["score"][1])}
-                        {this.intervalCol("location", 50, "km", 50)}
+                        {this.intervalCol("location", 10, "km", 1000)}
                     </Grid.Row>
                     <Header as={'h4'}>Tags</Header>
                     <Grid.Row columns={3}>
@@ -122,6 +139,8 @@ class GallerySettings extends React.Component {
                                 <Dropdown
                                     clearable
                                     options={options}
+                                    value={this.state.sort}
+                                    onChange={this.handleSortChange}
                                 />
                             </Grid.Row>
                         </Grid.Column>

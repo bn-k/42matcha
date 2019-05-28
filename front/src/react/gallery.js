@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
-import {getAge} from "./modules/utils";
+import {distance, getAge} from "./modules/utils";
 import {
     Segment,
     Container,
@@ -52,6 +52,7 @@ class Gallery extends Component {
                         <Card.Meta>
                             <span className='date'>{getAge(person.Properties.birthday)}</span>
                             <p>{person.Properties.firstname} {person.Properties.lastname}</p>
+                            <p>{Math.round(distance(this.props.app.user.latitude, this.props.app.user.longitude, person.Properties.latitude, person.Properties.longitude, "K"))} km</p>
                         </Card.Meta>
                     </Card.Content>
                 </Card>
