@@ -54,6 +54,7 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 	} else {
 		score2++
 	}
+
 	for _, res := range u.Tags {
 		for _, resG := range tagG {
 			if resG == res {
@@ -67,7 +68,67 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 		}
 	}
 
-	return score1 < score2
+	parsedG, _ := time.Parse(time.RFC3339Nano, g.Properties["birthday"].(string))
+	parsedH, _ := time.Parse(time.RFC3339Nano, h.Properties["birthday"].(string))
+	ageU := Age(u.Birthday)
+	ageG := absInt(ageU - Age(parsedG))
+	ageH := absInt(ageU - Age(parsedH))
+
+	if ageG < ageH {
+		score1++
+	} else if ageG > ageH {
+		score2++
+	}
+
+	fmt.Println()
+	return score1 > score2
+
+}
+
+func absInt(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func AgeAt(birthDate time.Time, now time.Time) int {
+	years := now.Year() - birthDate.Year()
+
+	birthDay := getAdjustedBirthDay(birthDate, now)
+	if now.YearDay() < birthDay {
+		years -= 1
+	}
+
+	return years
+}
+
+func Age(birthDate time.Time) int {
+	return AgeAt(birthDate, time.Now())
+}
+
+func getAdjustedBirthDay(birthDate time.Time, now time.Time) int {
+	birthDay := birthDate.YearDay()
+	currentDay := now.YearDay()
+	if isLeap(birthDate) && !isLeap(now) && birthDay >= 60 {
+		return birthDay - 1
+	}
+	if isLeap(now) && !isLeap(birthDate) && currentDay >= 60 {
+		return birthDay + 1
+	}
+	return birthDay
+}
+
+func isLeap(date time.Time) bool {
+	year := date.Year()
+	if year%400 == 0 {
+		return true
+	} else if year%100 == 0 {
+		return false
+	} else if year%4 == 0 {
+		return true
+	}
+	return false
 }
 
 func interestQuery(Interest string, Genre string) (Query string) {
@@ -147,17 +208,17 @@ func setInterest(PeopleGenre string, PeopleInterest string, Id int) (valid bool)
 }
 
 func customQuery(Id int, Filter *Filters) (superQuery string) {
-	var cQuery string
+	var tagQuery string
 
 	minAge := ageConvert(Filter.Age[0])
 	maxAge := ageConvert(Filter.Age[1])
 
 	if len(Filter.Tags) > 0 {
-		cQuery = setTagQuery(Filter)
+		tagQuery = setTagQuery(Filter)
 	}
 
 	superQuery += `MATCH (u:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)<-[:BLOCK]-() AND (u.rating >= ` + strconv.Itoa(Filter.Score[0]) + ` AND u.rating <= ` + strconv.Itoa(Filter.Score[1]) + `)
-	AND (u.birthday >= "` + maxAge + `" AND u.birthday <= "` + minAge + `") ` + cQuery + ` RETURN DISTINCT u`
+	AND (u.birthday >= "` + maxAge + `" AND u.birthday <= "` + minAge + `") ` + tagQuery + ` RETURN DISTINCT u`
 	//prin("SUPERQUERY ==> ", superQuery, "|")
 	return
 }

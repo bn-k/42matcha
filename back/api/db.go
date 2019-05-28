@@ -228,7 +228,7 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 
 	q := interestQuery(u.Interest, u.Genre)
 	//Skip := "SKIP " + strconv.Itoa(Page * 25)
-	superQuery := `MATCH (u:User), (n:User) WHERE Id(u)= ` + strconv.Itoa(Id) + ` AND ` + q + ` AND NOT ( (u)-[]->(n) OR (u)<-[:BLOCK]-(n) ) RETURN DISTINCT n ORDER BY n.rating DESC LIMIT 25`
+	superQuery := `MATCH (u:User), (n:User) WHERE Id(u)= ` + strconv.Itoa(Id) + ` AND NOT Id(n)= ` + strconv.Itoa(Id) + ` AND ` + q + ` AND NOT ( (u)-[]->(n) OR (u)<-[:BLOCK]-(n) ) RETURN DISTINCT n ORDER BY n.rating DESC`
 	fmt.Println("Interest query == > ", superQuery, "|")
 
 	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
