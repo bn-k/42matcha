@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -40,11 +41,10 @@ func createRelation(c *gin.Context) {
 	claims := jwt.MapClaims{}
 	valid, err := ValidateToken(c, &claims)
 
-	id := int(claims["id"].(float64))
-	UpdateLastConn(id)
-
 	if valid == true {
 		var m Match
+		id := int(claims["id"].(float64))
+		UpdateLastConn(id)
 		m.idTo, _ = strconv.Atoi(c.Param("id"))
 		m.action = strings.ToUpper(c.Param("action"))
 		m.idFrom = id
@@ -60,8 +60,15 @@ func createRelation(c *gin.Context) {
 }
 
 func ValidateToken(c *gin.Context, claims jwt.Claims) (valid bool, err error) {
+
+	if claims == nil {
+		err := errors.New("error : Invalide token")
+		c.JSON(201, gin.H{"err": err.Error()})
+		return false, err
+	}
+
 	tokenString := c.Request.Header["Authorization"][0]
-	fmt.Println("token: ",tokenString)
+	fmt.Println("token: ", tokenString)
 
 	_, err = jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(HashKey), nil
@@ -73,7 +80,7 @@ func ValidateToken(c *gin.Context, claims jwt.Claims) (valid bool, err error) {
 		return true, err
 	}
 	return false, err
-	}
+}
 
 func Next(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
@@ -195,6 +202,32 @@ func Recommended(c *gin.Context) {
 		}
 	} else {
 		fmt.Println("2", err)
+		c.JSON(201, gin.H{"err": err.Error()})
+	}
+}
+
+func ReportHandler(c *gin.Context) {
+	fmt.Println("IN report HANDLER")
+	claims := jwt.MapClaims{}
+	valid, err := ValidateToken(c, &claims)
+
+	if valid == true {
+		fmt.Println("TOKEN VALIDATED")
+		id := int(claims["id"].(float64))
+		u, err := app.getUser(id, "")
+		if err != nil {
+			c.JSON(201, gin.H{"err": err.Error()})
+			return
+		}
+		username := c.Param("username")
+		message := "The following user has been reported by " + u.Username + " : "
+		UpdateLastConn(id)
+		if err = SendReportmail("Report User", username, "camagru4422@gmail.com", message); err != nil {
+			c.JSON(201, gin.H{"err": err.Error()})
+		} else {
+			c.JSON(200, nil)
+		}
+	} else {
 		c.JSON(201, gin.H{"err": err.Error()})
 	}
 }

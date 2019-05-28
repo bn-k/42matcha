@@ -55,6 +55,12 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 		score2++
 	}
 
+	if g.Properties["rating"].(float64) > h.Properties["rating"].(float64) {
+		score1++
+	} else {
+		score2++
+	}
+
 	for _, res := range u.Tags {
 		for _, resG := range tagG {
 			if resG == res {
@@ -219,18 +225,18 @@ func customQuery(Id int, Filter *Filters) (superQuery string) {
 
 	superQuery += `MATCH (u:User) WHERE NOT Id(u)= ` + strconv.Itoa(Id) + ` AND NOT (u)<-[:BLOCK]-() AND (u.rating >= ` + strconv.Itoa(Filter.Score[0]) + ` AND u.rating <= ` + strconv.Itoa(Filter.Score[1]) + `)
 	AND (u.birthday >= "` + maxAge + `" AND u.birthday <= "` + minAge + `") ` + tagQuery + ` RETURN DISTINCT u`
-	//prin("SUPERQUERY ==> ", superQuery, "|")
+	fmt.Println("SUPERQUERY ==> ", superQuery, "|")
 	return
 }
 
 func setTagQuery(Filter *Filters) (customQuery string) {
 
-	customQuery = `MATCH (t:TAG)-[]-(u) WHERE `
+	customQuery = `MATCH (u:User) WHERE '`
 	for i, tag := range Filter.Tags {
 		if i == 0 {
-			customQuery += `t.value='` + tag + `' `
+			customQuery += tag + `' IN u.tags`
 		} else {
-			customQuery += `OR t.value='` + tag + `' `
+			customQuery += ` AND '` + tag + `' IN u.tags`
 		}
 	}
 	return
