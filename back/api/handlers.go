@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -60,8 +61,15 @@ func createRelation(c *gin.Context) {
 }
 
 func ValidateToken(c *gin.Context, claims jwt.Claims) (valid bool, err error) {
+
+	if claims == nil {
+		err := errors.New("error : Invalide token")
+		c.JSON(201, gin.H{"err": err.Error()})
+		return false, err
+	}
+
 	tokenString := c.Request.Header["Authorization"][0]
-	fmt.Println("token: ",tokenString)
+	fmt.Println("token: ", tokenString)
 
 	_, err = jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(HashKey), nil
@@ -73,7 +81,7 @@ func ValidateToken(c *gin.Context, claims jwt.Claims) (valid bool, err error) {
 		return true, err
 	}
 	return false, err
-	}
+}
 
 func Next(c *gin.Context) {
 	c.Header("Content-Type", "application/json")

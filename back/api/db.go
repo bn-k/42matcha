@@ -213,6 +213,9 @@ func (app *App) dbGetPeople(Id int, Filter *Filters) ([]graph.Node, error) {
 				}
 			}
 		}
+		if len(g) < 20 {
+			fmt.Println("G ==== > ", g, " LEN G ==>", len(g), "|")
+		}
 		return g, err
 	}
 }

@@ -86,10 +86,17 @@ func (req Request) updatePosition() {
 		req.user.Latitude = req.body["position"].(map[string]interface{})["lat"].(float64)
 		req.user.Longitude = req.body["position"].(map[string]interface{})["long"].(float64)
 		app.updateUser(req.user)
+	} else {
+		err := errors.New("error : Can't update user position")
+		req.context.JSON(201, gin.H{"err": err.Error()})
 	}
 	retUser(req)
 }
 func (req Request) updateLocation() {
+	if req.body["position"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 
 	pos := req.body["position"]
 	req.user.Latitude = pos.(map[string]interface{})["Latitude"].(float64)
@@ -98,6 +105,18 @@ func (req Request) updateLocation() {
 	retUser(req)
 }
 func (req Request) updateBirthday() {
+	if req.body["day"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
+	if req.body["month"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
+	if req.body["year"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 	day := strconv.FormatInt(int64(req.body["day"].(float64)), 10)
 	month := strconv.FormatInt(int64(req.body["month"].(float64)), 10)
 	year := strconv.FormatInt(int64(req.body["year"].(float64)), 10)
@@ -116,8 +135,11 @@ func (req Request) updateBirthday() {
 }
 
 func (req Request) updateBio() {
+	if req.body["biography"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 	bio := req.body["biography"].(string)
-
 	if len(bio) > 250 || len(bio) < 10 {
 		err := errors.New("error : your biography must be between 10 and 250 characters")
 		req.context.JSON(201, gin.H{"err": err.Error()})
@@ -129,6 +151,10 @@ func (req Request) updateBio() {
 }
 
 func (req Request) checkPassword() error {
+	if req.body["old_password"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 	pass := req.body["old_password"].(string)
 	truePass := Decrypt(HashKey, req.user.Password)
 	if pass != truePass {
@@ -139,6 +165,10 @@ func (req Request) checkPassword() error {
 }
 
 func (req Request) updateUsername() {
+	if req.body["new_username"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 	newUsername := req.body["new_username"].(string)
 	if err := req.checkPassword(); err != nil {
 		req.context.JSON(201, gin.H{"err": err.Error()})
@@ -153,6 +183,10 @@ func (req Request) updateUsername() {
 }
 
 func (req Request) updateGenre() {
+	if req.body["genre"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 	genre := req.body["genre"].(string)
 	req.user.Genre = genre
 	app.updateUser(req.user)
@@ -160,6 +194,10 @@ func (req Request) updateGenre() {
 }
 
 func (req Request) updateInterest() {
+	if req.body["interest"] == nil {
+		err := errors.New("error : Your selection is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 	interest := req.body["interest"].(string)
 	req.user.Interest = interest
 	app.updateUser(req.user)
@@ -168,6 +206,10 @@ func (req Request) updateInterest() {
 
 func (req Request) addNewTag() {
 	var Tags Tag
+	if req.body["tag"] == nil {
+		err := errors.New("error : The form is empty")
+		req.context.JSON(201, gin.H{"err": err.Error()})
+	}
 
 	Tags.Value = req.body["tag"].(string)
 	if len(Tags.Value) < 1 || len(Tags.Value) > 20 {

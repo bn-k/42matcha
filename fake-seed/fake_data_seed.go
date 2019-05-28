@@ -85,8 +85,8 @@ func newRandomMale() User {
 		}
 	}
 
-	Latitude, _ := gofakeit.LatitudeInRange(42.490627, 50.264989)
-	Longitude, _ := gofakeit.LongitudeInRange(-3.396493, 9.517944)
+	Latitude, _ := gofakeit.LatitudeInRange(42.490627, 48.264989)
+	Longitude, _ := gofakeit.LongitudeInRange(-3.396493, 7.517944)
 	return User{Username: gofakeit.Username(),
 		Password:  api.Encrypt(api.HashKey, "'"),
 		FirstName: f.FirstName,
@@ -98,11 +98,11 @@ func newRandomMale() User {
 		Img4:      gofakeit.ImageURL(300, 300),
 		Img5:      gofakeit.ImageURL(300, 300),
 		Biography: gofakeit.Paragraph(1, 4, 10, " "),
-		Birthday: gofakeit.DateRange(time.Date(1900, 01, 01, 00, 00, 00, 00, time.UTC),
+		Birthday: gofakeit.DateRange(time.Date(1965, 01, 01, 00, 00, 00, 00, time.UTC),
 			time.Date(2000, 01, 01, 00, 00, 00, 00, time.UTC)),
 		Genre:      "male",
 		Interest:   gofakeit.RandString(interest),
-		AccessLvl:  1,
+		AccessLvl:  2,
 		Online:     gofakeit.Bool(),
 		Rating:     gofakeit.Number(0, 100),
 		City:       gofakeit.City(),
@@ -111,11 +111,11 @@ func newRandomMale() User {
 		Latitude:   Latitude,
 		Longitude:  Longitude,
 		GeoAllowed: gofakeit.Bool(),
-		CreatedAt: gofakeit.DateRange(time.Date(1900, 01, 01, 00, 00, 00, 00, time.Local),
-			time.Date(2017, 01, 01, 00, 00, 00, 00, time.Local)),
+		CreatedAt: gofakeit.DateRange(time.Date(1995, 01, 01, 00, 00, 00, 00, time.Local),
+			time.Date(2019, 05, 25, 00, 00, 00, 00, time.Local)),
 		Tags: tagtab,
 		LastConn: gofakeit.DateRange(time.Date(2016, 01, 01, 00, 00, 00, 00, time.Local),
-			time.Date(2017, 01, 01, 00, 00, 00, 00, time.Local)),
+			time.Date(2019, 05, 25, 00, 00, 00, 00, time.Local)),
 		Ilike:    false,
 		Relation: "none",
 		Distance: 0,
@@ -124,8 +124,8 @@ func newRandomMale() User {
 }
 
 func newRandomFemale() User {
-	Latitude, _ := gofakeit.LatitudeInRange(42.490627, 50.264989)
-	Longitude, _ := gofakeit.LongitudeInRange(-3.396493, 9.517944)
+	Latitude, _ := gofakeit.LatitudeInRange(42.490627, 48.264989)
+	Longitude, _ := gofakeit.LongitudeInRange(-3.396493, 7.517944)
 	var f *gofakeit.PersonInfo
 	max := 2
 	f = gofakeit.Person()
@@ -151,11 +151,11 @@ func newRandomFemale() User {
 		Img4:      gofakeit.ImageURL(300, 300),
 		Img5:      gofakeit.ImageURL(300, 300),
 		Biography: gofakeit.Paragraph(1, 4, 10, " "),
-		Birthday: gofakeit.DateRange(time.Date(1900, 01, 01, 00, 00, 00, 00, time.UTC),
+		Birthday: gofakeit.DateRange(time.Date(1965, 01, 01, 00, 00, 00, 00, time.UTC),
 			time.Date(2000, 01, 01, 00, 00, 00, 00, time.UTC)),
 		Genre:      "female",
 		Interest:   gofakeit.RandString(interest),
-		AccessLvl:  1,
+		AccessLvl:  2,
 		Online:     gofakeit.Bool(),
 		Rating:     gofakeit.Number(0, 100),
 		City:       gofakeit.City(),
@@ -164,11 +164,11 @@ func newRandomFemale() User {
 		Latitude:   Latitude,
 		Longitude:  Longitude,
 		GeoAllowed: gofakeit.Bool(),
-		CreatedAt: gofakeit.DateRange(time.Date(1900, 01, 01, 00, 00, 00, 00, time.Local),
-			time.Date(2017, 01, 01, 00, 00, 00, 00, time.Local)),
+		CreatedAt: gofakeit.DateRange(time.Date(1995, 01, 01, 00, 00, 00, 00, time.Local),
+			time.Date(2019, 05, 25, 00, 00, 00, 00, time.Local)),
 		Tags: tagtab,
 		LastConn: gofakeit.DateRange(time.Date(2016, 01, 01, 00, 00, 00, 00, time.Local),
-			time.Date(2017, 01, 01, 00, 00, 00, 00, time.Local)),
+			time.Date(2019, 05, 25, 00, 00, 00, 00, time.Local)),
 		Ilike:    false,
 		Relation: "none",
 		Distance: 0,
