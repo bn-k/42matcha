@@ -50,6 +50,7 @@ class Profile extends React.Component {
                 }
             })
         }
+        this.report = this.report.bind(this);
         this.dislike = this.dislike.bind(this);
         this.like = this.like.bind(this);
         this.block= this.block.bind(this);
@@ -72,6 +73,9 @@ class Profile extends React.Component {
         if(this.state.socket) {
             this.state.socket.close()
         }
+    }
+    report (e, username) {
+        report(username)
     }
     dislike = () => {
         this.props.dispatch(peopleAction(this.props.people, this.props.people.data[this.props.app.i].NodeIdentity, dislike));
@@ -178,7 +182,7 @@ class Profile extends React.Component {
                         </Grid.Column>
                     </Grid>
                     <Segment>
-                        <Button onClick={report(profile.username)} fluid color={"red"} >Signaler le profil</Button>
+                        <Button onClick={e => this.report(e, profile.username)} fluid color={"red"} >Signaler le profil</Button>
                     </Segment>
                 </Container>
             ):(null)

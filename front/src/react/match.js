@@ -40,6 +40,7 @@ class Suitor extends React.Component {
         this.dislike = this.dislike.bind(this);
         this.like = this.like.bind(this);
         this.block= this.block.bind(this);
+        this.report = this.report.bind(this);
     }
     componentDidMount() {
         const url = "ws://localhost:8181/api/online/websocket/" + this.props.suitor.NodeIdentity;
@@ -79,6 +80,9 @@ class Suitor extends React.Component {
     block = () => {
         this.action(this.props.suitor.NodeIdentity, block)
     };
+    report (e, username) {
+        report(username)
+    }
     render () {
         const profile = this.props.suitor.Properties;
         return (
@@ -169,7 +173,7 @@ class Suitor extends React.Component {
                         </Grid.Column>
                     </Grid>
                     <Segment>
-                        <Button onClick={report(profile.username)} fluid color={"red"} >Signaler le profil</Button>
+                        <Button onClick={e => this.report(e, profile.username)} fluid color={"red"} >Signaler le profil</Button>
                     </Segment>
                 </Container>
             ):(null)
