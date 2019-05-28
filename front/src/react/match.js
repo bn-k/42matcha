@@ -11,7 +11,7 @@ import {
     Icon,
     Image,
 } from 'semantic-ui-react';
-import {getAge, timeSince} from "./modules/utils";
+import {getAge, report, timeSince} from "./modules/utils";
 import {peopleAction} from "../redux/action/people-action";
 import {block, dislike, like} from "../redux/action/types-action";
 import env from "../env";
@@ -169,7 +169,7 @@ class Suitor extends React.Component {
                         </Grid.Column>
                     </Grid>
                     <Segment>
-                        <Button fluid color={"red"} >Signaler le profil</Button>
+                        <Button onClick={report(profile.username)} fluid color={"red"} >Signaler le profil</Button>
                     </Segment>
                 </Container>
             ):(null)

@@ -1,3 +1,5 @@
+import env from "../../env";
+
 export const getAge = (iso) =>  {
     const dateold = new Date(iso);
     const datenew = new Date();
@@ -17,6 +19,16 @@ export const getAge = (iso) =>  {
         }
     }
     return diff;
+};
+
+export const report = (username) => {
+    let init = {
+        method: 'POST',
+        headers:{
+            'Authorization': localStorage.getItem('jwt'),
+        }
+    };
+    fetch(env.api + '/report/' + username, init)
 };
 
 export function timeSince(date) {

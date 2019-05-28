@@ -63,6 +63,7 @@ const Swipe = (props) => {
     };
     const suitor = array[index];
     if (end && array.length === index) {
+        console.log(end, array, index);
         return (
             <Segment>
                 <Header>Sorry, we have nobody to recommend to you...</Header>

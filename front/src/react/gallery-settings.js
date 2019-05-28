@@ -89,10 +89,12 @@ class GallerySettings extends React.Component {
             <Segment>
                 <Grid>
                     <Grid.Row columns={4}>
+                        <Grid.Column style={{paddingTop: "4px"}} mobile={16} tablet={16} computer={1}>
+                            <Button fluid onClick={this.props.toggle}><Icon link name='close' /></Button>
+                        </Grid.Column>
                         {this.intervalCol("age", 1, "years", this.props.people.filters["age"][1])}
                         {this.intervalCol("score", 1, "", this.props.people.filters["score"][1])}
                         {this.intervalCol("location", 50, "km", 50)}
-                        <Button onClick={this.props.toggle}><Icon link name='close' /></Button>
                     </Grid.Row>
                     <Header as={'h4'}>Tags</Header>
                     <Grid.Row columns={3}>

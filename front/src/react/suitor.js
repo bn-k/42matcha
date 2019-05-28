@@ -11,7 +11,7 @@ import {
     Icon,
     Image,
 } from 'semantic-ui-react';
-import {getAge, timeSince} from "./modules/utils";
+import {getAge, report, timeSince} from "./modules/utils";
 import {peopleAction} from "../redux/action/people-action";
 import {block, dislike, like} from "../redux/action/types-action";
 import env from "../env";
@@ -89,17 +89,17 @@ class Suitor extends React.Component {
                         <Grid.Column mobile={16} tablet={16} computer={16}>
                             <Segment>
                                 <Grid>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={4} tablet={1} computer={2}>
+                                        <Button onClick={this.props.toggle}><Icon name={'search'}/></Button>
+                                    </Grid.Column>
                                     <Grid.Column style={{padding: "3px"}} mobile={16} tablet={6} computer={5}>
                                         <p>{profile.ilike ? "Vous a déjà liké" : ""}</p>
                                     </Grid.Column>
                                     <Grid.Column  style={{padding: "3px"}} mobile={16} tablet={6} computer={5}>
                                         <Header as={"h3"}>Score {profile.rating}/100</Header>
                                     </Grid.Column>
-                                    <Grid.Column  style={{padding: "3px"}} mobile={15} tablet={3} computer={4}>
+                                    <Grid.Column  style={{padding: "3px"}} mobile={12} tablet={3} computer={4}>
                                         <Online online={profile.online} lastConn={profile.last_conn}/>
-                                    </Grid.Column>
-                                    <Grid.Column  style={{padding: "3px"}} mobile={1} tablet={1} computer={2}>
-                                        <Button onClick={this.props.toggle}>Search</Button>
                                     </Grid.Column>
                                 </Grid>
                             </Segment>
@@ -176,7 +176,7 @@ class Suitor extends React.Component {
                         </Grid.Column>
                     </Grid>
                     <Segment>
-                        <Button fluid color={"red"} >Signaler le profil</Button>
+                        <Button onClick={report(profile.username)} fluid color={"red"} >Signaler le profil</Button>
                     </Segment>
                 </Container>
             ):(null)
