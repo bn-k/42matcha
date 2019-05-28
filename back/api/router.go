@@ -35,6 +35,7 @@ func (app *App) routerAPI() {
 		api.GET("/matchs", GetMatchs)
 		api.GET("/messages", GetMessages)
 		api.GET("/user", UserHandler)
+		api.POST("/report/:username", ReportHandler)
 		api.PUT("/user/:name", UserModify)
 		api.POST("/img/:n", userImageHandler)
 		api.GET("/events/history/:user", getHistoryHandler)

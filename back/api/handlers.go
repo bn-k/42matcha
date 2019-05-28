@@ -41,11 +41,10 @@ func createRelation(c *gin.Context) {
 	claims := jwt.MapClaims{}
 	valid, err := ValidateToken(c, &claims)
 
-	id := int(claims["id"].(float64))
-	UpdateLastConn(id)
-
 	if valid == true {
 		var m Match
+		id := int(claims["id"].(float64))
+		UpdateLastConn(id)
 		m.idTo, _ = strconv.Atoi(c.Param("id"))
 		m.action = strings.ToUpper(c.Param("action"))
 		m.idFrom = id
@@ -203,6 +202,32 @@ func Recommended(c *gin.Context) {
 		}
 	} else {
 		fmt.Println("2", err)
+		c.JSON(201, gin.H{"err": err.Error()})
+	}
+}
+
+func ReportHandler(c *gin.Context) {
+	fmt.Println("IN report HANDLER")
+	claims := jwt.MapClaims{}
+	valid, err := ValidateToken(c, &claims)
+
+	if valid == true {
+		fmt.Println("TOKEN VALIDATED")
+		id := int(claims["id"].(float64))
+		u, err := app.getUser(id, "")
+		if err != nil {
+			c.JSON(201, gin.H{"err": err.Error()})
+			return
+		}
+		username := c.Param("username")
+		message := "The following user has been reported by " + u.Username + " : "
+		UpdateLastConn(id)
+		if err = SendReportmail("Report User", username, "camagru4422@gmail.com", message); err != nil {
+			c.JSON(201, gin.H{"err": err.Error()})
+		} else {
+			c.JSON(200, nil)
+		}
+	} else {
 		c.JSON(201, gin.H{"err": err.Error()})
 	}
 }

@@ -12,6 +12,113 @@ import (
 	"strconv"
 )
 
+func SendReportmail(Title, username, email, Message string) error {
+	smtpHost := "smtp.gmail.com"
+	smtpPort := 587
+	smtpLogin := "camagru4422@gmail.com"
+	smtpPasswd := "42istheanswer"
+
+	templateData := struct {
+		Name    string
+		Message string
+		URL     string
+	}{
+		Name:    username,
+		Message: Message,
+		URL:     "http://localhost:8080/",
+	}
+
+	from := mail.Address{"", smtpLogin}
+	to := mail.Address{username, email}
+	title := Title
+	body, err := ParseTemplate("./api/utils/report_user.html", templateData)
+	if err != nil {
+		return err
+	}
+
+	useTls := false
+	useStartTls := true
+
+	header := make(map[string]string)
+	header["From"] = "matcha@42.fr"
+	header["To"] = to.String()
+	header["Subject"] = title
+	header["MIME-Version"] = "1.0"
+	header["Content-Type"] = "text/html; charset=\"utf-8\""
+	header["Content-Transfer-Encoding"] = "base64"
+
+	message := ""
+	for k, v := range header {
+		message += fmt.Sprintf("%s: %s\r\n", k, v)
+	}
+	message += "\r\n" + base64.StdEncoding.EncodeToString([]byte(body))
+
+	conn, err := net.Dial("tcp", smtpHost+":"+strconv.Itoa(smtpPort))
+	if err != nil {
+		return err
+	}
+
+	// TLS
+	tlsconfig := &tls.Config{
+		InsecureSkipVerify: true,
+		ServerName:         smtpHost,
+	}
+
+	if useTls {
+		conn = tls.Client(conn, tlsconfig)
+	}
+
+	client, err := smtp.NewClient(conn, smtpHost)
+	if err != nil {
+		return err
+	}
+
+	hasStartTLS, _ := client.Extension("STARTTLS")
+	if useStartTls && hasStartTLS {
+		if err = client.StartTLS(tlsconfig); err != nil {
+			return err
+		}
+	}
+
+	auth := smtp.PlainAuth(
+		"",
+		smtpLogin,
+		smtpPasswd,
+		smtpHost,
+	)
+
+	if ok, _ := client.Extension("AUTH"); ok {
+		if err := client.Auth(auth); err != nil {
+			return err
+		}
+	}
+
+	if err := client.Mail(from.Address); err != nil {
+		return err
+	}
+
+	if err := client.Rcpt(to.Address); err != nil {
+		return err
+	}
+
+	w, err := client.Data()
+	if err != nil {
+		return err
+	}
+
+	_, err = w.Write([]byte(message))
+	if err != nil {
+		return err
+	}
+
+	err = w.Close()
+	if err != nil {
+		return err
+	}
+	client.Quit()
+	return nil
+}
+
 func SendEmail(Title, username, email, Message string) error {
 	smtpHost := "smtp.gmail.com"
 	smtpPort := 587

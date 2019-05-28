@@ -106,15 +106,15 @@ func (req Request) updateLocation() {
 }
 func (req Request) updateBirthday() {
 	if req.body["day"] == nil {
-		err := errors.New("error : The form is empty")
+		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
 	}
 	if req.body["month"] == nil {
-		err := errors.New("error : The form is empty")
+		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
 	}
 	if req.body["year"] == nil {
-		err := errors.New("error : The form is empty")
+		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
 	}
 	day := strconv.FormatInt(int64(req.body["day"].(float64)), 10)
@@ -195,7 +195,7 @@ func (req Request) updateGenre() {
 
 func (req Request) updateInterest() {
 	if req.body["interest"] == nil {
-		err := errors.New("error : Your selection is empty")
+		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
 	}
 	interest := req.body["interest"].(string)
