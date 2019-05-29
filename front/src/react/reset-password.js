@@ -52,12 +52,15 @@ class ResetPassword extends React.Component {
                     });
                 }
             });
+        setTimeout(() => {
+            this.setState({done: false, error: false})
+        }, 3000)
     };
     handleChange = (e, data) => {
         this.setState({[data.name]: data.value});
     };
     error () {
-        if (this.props.app.error) {
+        if (this.state.error) {
             return (
                 <>
                     <Mess color={"red"} text={this.state.msg}/>
@@ -66,7 +69,7 @@ class ResetPassword extends React.Component {
         }
     }
     done() {
-            if (this.props.app.done) {
+        if (this.state.done) {
             return (
                 <>
                     <Mess color={"green"} text={"Password has been changed"}/>

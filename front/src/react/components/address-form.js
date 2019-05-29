@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Button, Container, Divider, Grid, Input, Message} from "semantic-ui-react";
 import Mapp from "./map";
-import env from "../../env";
 
 const joinPlus = (s1, s2) => {
     if (s1 === '') {

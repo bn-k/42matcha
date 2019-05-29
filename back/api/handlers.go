@@ -68,8 +68,6 @@ func ValidateToken(c *gin.Context, claims jwt.Claims) (valid bool, err error) {
 	}
 
 	tokenString := c.Request.Header["Authorization"][0]
-	fmt.Println("token: ", tokenString)
-
 	_, err = jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(HashKey), nil
 	})
@@ -149,9 +147,10 @@ func GetPeople(c *gin.Context) {
 
 	filters := Filters{}
 	claims := jwt.MapClaims{}
-
 	valid, err := ValidateToken(c, &claims)
+
 	json.Unmarshal([]byte(filtersJson), &filters)
+	fmt.Print("Filters: ==> ", filters)
 
 	if err != nil {
 		c.JSON(202, gin.H{"err": err.Error()})

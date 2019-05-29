@@ -14,7 +14,7 @@ import {getPeopleAction, sortPeople, updateFiltersAction} from "../redux/action/
 import {peoplePreloaded} from "../redux/store/preloaded-state-store";
 import _ from 'lodash';
 import Tooltip from 'rc-tooltip';
-import {SORT_AGE, SORT_LOCALISATION} from "../redux/action/types-action";
+import {SORT_AGE, SORT_LOCALISATION, SORT_SCORE, SORT_TAGS} from "../redux/action/types-action";
 
 const Handle = Slider.Handle;
 const handle = (props, unit) => {
@@ -56,6 +56,7 @@ class GallerySettings extends React.Component {
         filters[name] = r;
     }
     intervalCol(name, step, unit, max) {
+        console.log(name, max);
         return (
             <Grid.Column mobile={16} tablet={16} computer={5}>
                 <Header as={'h4'}>{_.startCase(name)}</Header>
@@ -85,6 +86,12 @@ class GallerySettings extends React.Component {
             case 2:
                 this.props.dispatch(sortPeople(this.props.people, SORT_LOCALISATION, this.props.app.user));
                 break;
+            case 3:
+                this.props.dispatch(sortPeople(this.props.people, SORT_SCORE, this.props.app.user));
+                break;
+            case 4:
+                this.props.dispatch(sortPeople(this.props.people, SORT_TAGS, this.props.app.user));
+                break;
             default:
                 break;
         }
@@ -97,6 +104,7 @@ class GallerySettings extends React.Component {
     applyFilters (e) {
         let filters = this.props.people.filters;
         this.props.dispatch(getPeopleAction(filters, "true"));
+        this.setState({sort: null})
     }
     handleChange = (e, data) => {
         this.setState({[data.name]: data.value});
@@ -137,7 +145,6 @@ class GallerySettings extends React.Component {
                             </Grid.Row>
                             <Grid.Row>
                                 <Dropdown
-                                    clearable
                                     options={options}
                                     value={this.state.sort}
                                     onChange={this.handleSortChange}

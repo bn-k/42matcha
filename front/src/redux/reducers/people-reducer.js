@@ -4,12 +4,10 @@ import {
     like,
     LOAD_PEOPLE,
     NO_PEOPLE,
-    SORT,
     SORT_AGE,
     SORT_LOCALISATION, SORT_SCORE, SORT_TAGS,
     UPDATE_FILTERS
 } from "../action/types-action";
-import {sortPeople} from "../action/people-action";
 import {compareAge, compareLocalistation, compareScore, compareTags} from "../../react/modules/utils";
 
 const initial = () => {
@@ -53,7 +51,7 @@ export function peopleReducer (state = initial, action) {
         case SORT_LOCALISATION:
             return ({
                 ...action,
-                data: action.data.slice().sort(compareLocalistation(user))
+                data: action.data.slice().sort(compareLocalistation(action.user))
             });
         case SORT_SCORE:
             return ({
@@ -63,7 +61,7 @@ export function peopleReducer (state = initial, action) {
         case SORT_TAGS:
             return ({
                 ...action,
-                data: action.data.slice().sort(compareTags),
+                data: action.data.slice().sort(compareTags(action.user)),
             });
         case SORT_AGE:
             return ({

@@ -63,7 +63,7 @@ export const peoplePreloaded = {
     filters: {
         age: [16, 120],
         score : [0, 100],
-        location: [0 , 50],
+        location: [0 , 1000],
         param : false,
         tags: [],
     },

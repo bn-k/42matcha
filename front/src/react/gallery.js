@@ -13,7 +13,6 @@ import {
 } from 'semantic-ui-react';
 import {updateProfileAction} from "../redux/action/app-action";
 import {getPeopleAction} from "../redux/action/people-action";
-import InfiniteScroll from 'react-infinite-scroller';
 
 const IsLoading = (p) => {
     return (
@@ -53,6 +52,7 @@ class Gallery extends Component {
                             <span className='date'>{getAge(person.Properties.birthday)}</span>
                             <p>{person.Properties.firstname} {person.Properties.lastname}</p>
                             <p>{Math.round(distance(this.props.app.user.latitude, this.props.app.user.longitude, person.Properties.latitude, person.Properties.longitude, "K"))} km</p>
+                            <p>Score: {person.Properties.rating}</p>
                         </Card.Meta>
                     </Card.Content>
                 </Card>
@@ -75,14 +75,6 @@ class Gallery extends Component {
                             <Card.Group itemsPerRow={3}>{this.people()}</Card.Group>
                         </Responsive>
                         <Responsive as={Segment} {...Responsive.onlyComputer}>
-                            {/*<InfiniteScroll*/}
-                                {/*pageStart={0}*/}
-                                {/*loadMore={this.load}*/}
-                                {/*hasMore={true}*/}
-                                {/*loader={<IsLoading key={"isLoading"} param={false}/>}*/}
-                            {/*>*/}
-                                {/*<Card.Group itemsPerRow={4}>{this.people()}</Card.Group>*/}
-                            {/*</InfiniteScroll>*/}
                             <Card.Group itemsPerRow={4}>{this.people()}</Card.Group>
                         </Responsive>
                     </Container>

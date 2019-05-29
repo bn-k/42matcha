@@ -1,5 +1,4 @@
 import env from "../../env";
-import store from '../../redux/store/matcha-store'
 
 export const getAge = (iso) =>  {
     const dateold = new Date(iso);
@@ -29,7 +28,7 @@ export function compareAge(a, b){
 }
 
 export function distance(lat1, lon1, lat2, lon2, unit) {
-    if ((lat1 == lat2) && (lon1 == lon2)) {
+    if ((lat1 === lat2) && (lon1 === lon2)) {
         return 0;
     }
     else {
@@ -44,28 +43,50 @@ export function distance(lat1, lon1, lat2, lon2, unit) {
         dist = Math.acos(dist);
         dist = dist * 180/Math.PI;
         dist = dist * 60 * 1.1515;
-        if (unit=="K") { dist = dist * 1.609344 }
-        if (unit=="N") { dist = dist * 0.8684 }
+        if (unit === "K") { dist = dist * 1.609344 }
+        if (unit === "N") { dist = dist * 0.8684 }
         return dist;
     }
 }
-export const compareLocalistation =  user => {
+
+export const compareLocalistation = user => {
     return (a, b) => {
         const d1 = distance(user.latitude, user.longitude, a.Properties.latitude, a.Properties.longitude, "K");
         const d2 = distance(user.latitude, user.longitude, b.Properties.latitude, b.Properties.longitude, "K");
+        // console.log(d1, d2);
         if (d1 > d2) return 1;
         if (d1 < d2) return -1;
         return 0;
     }
 };
-export function compareScore(a, b){
-    if (a.Properties.birthday < b.Properties.birthday) return 1;
-    if (a.Properties.birthday > b.Properties.birthday) return -1;
-    return 0;
+
+const countTags = (a, b) => {
+    console.log(a, b);
+    let n = 0;
+    a.map(tagA => {
+        b.map( tagB => {
+            if (tagA === tagB) { n++ }
+        })
+    });
+    return n
+};
+
+export function compareTags(user){
+    return (a, b) => {
+        const t1 = countTags(a.Properties.tags, user.tags);
+        const t2 = countTags(b.Properties.tags, user.tags);
+        console.log("=====>", t1, t2);
+
+        if (t1 < t2) return 1;
+        if (t1 > t2) return -1;
+        return 0;
+    }
 }
-export function compareTags(a, b){
-    if (a.Properties.birthday < b.Properties.birthday) return 1;
-    if (a.Properties.birthday > b.Properties.birthday) return -1;
+
+
+export function compareScore(a, b){
+    if (a.Properties.rating < b.Properties.rating) return 1;
+    if (a.Properties.rating > b.Properties.rating) return -1;
     return 0;
 }
 

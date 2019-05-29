@@ -25,7 +25,7 @@ func SendReportmail(Title, username, email, Message string) error {
 	}{
 		Name:    username,
 		Message: Message,
-		URL:     "http://localhost:8080/",
+		URL:     "http://localhost:3000/",
 	}
 
 	from := mail.Address{"", smtpLogin}
@@ -132,7 +132,7 @@ func SendEmail(Title, username, email, Message string) error {
 	}{
 		Name:    username,
 		Message: Message,
-		URL:     "http://localhost:8080/",
+		URL:     "http://localhost:3000/",
 	}
 
 	from := mail.Address{"", smtpLogin}
@@ -237,7 +237,7 @@ func SendEmailValidation(username, email, token string) error {
 		URL  string
 	}{
 		Name: username,
-		URL:  "http://localhost:8080/valid_email?token=" + token,
+		URL:  "http://localhost:3000/valid_email?token=" + token,
 	}
 
 	from := mail.Address{"", smtpLogin}
@@ -342,7 +342,7 @@ func SendEmailPasswordForgot(username, email, token string) error {
 		URL  string
 	}{
 		Name: username,
-		URL:  "http://localhost:8080/reset-password?reset_token=" + token,
+		URL:  "http://localhost:3000/reset-password?reset_token=" + token,
 	}
 
 	from := mail.Address{"", smtpLogin}

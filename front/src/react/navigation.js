@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
 import {
-    Message,
     Responsive,
 } from 'semantic-ui-react'
 import Nav from "./components/navbar";

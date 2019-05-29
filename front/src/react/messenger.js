@@ -9,7 +9,7 @@ import {
     Container,
     Message,
     Button,
-    Responsive, Dimmer, Loader, Header,
+    Responsive, Header,
 } from 'semantic-ui-react';
 import store from "../redux/store/matcha-store";
 import {getMatchsAction} from "../redux/action/matchs-action";

@@ -1,4 +1,4 @@
-import {LOAD_MATCHS, NO_MATCH} from './types-action';
+import {LOAD_MATCHS} from './types-action';
 import {updateSuitorAction} from "./messenger-action";
 import env from "../../env";
 

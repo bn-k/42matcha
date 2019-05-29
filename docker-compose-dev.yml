@@ -34,6 +34,9 @@ services:
     networks:
       - default
     restart: unless-stopped
+    working_dir: /app/back
+    command: /go/bin/realize start
+#    command: "realize start --path='/app/back'"
 
   web:
     image: node:9.6.1
@@ -41,11 +44,11 @@ services:
     volumes:
       - .:/app
     ports:
-      - "3000:5000"
+      - "3000:3000"
     depends_on:
       - neo4j
     working_dir: /app/front
-    command: sh /app/front/deploy.sh
+    command: npm start
     networks:
       - default
 

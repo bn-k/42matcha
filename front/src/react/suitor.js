@@ -2,7 +2,6 @@ import React from "react";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 import {
-    Divider,
     Segment,
     Container,
     Header,
@@ -12,7 +11,6 @@ import {
     Image,
 } from 'semantic-ui-react';
 import {distance, getAge, report, timeSince} from "./modules/utils";
-import {peopleAction} from "../redux/action/people-action";
 import {block, dislike, like} from "../redux/action/types-action";
 import env from "../env";
 
