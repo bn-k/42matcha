@@ -229,6 +229,18 @@ func customQuery(Id int, Filter *Filters) (superQuery string) {
 	return
 }
 
+func arrayContain(Tab []string, str string) bool {
+	if len(Tab) == 0 {
+		return false
+	}
+	for _, s := range Tab {
+		if s == str {
+			return true
+		}
+	}
+	return false
+}
+
 func setTagQuery(Filter *Filters) (customQuery string) {
 
 	customQuery = `MATCH (u:User) WHERE '`

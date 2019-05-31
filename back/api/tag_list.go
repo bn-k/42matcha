@@ -59,6 +59,15 @@ func (app *App) tagRelationExist(Id int, value string) bool {
 	return false
 }
 
+func (app *App) deleteTagRelation(Id int) bool {
+	q := `MATCH (u:User)-[re:TAGGED]-(t:TAG) WHERE ID(u) = ` + strconv.Itoa(Id) + ` DETACH DELETE re`
+	data, _, _, _ := app.Neo.QueryNeoAll(q, nil)
+	if len(data) == 0 {
+		return false
+	}
+	return true
+}
+
 func (app *App) createTagRelation(Id int, value string) bool {
 	q := `MATCH (u:User), (t:TAG) WHERE ID(u) = ` + strconv.Itoa(Id) + ` AND t.value = "` + value + `" CREATE p=(u)-[r:TAGGED]->(t) return p`
 	data, _, _, _ := app.Neo.QueryNeoAll(q, nil)

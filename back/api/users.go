@@ -231,14 +231,18 @@ func (req Request) addNewTag() {
 
 func (req Request) userSetOldTags() {
 	tab := req.body["tags"].([]interface{})
+	fmt.Println("TAB ", tab)
 	var userTags []string
+	app.deleteTagRelation(int(req.user.Id))
 	for _, tag := range tab {
 		if app.tagExist(tag.(string)) && app.tagRelationExist(int(req.user.Id), tag.(string)) == false {
-			userTags = append(userTags, tag.(string))
-			app.createTagRelation(int(req.user.Id), tag.(string))
+			if arrayContain(req.user.Tags, tag.(string)) == false {
+				userTags = append(userTags, tag.(string))
+				app.createTagRelation(int(req.user.Id), tag.(string))
+			}
 		}
 	}
-	req.user.Tags = append(req.user.Tags, userTags...)
+	req.user.Tags = userTags
 	app.updateUser(req.user)
 	retUser(req)
 }
