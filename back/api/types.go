@@ -13,6 +13,7 @@ var app App
 type App struct {
 	R   *gin.Engine
 	Neo bolt.Conn
+	Nep bolt.Conn
 	M   *melody.Melody
 	Db  bolt.DriverPool
 }

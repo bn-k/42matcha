@@ -37,6 +37,7 @@ func Run() {
 	host := os.Getenv("NEO_HOST")
 	fmt.Println("HOST ===============> ", host)
 	app.Neo, _ = NewConn(host)
+
 	defer app.Neo.Close()
 
 	go app.routerAPI()
