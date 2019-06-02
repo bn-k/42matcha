@@ -164,6 +164,11 @@ class Profile extends React.Component {
                         <Grid.Column mobile={16} tablet={8} computer={4}>
                             <p>{profile.biography}</p>
                         </Grid.Column>
+                        <Grid.Column mobile={16} tablet={8} computer={4}>
+                            {profile.tags.map(tag => (
+                                <p key={tag}>#{tag}</p>
+                            ))}
+                        </Grid.Column>
                         <Grid.Column mobile={16} tablet={16} computer={16}>
                             <Segment>
                                 <Grid>
