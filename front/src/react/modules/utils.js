@@ -66,9 +66,12 @@ const countTags = (a, b) => {
     a.map(tagA => {
         b.map( tagB => {
             if (tagA === tagB) { n++ }
-        })
+            return tagB
+        });
+        return tagA
     });
     return n
+
 };
 
 export function compareTags(user){

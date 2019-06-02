@@ -15,7 +15,6 @@ const initial = () => {
 };
 
 export function peopleReducer (state = initial, action) {
-    const user = action.user;
     switch (action.type) {
         case like:
             return ({
