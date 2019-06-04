@@ -43,33 +43,33 @@ func interfaceToStringTab(inter []interface{}) []string {
 
 func bestScore(g graph.Node, h graph.Node, u User) bool {
 
-	var score1 = 0
-	var score2 = 0
+	var scoreG = 0
+	var scoreH = 0
 
 	tagG := interfaceToStringTab(g.Properties["tags"].([]interface{}))
 	tagH := interfaceToStringTab(h.Properties["tags"].([]interface{}))
 
 	if g.Properties["distance"].(int) < h.Properties["distance"].(int) {
-		score1++
+		scoreG += 3
 	} else {
-		score2++
+		scoreH += 3
 	}
 
 	if g.Properties["rating"].(float64) > h.Properties["rating"].(float64) {
-		score1++
+		scoreG++
 	} else {
-		score2++
+		scoreH++
 	}
 
 	for _, res := range u.Tags {
 		for _, resG := range tagG {
 			if resG == res {
-				score1++
+				scoreG += 2
 			}
 		}
 		for _, resH := range tagH {
 			if resH == res {
-				score2++
+				scoreH += 2
 			}
 		}
 	}
@@ -80,14 +80,14 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 	ageG := absInt(ageU - Age(parsedG))
 	ageH := absInt(ageU - Age(parsedH))
 
-	if ageG < ageH {
-		score1++
-	} else if ageG > ageH {
-		score2++
+	if ageG <= ageH {
+		scoreG++
+	} else if ageG >= ageH {
+		scoreH++
 	}
 
 	fmt.Println()
-	return score1 > score2
+	return scoreG > scoreH
 
 }
 

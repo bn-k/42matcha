@@ -115,20 +115,27 @@ func (app *App) getUser(Id int, Username string) (u User, err error) {
 
 	var q string
 
+	conn, err := app.Db.OpenPool()
+	if err != nil {
+		panic(err)
+	}
+
 	if Username != "" {
 		q = `MATCH (u:User {username : "` + Username + `"}) RETURN u`
 	} else {
 		q = `MATCH (u:User) WHERE ID(u)= ` + strconv.Itoa(Id) + ` RETURN u`
 	}
 
-	data, _, _, _ := app.Neo.QueryNeoAll(q, nil)
+	data, _, _, _ := conn.QueryNeoAll(q, nil)
 	if len(data) == 0 {
 		err = errors.New("Err : User doesn't exist")
+		conn.Close()
 		return
 	} else {
 		jso, _ := json.Marshal(data[0][0].(graph.Node).Properties)
 		_ = json.Unmarshal(jso, &u)
 		u.Id = data[0][0].(graph.Node).NodeIdentity
+		conn.Close()
 		return
 	}
 }
@@ -167,13 +174,20 @@ func (app *App) dbGetUserProfile(Id int) (graph.Node, error) {
 	var g = graph.Node{}
 	var err error
 
-	data, _, _, _ := app.Neo.QueryNeoAll(`MATCH (n:User) WHERE ID(n) = `+strconv.Itoa(Id)+` SET n.online = true RETURN  n`, nil)
+	conn, err := app.Db.OpenPool()
+	if err != nil {
+		panic(err)
+	}
+
+	data, _, _, _ := conn.QueryNeoAll(`MATCH (n:User) WHERE ID(n) = `+strconv.Itoa(Id)+` SET n.online = true RETURN  n`, nil)
 	if len(data) == 0 {
 		err = errors.New("Err : User Id doesn't exist")
+		conn.Close()
 		return g, err
 	} else {
 		g = data[0][0].(graph.Node)
 		delete(g.Properties, "password")
+		conn.Close()
 		return g, err
 	}
 }
@@ -182,17 +196,23 @@ func (app *App) dbGetPeople(Id int, Filter *Filters) ([]graph.Node, error) {
 	var g = make([]graph.Node, 0)
 	var err error
 
+	conn, err := app.Db.OpenPool()
+	if err != nil {
+		panic(err)
+	}
+
 	var m Match
 	m.action = like
 	// A custom query with applied Filters
 	time.Sleep(500 * time.Millisecond)
 	superQuery := customQuery(Id, Filter)
 
-	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
+	data, _, _, err := conn.QueryNeoAll(superQuery, nil)
 	u, _ := app.getUser(Id, "")
 
 	if len(data) == 0 {
 		err = errors.New("err : filters doesn't match anyone")
+		conn.Close()
 		return g, err
 	} else {
 		for _, d := range data {
@@ -217,13 +237,20 @@ func (app *App) dbGetPeople(Id int, Filter *Filters) ([]graph.Node, error) {
 		if len(g) < 20 {
 			fmt.Println("G ==== > ", g, " LEN G ==>", len(g), "|")
 		}
+		conn.Close()
 		return g, err
 	}
 }
 
 func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
-	var g = make([]graph.Node, 0)
 	var err error
+
+	conn, err := app.Db.OpenPool()
+	if err != nil {
+		panic(err)
+	}
+	var g = make([]graph.Node, 0)
+
 
 	u, err := app.getUser(Id, "")
 	if err != nil {
@@ -235,11 +262,12 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 	//Skip := "SKIP " + strconv.Itoa(Page * 25)
 	superQuery := `MATCH (u:User), (n:User) WHERE Id(u)= ` + strconv.Itoa(Id) + ` AND NOT Id(n)= ` + strconv.Itoa(Id) + ` AND ` + q + ` AND NOT ( (u)-[]->(n) OR (u)<-[:BLOCK]-(n) ) RETURN DISTINCT n ORDER BY n.rating DESC`
 
-	data, _, _, err := app.Neo.QueryNeoAll(superQuery, nil)
+	data, _, _, err := conn.QueryNeoAll(superQuery, nil)
 
 	//fmt.Println("DATA ====>>", data[0], "||")
 	if len(data) == 0 {
 		err = errors.New("No more recommendation.")
+		conn.Close()
 		return g, err
 	} else {
 		//fmt.Println("DAAAATAAAA ==>> ",data, "||")
@@ -255,6 +283,7 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 		sort.Slice(g, func(i, j int) bool {
 			return bestScore(g[i], g[j], u)
 		})
+		conn.Close()
 		return g, err
 	}
 }

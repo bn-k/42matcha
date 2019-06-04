@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
+	"github.com/johnnadratowski/golang-neo4j-bolt-driver/errors"
 	"os"
 	"time"
 )
@@ -14,29 +15,41 @@ func (app *App) newApp() {
 	app.R = gin.Default()
 }
 
-func NewConn(host string) (bolt.Conn, error) {
-	var err error
-	app.Db, err = bolt.NewDriverPool("bolt://neo4j:secret@"+host+":7687", 1000)
-	if err != nil {
-		return nil, err
-	}
+func NewConn() (bolt.Conn, error){
 	retries := 0
 	for retries < 300 {
-		conn, _ := app.Db.OpenPool()
+		conn, err := app.Db.OpenPool()
 		if conn != nil {
-			return conn, nil
+			return conn, err
 		}
 		retries = retries + 1
 		time.Sleep(15 * time.Second)
 	}
-	return nil, err
+	return nil, errors.New("Connection Time Out")
+}
+
+func setAppDb(host string) (err error) {
+	app.Db, err = bolt.NewDriverPool("bolt://neo4j:secret@"+host+":7687", 100)
+	if err != nil {
+		return
+	}
+	return
 }
 
 func Run() {
+	var err error
+
 	app.newApp()
 	host := os.Getenv("NEO_HOST")
+	if err = setAppDb(host); err != nil {
+		panic(err)
+	}
 	fmt.Println("HOST ===============> ", host)
-	app.Neo, _ = NewConn(host)
+
+	app.Neo, err = NewConn()
+	if err != nil {
+		panic(err)
+	}
 
 	defer app.Neo.Close()
 
