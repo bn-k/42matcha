@@ -56,20 +56,21 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 	}
 
 	if g.Properties["rating"].(float64) > h.Properties["rating"].(float64) {
-		scoreG++
+		scoreG += 2
 	} else {
-		scoreH++
+		scoreH += 2
 	}
 
 	for _, res := range u.Tags {
 		for _, resG := range tagG {
 			if resG == res {
-				scoreG += 2
+				fmt.Println("LAAAAA")
+				scoreG += 15
 			}
 		}
 		for _, resH := range tagH {
 			if resH == res {
-				scoreH += 2
+				scoreH += 15
 			}
 		}
 	}
@@ -81,9 +82,9 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 	ageH := absInt(ageU - Age(parsedH))
 
 	if ageG <= ageH {
-		scoreG++
+		scoreG += 5
 	} else if ageG >= ageH {
-		scoreH++
+		scoreH += 5
 	}
 
 	fmt.Println()

@@ -259,28 +259,23 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 
 	time.Sleep(500 * time.Millisecond)
 	q := interestQuery(u.Interest, u.Genre)
-	//Skip := "SKIP " + strconv.Itoa(Page * 25)
-	superQuery := `MATCH (u:User), (n:User) WHERE Id(u)= ` + strconv.Itoa(Id) + ` AND NOT Id(n)= ` + strconv.Itoa(Id) + ` AND ` + q + ` AND NOT ( (u)-[]->(n) OR (u)<-[:BLOCK]-(n) ) RETURN DISTINCT n ORDER BY n.rating DESC`
+	superQuery := `MATCH (u:User), (n:User) WHERE Id(u)= ` + strconv.Itoa(Id) + ` AND NOT Id(n)= ` + strconv.Itoa(Id) + ` AND ` + q + ` AND NOT ( (u)-[]->(n) OR (u)<-[:BLOCK]-(n) ) RETURN DISTINCT n`
 
 	data, _, _, err := conn.QueryNeoAll(superQuery, nil)
 
-	//fmt.Println("DATA ====>>", data[0], "||")
 	if len(data) == 0 {
 		err = errors.New("No more recommendation.")
 		conn.Close()
 		return g, err
 	} else {
-		//fmt.Println("DAAAATAAAA ==>> ",data, "||")
 		for _, d := range data {
-			//fmt.Println("Distance before ==>", d[0].(graph.Node).Properties["distance"], "|")
 			lon := d[0].(graph.Node).Properties["longitude"].(float64)
 			lat := d[0].(graph.Node).Properties["latitude"].(float64)
 			d[0].(graph.Node).Properties["distance"] = Haversine(u.Longitude, u.Latitude, lon, lat)
-			//fmt.Println("Distance after ==>", d[0].(graph.Node).Properties["distance"], "|")
 			g = append(g, d[0].(graph.Node))
 		}
 
-		sort.Slice(g, func(i, j int) bool {
+		sort.SliceStable(g, func(i, j int) bool {
 			return bestScore(g[i], g[j], u)
 		})
 		conn.Close()
