@@ -80,6 +80,7 @@ func userFactory(rf registerForm) (u User, err error) {
 	now = now.AddDate(-(18), 0, 0)
 
 	u.Username = rf.Username
+	u.AccessLvl = 0
 	u.Email = rf.Email
 	u.Password = Encrypt(HashKey, rf.Password)
 	u.LastName = rf.Lastname

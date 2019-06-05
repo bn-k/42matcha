@@ -325,6 +325,7 @@ func extFromIncipit(incipit []byte) (string, error) {
 }
 
 func userImageHandler(c *gin.Context) {
+	fmt.Println("IMAGE HANDLER")
 	mFile, _ := c.FormFile("file")                // Get Multipart Header
 	file, _ := mFile.Open()                       // Create Reader
 	buf := bytes.NewBuffer(nil)                   // Init buffer
@@ -356,6 +357,7 @@ func userImageHandler(c *gin.Context) {
 					switch c.Param("n") {
 					case "img1":
 						req.user.Img1 = link
+						req.user.AccessLvl = 2
 						break
 					case "img2":
 						req.user.Img2 = link

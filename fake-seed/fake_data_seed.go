@@ -220,7 +220,7 @@ city:{city}, zip: {zip},
 country:{country}, latitude: {latitude},
 longitude:{longitude}, geo_allowed: {geo_allowed},
 online:{online}, rating: {rating},
-email: {email}, access_lvl: 1, last_conn: {last_conn},
+email: {email}, access_lvl: {access_lvl}, last_conn: {last_conn},
 ilike: {ilike}, relation: {relation}, tags: {tags}, 
 distance: {distance}, overall_rating: {overall_rating}})`
 	st := app.prepareFakeStatement(q)

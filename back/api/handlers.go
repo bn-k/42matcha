@@ -22,7 +22,10 @@ const (
 )
 
 func Token(c *gin.Context) {
-	data, _, _, _ := app.Neo.QueryNeoAll(`MATCH (n:User{random_token : "`+c.Param("token")+`"}) SET n.access_lvl = 1 RETURN n`, nil)
+	fmt.Println("IN TOKENNN")
+	q := `MATCH (n:User{random_token : "`+c.Param("token")+`"}) SET n.access_lvl = 1 RETURN n`
+	data, _, _, _ := app.Neo.QueryNeoAll(q, nil)
+	fmt.Println("Q = ",q)
 	if len(data) == 0 {
 		c.JSON(201, gin.H{"err": "Wrong token"})
 	} else if data[0][0].(graph.Node).Properties["access_lvl"] == int64(1) {
@@ -140,6 +143,15 @@ func GetMessages(c *gin.Context) {
 //func getMatchPeople(g []graph.Node) []graph.Node {
 //	sort.Sort()
 //}
+func CheckUserAccess(Id int) bool {
+	u, err := app.getUser(Id, "")
+	if err != nil {
+		return false
+	} else if u.AccessLvl != 2 {
+		return false
+	}
+	return true
+}
 
 func GetPeople(c *gin.Context) {
 	filtersJson := c.Request.Header["Filters"][0]
@@ -156,6 +168,10 @@ func GetPeople(c *gin.Context) {
 		c.JSON(202, gin.H{"err": err.Error()})
 	} else if valid == true {
 		id := int(claims["id"].(float64))
+		if CheckUserAccess(id) == false {
+			c.JSON(201, gin.H{"err": "Please put a Profil picture"})
+			return
+		}
 		str := strconv.Itoa(id)
 		app.onlineRefresh(str)
 		app.alertOnline(true, str)
@@ -188,6 +204,10 @@ func Recommended(c *gin.Context) {
 		c.JSON(202, gin.H{"err": err.Error()})
 	} else if valid == true {
 		id := int(claims["id"].(float64))
+		if CheckUserAccess(id) == false {
+			c.JSON(201, gin.H{"err": "Please put a Profil picture"})
+			return
+		}
 		str := strconv.Itoa(id)
 		app.onlineRefresh(str)
 		app.alertOnline(true, str)
@@ -251,7 +271,9 @@ func Login(c *gin.Context) {
 	password := c.PostForm("password")
 
 	u, err := app.getUser(-1, username)
-	if err != nil || password != Decrypt(HashKey, u.Password) {
+	if u.AccessLvl < 1 {
+		c.JSON(201, gin.H{"err": "Please activate your account"})
+	} else if err != nil || password != Decrypt(HashKey, u.Password) {
 		c.JSON(201, gin.H{"err": "Wrong password or username"})
 	} else if u.AccessLvl == 0 {
 		c.JSON(201, gin.H{"err": "You must validate your Email first"})
