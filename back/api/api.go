@@ -15,7 +15,7 @@ func (app *App) newApp() {
 	app.R = gin.Default()
 }
 
-func NewConn() (bolt.Conn, error){
+func NewConn() (bolt.Conn, error) {
 	retries := 0
 	for retries < 300 {
 		conn, err := app.Db.OpenPool()
@@ -44,7 +44,6 @@ func Run() {
 	if err = setAppDb(host); err != nil {
 		panic(err)
 	}
-	fmt.Println("HOST ===============> ", host)
 
 	app.Neo, err = NewConn()
 	if err != nil {

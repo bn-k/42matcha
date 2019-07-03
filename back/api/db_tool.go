@@ -64,7 +64,6 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 	for _, res := range u.Tags {
 		for _, resG := range tagG {
 			if resG == res {
-				fmt.Println("LAAAAA")
 				scoreG += 15
 			}
 		}

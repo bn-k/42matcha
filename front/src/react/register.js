@@ -28,7 +28,7 @@ class Register extends Component {
     };
     submit (e) {
         e.preventDefault();
-        const formData = new FormData(e.target);
+        const formData = new FormData();
         formData.append("username", this.state.username);
         formData.append("email", this.state.email);
         formData.append("password", this.state.password);

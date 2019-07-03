@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
 	"sort"
@@ -74,7 +73,6 @@ online:{online}, rating: {rating},
 email: {email}, access_lvl: {access_lvl}, last_conn: {last_conn},
 ilike: {ilike}, relation: {relation}, tags: {tags}, 
 distance: {distance}, overall_rating: {overall_rating}})`
-	//fmt.Println("Query == ", q)
 	st := app.PrepareStatement(q)
 	ExecuteStatement(st, MapOf(u))
 	return
@@ -234,9 +232,7 @@ func (app *App) dbGetPeople(Id int, Filter *Filters) ([]graph.Node, error) {
 				}
 			}
 		}
-		if len(g) < 20 {
-			fmt.Println("G ==== > ", g, " LEN G ==>", len(g), "|")
-		}
+
 		conn.Close()
 		return g, err
 	}
@@ -250,7 +246,6 @@ func (app *App) dbGetRecommended(Id int, Page int) ([]graph.Node, error) {
 		panic(err)
 	}
 	var g = make([]graph.Node, 0)
-
 
 	u, err := app.getUser(Id, "")
 	if err != nil {

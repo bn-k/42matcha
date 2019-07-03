@@ -45,7 +45,7 @@ class Gallery extends Component {
         <>
             {this.props.people.data.map((person, i) => (
                 <Card key={person.NodeIdentity} onClick={e => this.handleClick(e, person.NodeIdentity, i)}>
-                    <Image src={person.Properties.img1} size='big'/>
+                    <Image src={person.Properties.img1} size='medium' style={{height: "68%"}}/>
                     <Card.Content>
                         <Card.Header>{person.Properties.username}</Card.Header>
                         <Card.Meta>

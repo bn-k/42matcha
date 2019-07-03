@@ -20,7 +20,7 @@ class Forgot extends Component {
     };
     submit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
+        const formData = new FormData();
         formData.append("username", this.state.username);
         fetch(env.api + '/send_token', {
             method: 'POST',

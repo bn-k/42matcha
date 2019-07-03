@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
+import env from "../env";
 
 export function getJsonFromUrl(url) {
     if(!url) url = window.location.search;
@@ -23,11 +24,11 @@ class ValidEmail extends Component {
     }
     componentWillMount() {
         let url = getJsonFromUrl(this.props.location.search);
-        fetch('/auth/valid_email/' + url.token)
+        fetch(env.auth + '/valid_email/' + url.token)
             .then((res) => {
                 if (res.status === 200) {
                     this.setState({message: "Email successfully activated", class: " is-info"})
-                } else if (res.status === 401) {
+                } else if (res.status === 201) {
                     res.json().then((json) => {
                         this.setState({message: json.err, class: " is-danger"})
                     })
@@ -51,6 +52,7 @@ class ValidEmail extends Component {
     render () {
         return (
             <React.Fragment>
+                <p>Valid email...</p>
                 {this.snack()}
             </React.Fragment>
         )
