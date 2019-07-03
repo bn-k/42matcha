@@ -46,8 +46,15 @@ func bestScore(g graph.Node, h graph.Node, u User) bool {
 	var scoreG = 0
 	var scoreH = 0
 
-	tagG := interfaceToStringTab(g.Properties["tags"].([]interface{}))
-	tagH := interfaceToStringTab(h.Properties["tags"].([]interface{}))
+	var tagG []string
+	var tagH []string
+
+	if g.Properties["tags"] != nil {
+		tagG = interfaceToStringTab(g.Properties["tags"].([]interface{}))
+	}
+	if h.Properties["tags"] != nil {
+		tagH = interfaceToStringTab(h.Properties["tags"].([]interface{}))
+	}
 
 	if g.Properties["distance"].(int) < h.Properties["distance"].(int) {
 		scoreG += 3

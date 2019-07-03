@@ -161,7 +161,8 @@ const preloadedState = {
                 online: true,
                 rating: 0,
                 username: '',
-                zip: ''
+                zip: '',
+                tags: [],
             }
         },
     ],
