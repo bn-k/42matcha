@@ -105,17 +105,21 @@ func (req Request) updateLocation() {
 	retUser(req)
 }
 func (req Request) updateBirthday() {
+	fmt.Println("=====> ", req.body["day"])
 	if req.body["day"] == nil {
 		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
+		return
 	}
 	if req.body["month"] == nil {
 		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
+		return
 	}
 	if req.body["year"] == nil {
 		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
+		return
 	}
 	day := strconv.FormatInt(int64(req.body["day"].(float64)), 10)
 	month := strconv.FormatInt(int64(req.body["month"].(float64)), 10)
@@ -184,7 +188,7 @@ func (req Request) updateUsername() {
 
 func (req Request) updateGenre() {
 	if req.body["genre"] == nil {
-		err := errors.New("error : The form is empty")
+		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
 	}
 	genre := req.body["genre"].(string)
@@ -231,16 +235,12 @@ func (req Request) addNewTag() {
 
 func (req Request) userSetOldTags() {
 	tab := req.body["tags"].([]interface{})
-	fmt.Println("TAB ", tab)
 	var userTags []string
+	fmt.Println("TAAB = ", tab)
 	app.deleteTagRelation(int(req.user.Id))
 	for _, tag := range tab {
-		if app.tagExist(tag.(string)) && app.tagRelationExist(int(req.user.Id), tag.(string)) == false {
-			if arrayContain(req.user.Tags, tag.(string)) == false {
-				userTags = append(userTags, tag.(string))
-				app.createTagRelation(int(req.user.Id), tag.(string))
-			}
-		}
+		userTags = append(userTags, tag.(string))
+		app.createTagRelation(int(req.user.Id), tag.(string))
 	}
 	req.user.Tags = userTags
 	app.updateUser(req.user)
@@ -248,6 +248,9 @@ func (req Request) userSetOldTags() {
 }
 
 func (req Request) updateEmail() {
+	if req.body["new_email"] == nil {
+		req.context.JSON(201, gin.H{"err": "Empty Form"})
+	}
 	newEmail := req.body["new_email"].(string)
 	message := "Your mail address has been updated."
 	if err := req.checkPassword(); err != nil {
@@ -265,6 +268,10 @@ func (req Request) updateEmail() {
 }
 
 func (req Request) updatePassword() {
+
+	if req.body["new_password"] == nil || req.body["confirm"] == nil {
+		req.context.JSON(201, gin.H{"err": "Empty Form"})
+	}
 	newPassword := req.body["new_password"].(string)
 	confirmPassword := req.body["confirm"].(string)
 
@@ -284,6 +291,9 @@ func (req Request) updatePassword() {
 }
 
 func (req Request) updateFirstname() {
+	if req.body["firstname"] == nil {
+		req.context.JSON(201, gin.H{"err": "Empty Form"})
+	}
 	firstname := req.body["firstname"].(string)
 	if len(firstname) < 2 || len(firstname) > 20 {
 		req.context.JSON(201, gin.H{"err": "error : your firstname must be between 2 to 20 characters"})
@@ -295,6 +305,9 @@ func (req Request) updateFirstname() {
 }
 
 func (req Request) updateLastname() {
+	if req.body["lastname"] == nil {
+		req.context.JSON(201, gin.H{"err": "Empty Form"})
+	}
 	lastname := req.body["lastname"].(string)
 	if len(lastname) < 2 || len(lastname) > 20 {
 		err := errors.New("error : your lastname must be between 2 to 20 characters")
@@ -325,7 +338,6 @@ func extFromIncipit(incipit []byte) (string, error) {
 }
 
 func userImageHandler(c *gin.Context) {
-	fmt.Println("IMAGE HANDLER")
 	mFile, _ := c.FormFile("file")                // Get Multipart Header
 	file, _ := mFile.Open()                       // Create Reader
 	buf := bytes.NewBuffer(nil)                   // Init buffer

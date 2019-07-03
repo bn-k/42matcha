@@ -59,7 +59,9 @@ type User struct {
 
 func arrayContain(Tab []string, str string) bool {
 
-	if len(Tab) == 0 { return false }
+	if len(Tab) == 0 {
+		return false
+	}
 	for _, s := range Tab {
 		if s == str {
 			return true
@@ -67,7 +69,6 @@ func arrayContain(Tab []string, str string) bool {
 	}
 	return false
 }
-
 
 func newRandomMale() User {
 	var f *gofakeit.PersonInfo
@@ -116,9 +117,9 @@ func newRandomMale() User {
 		Tags: tagtab,
 		LastConn: gofakeit.DateRange(time.Date(2016, 01, 01, 00, 00, 00, 00, time.Local),
 			time.Date(2019, 05, 25, 00, 00, 00, 00, time.Local)),
-		Ilike:    false,
-		Relation: "none",
-		Distance: 0,
+		Ilike:         false,
+		Relation:      "none",
+		Distance:      0,
 		OverallRating: 0,
 	}
 }
@@ -136,7 +137,7 @@ func newRandomFemale() User {
 	tagtab := make([]string, 2)
 	for i := 0; i < max; i++ {
 		str := strings.ToLower(gofakeit.Color())
-		if arrayContain(tagtab, str) == false{
+		if arrayContain(tagtab, str) == false {
 			tagtab[i] = str
 		}
 	}
@@ -169,16 +170,15 @@ func newRandomFemale() User {
 		Tags: tagtab,
 		LastConn: gofakeit.DateRange(time.Date(2016, 01, 01, 00, 00, 00, 00, time.Local),
 			time.Date(2019, 05, 25, 00, 00, 00, 00, time.Local)),
-		Ilike:    false,
-		Relation: "none",
-		Distance: 0,
+		Ilike:         false,
+		Relation:      "none",
+		Distance:      0,
 		OverallRating: 0,
 	}
 }
 
 func main() {
 	const max = 260
-	fmt.Println("-- STARTING FAKE DATA CREATION --")
 	app.Db, _ = bolt.NewDriverPool("bolt://neo4j:secret@localhost:7687", 1000)
 	app.Neo, _ = app.Db.OpenPool()
 	defer app.Neo.Close()

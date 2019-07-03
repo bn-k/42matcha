@@ -260,6 +260,7 @@ const fields = [
             {type: (hc) => (
                     <Form.Group label={"Birthday"} key={"birthday"}>
                         <Form.Select
+                            defaultValue={1}
                             fluid label='Day'
                             options={days}
                             placeholder='01'
@@ -267,6 +268,7 @@ const fields = [
                             onChange={hc}
                         />
                         <Form.Select
+                            defaultValue={1}
                             width={16}
                             fluid label='Month'
                             options={months}
@@ -275,6 +277,7 @@ const fields = [
                             onChange={hc}
                         />
                         <Form.Select
+                            defaultValue={1900}
                             fluid label='Year'
                             options={years}
                             placeholder='1900'

@@ -22,10 +22,8 @@ const (
 )
 
 func Token(c *gin.Context) {
-	fmt.Println("IN TOKENNN")
-	q := `MATCH (n:User{random_token : "`+c.Param("token")+`"}) SET n.access_lvl = 1 RETURN n`
+	q := `MATCH (n:User{random_token : "` + c.Param("token") + `"}) SET n.access_lvl = 1 RETURN n`
 	data, _, _, _ := app.Neo.QueryNeoAll(q, nil)
-	fmt.Println("Q = ",q)
 	if len(data) == 0 {
 		c.JSON(201, gin.H{"err": "Wrong token"})
 	} else if data[0][0].(graph.Node).Properties["access_lvl"] == int64(1) {
