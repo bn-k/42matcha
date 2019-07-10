@@ -14,7 +14,7 @@ import {
 import {updateProfileAction} from "../redux/action/app-action";
 import {getPeopleAction} from "../redux/action/people-action";
 
-const IsLoading = (p) => {
+export const IsLoading = (p) => {
     return (
         p.param ?
             <Segment style={{height: "30vh"}}>

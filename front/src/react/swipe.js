@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import env from "../env";
 import Suitor from "./suitor";
 import {Button, Header, Segment} from "semantic-ui-react";
+import {IsLoading} from "./gallery";
 
 const request = (setArray) => {
     let init = {
@@ -62,7 +63,7 @@ const Swipe = (props) => {
         setIndex(index + 1);
     };
     const suitor = array[index];
-    if (end && array.length === index) {
+    if (end && array.length === index && index !== 0) {
         return (
             <Segment>
                 <Header>Sorry, we have nobody to recommend to you...</Header>
@@ -74,7 +75,7 @@ const Swipe = (props) => {
         setIndex(0);
         return (<Suitor suitor={suitor} next={next}/>)
     } else if (loading) {
-        return (<div>...loading</div>)
+        return (<IsLoading param={true}/>)
     } else {
         return (<Suitor suitor={suitor} next={next} toggle={props.toggle}/>)
     }

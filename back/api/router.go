@@ -56,7 +56,7 @@ func (app *App) routerAPI() {
 		_ = app.M.BroadcastFilter(msg, func(session *melody.Session) bool {
 			return session.Request.URL.Path == s.Request.URL.Path
 		})
-		time.Sleep(time.Second * 1)
+		//time.Sleep(time.Second * 1)
 		newEventMessage(msg)
 	})
 

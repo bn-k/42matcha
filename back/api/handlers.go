@@ -33,10 +33,6 @@ func Token(c *gin.Context) {
 	}
 }
 
-func PrintHandlerLog(Err string, Color string) {
-	Err = Err + "\n"
-}
-
 func createRelation(c *gin.Context) {
 
 	claims := jwt.MapClaims{}
@@ -206,14 +202,12 @@ func Recommended(c *gin.Context) {
 		app.alertOnline(true, str)
 		g, err := app.dbGetRecommended(id, Page)
 		if err != nil {
-			fmt.Println("1", err)
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {
 			UpdateLastConn(id)
 			c.JSON(200, g)
 		}
 	} else {
-		fmt.Println("2", err)
 		c.JSON(201, gin.H{"err": err.Error()})
 	}
 }

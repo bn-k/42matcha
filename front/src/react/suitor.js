@@ -8,7 +8,7 @@ import {
     Button,
     Grid,
     Icon,
-    Image,
+    Image, Message,
 } from 'semantic-ui-react';
 import {distance, getAge, report, timeSince} from "./modules/utils";
 import {block, dislike, like} from "../redux/action/types-action";
@@ -31,13 +31,12 @@ const Online = (props) => (
 class Suitor extends React.Component {
     constructor (props) {
         super(props);
-            this.state = {
-                loaded: true,
-                profile : props.suitor.Properties
-            };
-        this.dislike = this.dislike.bind(this);
-        this.like = this.like.bind(this);
-        this.block= this.block.bind(this);
+        this.state = {
+            loaded: true,
+            profile : props.suitor.Properties,
+            action : false,
+        };
+        this.do = this.do.bind(this);
         this.report = this.report.bind(this);
     }
     componentDidMount() {
@@ -68,23 +67,22 @@ class Suitor extends React.Component {
             }
         };
         fetch(env.api + '/people/' + id + "/" + action, init);
-        this.props.next();
+        setTimeout(() => {
+            this.setState({action : false});
+            this.props.next();
+        }, 300);
     };
-    dislike = () => {
-        this.action(this.props.suitor.NodeIdentity, dislike)
-    };
-    like = () => {
-        this.action(this.props.suitor.NodeIdentity, like)
-    };
-    block = () => {
-        this.action(this.props.suitor.NodeIdentity, block)
+    do = (action) => {
+        this.setState({action : true});
+        setTimeout(() => {
+            this.action(this.props.suitor.NodeIdentity, action)
+        }, 600)
     };
     report (e, username) {
         report(username)
     }
     render () {
         const profile = this.props.suitor.Properties;
-        console.log(profile);
         return (
             this.state.loaded ? (
                 <Container className={"profile"}>
@@ -128,25 +126,28 @@ class Suitor extends React.Component {
                                         <p>{Math.round(distance(this.props.app.user.latitude, this.props.app.user.longitude, profile.latitude, profile.longitude, "K"))} km</p>
                                     </Grid.Row>
                                     <Grid.Row mobile={16} tablet={16} computer={16}>
-                                        <Button.Group fluid>
-                                            <Button
-                                                disabled={profile.relation === "BLOCK"}
-                                                color={"red"}
-                                                onClick={this.block}
-                                            ><Icon name={"ban"}/></Button>
-                                            <Button.Or />
-                                            <Button
-                                                disabled={profile.relation === "DISLIKE"}
-                                                color={"yellow"}
-                                                onClick={this.dislike}
-                                            ><Icon name={"thumbs down"}/></Button>
-                                            <Button.Or />
-                                            <Button
-                                                disabled={profile.relation === "LIKE"}
-                                                color={"green"}
-                                                onClick={this.like}
-                                            ><Icon name={"heart"}/></Button>
-                                        </Button.Group>
+                                        {this.state.action ?
+                                            <Message floating>Done!</Message> :
+                                            <Button.Group fluid>
+                                                <Button
+                                                    disabled={profile.relation === block}
+                                                    color={"red"}
+                                                    onClick={() => this.do(block)}
+                                                ><Icon name={"ban"}/></Button>
+                                                <Button.Or />
+                                                <Button
+                                                    disabled={profile.relation === dislike}
+                                                    color={"yellow"}
+                                                    onClick={() => this.do(dislike)}
+                                                ><Icon name={"thumbs down"}/></Button>
+                                                <Button.Or />
+                                                <Button
+                                                    disabled={profile.relation === like}
+                                                    color={"green"}
+                                                    onClick={() => this.do(like)}
+                                                ><Icon name={"heart"}/></Button>
+                                            </Button.Group>
+                                        }
                                     </Grid.Row>
                                     <Grid.Row mobile={16} tablet={16} computer={16}>
                                         <Grid.Column mobile={16} tablet={8} computer={8}>
