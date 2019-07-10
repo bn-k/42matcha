@@ -52,7 +52,7 @@ func (app *App) routerAPI() {
 		})
 	}
 	app.M.HandleMessage(func(s *melody.Session, msg []byte) {
-		app.insertMessage(msg)
+		go app.insertMessage(msg)
 		_ = app.M.BroadcastFilter(msg, func(session *melody.Session) bool {
 			return session.Request.URL.Path == s.Request.URL.Path
 		})

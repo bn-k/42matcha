@@ -27,9 +27,7 @@ func Token(c *gin.Context) {
 	if len(data) == 0 {
 		c.JSON(201, gin.H{"err": "Wrong token"})
 	} else if data[0][0].(graph.Node).Properties["access_lvl"] == int64(1) {
-		c.JSON(201, gin.H{"err": "Email already validated"})
-	} else {
-		c.JSON(200, gin.H{"status": "Email validated"})
+		c.JSON(201, gin.H{"status": "Email validated"})
 	}
 }
 
@@ -101,7 +99,6 @@ func GetMatchs(c *gin.Context) {
 		app.onlineRefresh(strconv.Itoa(id))
 		g, err := app.dbGetMatchs(id)
 		if err != nil {
-			fmt.Println(err.Error())
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {
 			c.JSON(200, g)
@@ -156,7 +153,6 @@ func GetPeople(c *gin.Context) {
 	valid, err := ValidateToken(c, &claims)
 
 	json.Unmarshal([]byte(filtersJson), &filters)
-	fmt.Print("Filters: ==> ", filters)
 
 	if err != nil {
 		c.JSON(202, gin.H{"err": err.Error()})
@@ -213,12 +209,10 @@ func Recommended(c *gin.Context) {
 }
 
 func ReportHandler(c *gin.Context) {
-	fmt.Println("IN report HANDLER")
 	claims := jwt.MapClaims{}
 	valid, err := ValidateToken(c, &claims)
 
 	if valid == true {
-		fmt.Println("TOKEN VALIDATED")
 		id := int(claims["id"].(float64))
 		u, err := app.getUser(id, "")
 		if err != nil {
@@ -229,8 +223,10 @@ func ReportHandler(c *gin.Context) {
 		message := "The following user has been reported by " + u.Username + " : "
 		UpdateLastConn(id)
 		if err = SendReportmail("Report User", username, "camagru4422@gmail.com", message); err != nil {
+			fmt.Println("EMAIL ERROR")
 			c.JSON(201, gin.H{"err": err.Error()})
 		} else {
+			fmt.Println("EMAIL OK")
 			c.JSON(200, nil)
 		}
 	} else {

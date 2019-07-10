@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"io"
@@ -105,7 +104,6 @@ func (req Request) updateLocation() {
 	retUser(req)
 }
 func (req Request) updateBirthday() {
-	fmt.Println("=====> ", req.body["day"])
 	if req.body["day"] == nil {
 		err := errors.New("error : The selection is empty")
 		req.context.JSON(201, gin.H{"err": err.Error()})
@@ -236,7 +234,6 @@ func (req Request) addNewTag() {
 func (req Request) userSetOldTags() {
 	tab := req.body["tags"].([]interface{})
 	var userTags []string
-	fmt.Println("TAAB = ", tab)
 	app.deleteTagRelation(int(req.user.Id))
 	for _, tag := range tab {
 		userTags = append(userTags, tag.(string))
